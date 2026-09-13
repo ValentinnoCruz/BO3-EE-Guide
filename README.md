@@ -14,7 +14,7 @@ Interactive visual Easter Egg guides for **Call of Duty: Black Ops III Zombies**
 - whole-section and whole-phase completion checkboxes
 - zebra-shaded phases/subsections
 - search
-- visual step screenshots
+- embedded visual step screenshots that work offline
 - in-page screenshot lightbox
 - responsive layout
 
@@ -28,3 +28,8 @@ Interactive visual Easter Egg guides for **Call of Duty: Black Ops III Zombies**
 - Zetsubou No Shima
 - Gorod Krovi
 - Revelations
+
+## Offline use
+Open `index.html` in a browser to choose a map, or open either standalone guide directly. Screenshots are embedded in each HTML file, including the combined chooser; no assets folder, server, or internet connection is required. External source/reference links still require internet access.
+
+The original handoff contained broken screenshot URLs. Available replacements from the credited visual guides are included. Six screenshots without a matching source image are explicitly marked unavailable; their instructions remain intact.
