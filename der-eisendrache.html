@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Der Eisendrache Visual Easter Egg Guide — High Contrast v6</title>
+<style>
+:root{
+  --bg:#070b11;--bg2:#0b121c;--panel:#101924;--panel2:#142231;--line:#26394d;
+  --text:#eef6ff;--muted:#9eb0c4;--blue:#79d7ff;--green:#91f2b8;--gold:#ffd67b;
+  --red:#ff927f;--purple:#d09aff;--orange:#ffb06e;--shadow:0 12px 38px rgba(0,0,0,.28)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);background:
+  radial-gradient(circle at 12% -5%,rgba(57,120,180,.13),transparent 30%),
+  radial-gradient(circle at 86% 0%,rgba(77,154,124,.09),transparent 28%),
+  linear-gradient(180deg,#060a10,var(--bg2) 35%,var(--bg));
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.48
+}
+button,input{font:inherit} a{color:var(--blue)}
+header{position:sticky;top:0;z-index:50;background:rgba(7,11,17,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top{max-width:1500px;margin:auto;padding:16px 18px 11px}
+.eyebrow{color:var(--green);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:900}
+h1{font-size:clamp(28px,4vw,44px);line-height:1;margin:3px 0 6px}
+.version{color:var(--muted);font-size:13px;margin-bottom:11px}
+.controls{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.search{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#08111a;color:var(--text);outline:none}
+.search:focus{border-color:var(--blue)}
+.navbtn,.toolbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 11px;cursor:pointer;font-weight:760}
+.navbtn:hover,.toolbtn:hover{border-color:var(--blue);background:var(--panel2)}
+.progressbar{height:3px;background:#101820}.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));transition:.2s}
+
+main{max-width:1500px;margin:auto;padding:22px 18px 80px}
+.callout{border:1px solid #31506b;background:linear-gradient(145deg,rgba(20,34,49,.95),rgba(12,22,32,.95));padding:14px 16px;border-radius:14px;margin-bottom:14px;color:var(--muted)}
+.callout strong{color:var(--text)}.corrections{border-color:#6a5131;background:linear-gradient(145deg,rgba(57,38,21,.72),rgba(20,27,34,.88))}
+.corrections b{color:var(--gold)}
+
+details.quick,details.big-section{border:1px solid var(--line);border-radius:16px;background:rgba(13,22,32,.8);margin:14px 0;overflow:hidden}
+summary.section-summary,summary.quick-summary{list-style:none;cursor:pointer;padding:16px;display:flex;justify-content:space-between;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+.section-summary:hover,.quick-summary:hover{background:rgba(20,34,49,.65)}
+.section-name{font-size:clamp(21px,2.4vw,30px);font-weight:900}.section-num{color:var(--blue);margin-right:8px}
+.section-sub{color:var(--muted);font-size:13px;margin-top:4px}.chev{color:var(--blue);font-size:22px;transition:.18s}
+details[open]>.section-summary .chev,details[open]>.quick-summary .chev{transform:rotate(90deg)}
+.section-count{white-space:nowrap;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--green);font-weight:850;font-size:13px}
+.section-inner{padding:0 12px 14px}
+
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:3px 20px;padding:0 16px 16px}
+.quick-item{display:flex;gap:8px;color:var(--muted);font-size:14px;padding:5px 0}.quick-num{color:var(--green);font-weight:900;min-width:24px}
+
+details.group{border:1px solid #22364a;border-radius:13px;background:rgba(12,20,29,.76);margin:10px 0;overflow:hidden}
+summary.group-head{list-style:none;cursor:pointer;padding:14px 15px;display:flex;justify-content:space-between;gap:13px;align-items:center}
+summary.group-head:hover{background:rgba(20,34,49,.55)}
+.group-title{font-size:18px;font-weight:880}.group-summary{color:var(--muted);font-size:13px;margin-top:3px}
+.group-effect{margin-top:7px;padding:8px 10px;border-left:3px solid var(--green);background:rgba(57,105,78,.12);border-radius:0 8px 8px 0;color:#ccebd8;font-size:12.5px}
+.group-body{padding:0 12px 12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:12px}
+.card{border:1px solid #22364a;border-radius:13px;background:linear-gradient(180deg,#111d29,#0c151f);overflow:hidden;box-shadow:var(--shadow);min-width:0;transition:.16s}
+.card:hover{border-color:#365b79;transform:translateY(-1px)}.card.done{opacity:.64;border-color:#2f684e}
+.card-head{display:flex;gap:11px;padding:14px 14px 9px}.check{position:relative;display:block;width:23px;height:23px;min-width:23px;margin-top:2px;cursor:pointer}
+.check input{position:absolute;opacity:0}.fake{width:23px;height:23px;border:2px solid #50677c;border-radius:7px;display:block;position:relative}
+.check input:checked+.fake{border-color:var(--green);background:rgba(145,242,184,.12)}.check input:checked+.fake:after{content:"✓";position:absolute;left:3px;top:-6px;color:var(--green);font-size:23px;font-weight:900}
+.card-code{font-size:10px;letter-spacing:.13em;color:var(--blue);font-weight:900}.card h3{margin:2px 0 0;font-size:17px;line-height:1.23}.card.done h3{text-decoration:line-through}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{padding:3px 7px;border-radius:999px;border:1px solid var(--line);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:850}
+.badge.required{color:var(--gold);border-color:#725b31}.badge.buildable{color:var(--green);border-color:#315f47}.badge.bow{color:#b8ceff;border-color:#405785}.badge.wisp{color:var(--purple);border-color:#664882}
+.card-body{padding:0 14px 14px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#7f94aa;margin-top:8px}
+.todo{padding-left:20px;margin:5px 0 0}.todo li{margin:5px 0;color:#e1ebf4;font-size:13.5px}.todo li::marker{color:var(--green)}
+.look{margin:4px 0;color:var(--muted);font-size:13.5px}.warn,.note{margin-top:10px;padding:9px 10px;border-radius:9px;font-size:12.5px}
+.warn{border:1px solid #74473e;background:rgba(96,45,36,.18);color:#ffd1c8}.note{border:1px solid #35506b;background:rgba(49,82,112,.15);color:#c5d9ec}
+
+.imgwrap{display:block;background:#05080c;border-top:1px solid #1b2b3b;position:relative}.imgwrap img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#030609}
+.imgwrap .fallback{display:none;padding:35px 16px;text-align:center;color:#ffb6a8;font-size:13px}.imgwrap.failed img{display:none}.imgwrap.failed .fallback{display:block}
+.imgcredit{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:7px 10px;background:#080f16;color:#73899e;font-size:10px}.imgcredit span:last-child{color:var(--blue)}
+.noimg{border-top:1px solid #1b2b3b;padding:22px 14px;color:#7f94aa;font-size:12px;background:#080f16}
+
+.bow-choice{border-top:1px solid #1b2b3b;background:#080f16;padding:14px}.bow-choice-title{text-align:center;font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:800;letter-spacing:.08em}
+.bow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.bow-chip{border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-weight:900}
+.bow-chip small{display:block;font-size:10px;font-weight:700;opacity:.78;margin-top:2px}.storm{background:rgba(32,74,130,.28);border-color:#416da5}.void{background:rgba(94,45,127,.27);border-color:#704593}
+.fire{background:rgba(140,65,35,.25);border-color:#985b3e}.wolf{background:rgba(73,140,170,.22);border-color:#5e9ab2}
+.bow-arrow{text-align:center;font-size:22px;color:var(--green);padding-top:7px}.bow-caption{text-align:center;color:#cfe9dc;font-size:12px;font-weight:800}
+
+.source-section{border-top:1px solid var(--line);margin-top:42px;padding-top:24px}.source-card{border:1px solid var(--line);background:var(--panel);padding:13px;border-radius:12px;margin:9px 0}.source-card h3{margin:0 0 4px;font-size:16px}.source-card p{margin:0;color:var(--muted);font-size:13px}.source-card a{display:inline-block;margin-top:7px}
+.offline-box{border:1px solid #315f47;background:rgba(38,84,60,.14);padding:14px;border-radius:12px;margin:18px 0;color:#cde8d8}.offline-box strong{color:var(--green)}
+.hidden{display:none!important}.footer-note{margin-top:24px;color:#73869a;font-size:12px}
+@media(max-width:800px){
+  header{position:relative}.cards{grid-template-columns:1fr}.top{padding:14px}.quick-grid{grid-template-columns:1fr}.section-summary{align-items:flex-start}
+}
+</style>
+
+<style id="high-contrast-v4">
+/* HIGH-CONTRAST DARK READABILITY PASS
+   One section = one accent color. Neutral content areas. Hard visual separators. */
+:root{
+  --hc-bg:#090a0c;
+  --hc-surface:#131519;
+  --hc-surface2:#1d2026;
+  --hc-surface3:#262a31;
+  --hc-line:#444a53;
+  --hc-line-strong:#606874;
+  --hc-text:#f7f8fa;
+  --hc-muted:#c2c8d0;
+  --hc-dim:#9099a4;
+  --hc-cyan:#49c8e8;
+  --hc-amber:#f0b84b;
+  --hc-green:#67d39a;
+  --hc-purple:#b58cff;
+  --hc-coral:#ff8178;
+  --hc-yellow:#ffd86b;
+  --hc-blue:#79cfff;
+}
+html{background:var(--hc-bg)!important}
+body{
+  background:var(--hc-bg)!important;
+  color:var(--hc-text)!important;
+  font-size:15px!important;
+}
+header{
+  background:rgba(9,10,12,.97)!important;
+  border-bottom:2px solid var(--hc-line)!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.35)!important;
+}
+h1{color:#fff!important}
+.search{
+  background:#101216!important;
+  color:#fff!important;
+  border:1px solid #59616c!important;
+}
+.search::placeholder{color:#8e98a4!important}
+.btn,.navbtn,.toolbtn{
+  background:#171a1f!important;
+  color:#f4f6f8!important;
+  border:1px solid #505761!important;
+  box-shadow:none!important;
+}
+.btn:hover,.navbtn:hover,.toolbtn:hover{background:#22262d!important}
+button[data-go="setup"]{border-bottom:4px solid var(--hc-cyan)!important}
+button[data-go="pap"],button[data-go="buildables"]{border-bottom:4px solid var(--hc-amber)!important}
+button[data-go="bows"]{border-bottom:4px solid var(--hc-green)!important}
+button[data-go="main"]{border-bottom:4px solid var(--hc-purple)!important}
+button[data-go="side"]{border-bottom:4px solid var(--hc-coral)!important}
+.progressbar{background:#20242a!important;height:5px!important}
+.progressfill{background:#79cfff!important}
+
+main{max-width:1320px!important}
+
+/* Keep the opening area quiet. Technical/meta boxes are hidden so the quest starts sooner. */
+.readability-key{
+  display:flex;flex-wrap:wrap;gap:8px 14px;
+  margin:2px 0 18px;padding:11px 13px;
+  background:#111318;border:1px solid #3d434c;border-radius:10px;
+  color:#c8ced5;font-size:12px;font-weight:750
+}
+.readability-key span{display:inline-flex;align-items:center;gap:6px}
+.readability-key i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.readability-key .c1 i{background:var(--hc-cyan)}
+.readability-key .c2 i{background:var(--hc-amber)}
+.readability-key .c3 i{background:var(--hc-green)}
+.readability-key .c4 i{background:var(--hc-purple)}
+.readability-key .c5 i{background:var(--hc-coral)}
+
+/* Fast route: a real numbered list instead of floating tiles */
+details.quick{
+  background:#111318!important;
+  border:2px solid #414751!important;
+  box-shadow:none!important;
+  border-radius:12px!important
+}
+.quick-summary,.quickhead{
+  background:#181b20!important;
+  color:#fff!important;
+  border:0!important;
+  padding:16px 18px!important
+}
+.quick-grid,.quickgrid{
+  display:block!important;
+  background:#0f1114!important;
+  padding:0!important
+}
+.quick-item,.q{
+  display:grid!important;
+  grid-template-columns:48px 1fr!important;
+  gap:10px!important;
+  align-items:start!important;
+  margin:0!important;
+  padding:11px 16px!important;
+  color:#e8ebef!important;
+  border-top:1px solid #3a4048!important
+}
+.quick-item:nth-child(even),.q:nth-child(even){background:#191c21!important}
+.quick-num,.qn{
+  display:grid!important;place-items:center!important;
+  width:31px!important;height:31px!important;
+  border-radius:7px!important;
+  background:#303640!important;
+  color:#fff!important;font-weight:900!important
+}
+
+/* Notes and warnings are deliberately different from normal content */
+.warn{
+  background:#332a12!important;
+  color:#ffe7a5!important;
+  border:1px solid #8c7022!important;
+  border-left:6px solid var(--hc-yellow)!important;
+  border-radius:7px!important
+}
+.note{
+  background:#112637!important;
+  color:#d5edff!important;
+  border:1px solid #345c79!important;
+  border-left:6px solid var(--hc-blue)!important;
+  border-radius:7px!important
+}
+.group-effect,.effect{
+  background:#12291f!important;
+  color:#d6f3e2!important;
+  border-left:6px solid var(--hc-green)!important;
+  border-radius:7px!important
+}
+
+/* Stronger text hierarchy */
+.label{
+  color:#b9c1ca!important;
+  font-size:11px!important;
+  letter-spacing:.13em!important;
+  font-weight:900!important;
+  margin-top:14px!important
+}
+.todo li{
+  color:#f2f4f6!important;
+  font-size:14.5px!important;
+  margin:8px 0!important;
+  line-height:1.52!important
+}
+.look{
+  color:#c4cbd3!important;
+  line-height:1.5!important
+}
+.badge{background:#0f1114!important;border-color:#59616c!important;color:#e5e8eb!important}
+.fake{border-color:#77818c!important}
+.card.done{opacity:.55!important}
+
+/* Mobile */
+@media(max-width:850px){
+  header{position:relative!important}
+}
+</style>
+
+<style>
+main > .callout, main > .offline-box{display:none!important}
+</style>
+
+<style id="de-high-contrast-layout">
+#content > details.big-section:nth-of-type(1){--section-accent:var(--hc-cyan)}
+#content > details.big-section:nth-of-type(2){--section-accent:var(--hc-amber)}
+#content > details.big-section:nth-of-type(3){--section-accent:var(--hc-green)}
+#content > details.big-section:nth-of-type(4){--section-accent:var(--hc-purple)}
+#content > details.big-section:nth-of-type(5){--section-accent:var(--hc-coral)}
+
+details.big-section{
+  background:#0e1013!important;
+  border:2px solid #40464f!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.28)!important;
+  border-radius:12px!important;
+  margin:20px 0!important
+}
+#content > details.big-section > .section-summary{
+  background:#15181d!important;
+  border-left:9px solid var(--section-accent)!important;
+  padding:19px 20px!important
+}
+.section-name{color:#fff!important}
+.section-sub{color:#bcc4cd!important}
+.section-num{
+  display:inline-grid!important;place-items:center!important;
+  width:34px!important;height:34px!important;
+  border-radius:7px!important;margin-right:10px!important;
+  background:var(--section-accent)!important;color:#08090b!important;
+  font-weight:950!important
+}
+.section-summary .chev{color:var(--section-accent)!important}
+.section-count{
+  background:#0f1114!important;
+  color:#fff!important;
+  border:1px solid #59616c!important
+}
+.section-inner{background:#0b0d10!important;padding:16px!important}
+
+details.group{
+  background:#121419!important;
+  border:1px solid #464d56!important;
+  border-radius:10px!important;
+  margin:0 0 18px!important
+}
+summary.group-head{
+  background:#22262c!important;
+  border-left:5px solid var(--section-accent)!important;
+  padding:14px 16px!important
+}
+.group-title{color:#fff!important}
+.group-summary{color:#b8c0c9!important}
+.group-head .chev{color:var(--section-accent)!important}
+.group-body{background:#0d0f12!important;padding:0!important}
+
+/* Same one-step-per-row treatment as Shadows */
+.cards{display:block!important}
+.card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(280px,400px)!important;
+  grid-template-rows:auto 1fr!important;
+  column-gap:22px!important;
+  border:0!important;
+  border-left:6px solid var(--section-accent)!important;
+  border-top:2px solid #383e46!important;
+  border-radius:0!important;
+  background:#131519!important;
+  box-shadow:none!important;
+  transform:none!important
+}
+.card:first-child{border-top:0!important}
+.card:nth-child(even){background:#1d2026!important}
+.card-head{grid-column:1!important;grid-row:1!important;padding:18px 18px 6px!important}
+.card-body{grid-column:1!important;grid-row:2!important;padding:0 18px 20px!important}
+.imgwrap,.bow-choice,.noimg{
+  grid-column:2!important;grid-row:1 / span 2!important;
+  align-self:center!important;
+  margin:18px!important
+}
+.imgwrap{
+  border:2px solid #4d555f!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+  background:#08090b!important
+}
+.imgcredit{background:#101216!important;color:#aeb7c1!important;border-top:1px solid #3d444d!important}
+.card-code{
+  display:inline-block!important;
+  background:var(--section-accent)!important;
+  color:#08090b!important;
+  border-radius:5px!important;
+  padding:3px 7px!important;
+  margin-bottom:4px!important;
+  font-weight:950!important
+}
+.card h3{color:#fff!important;font-size:19px!important}
+.noimg{color:#c3cad2!important;background:#181b20!important;border:1px dashed #505862!important;border-radius:8px!important;padding:20px!important}
+.bow-choice{background:#181b20!important;border:2px solid #4d555f!important;border-radius:8px!important;padding:18px!important}
+
+@media(max-width:850px){
+  .card{grid-template-columns:1fr!important}
+  .card-head{grid-column:1!important;grid-row:1!important}
+  .card-body{grid-column:1!important;grid-row:2!important}
+  .imgwrap,.bow-choice,.noimg{grid-column:1!important;grid-row:3!important;margin:0 18px 18px!important}
+}
+</style>
+
+
+<style id="image-lightbox-v5">
+/* In-page image expansion */
+.img, .imgwrap {
+  cursor: zoom-in !important;
+}
+.img .credit span:last-child,
+.imgwrap .imgcredit span:last-child {
+  color: #aeb8c2 !important;
+}
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  background: rgba(0,0,0,.90);
+  backdrop-filter: blur(5px);
+}
+.image-lightbox.open { display: flex; }
+.image-lightbox-inner {
+  position: relative;
+  width: min(96vw, 1500px);
+  height: min(94vh, 1000px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 2px solid #626b76;
+  border-radius: 10px;
+  background: #07080a;
+  box-shadow: 0 18px 60px rgba(0,0,0,.65);
+  cursor: zoom-out;
+}
+.image-lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 100000;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #6b747f;
+  border-radius: 50%;
+  background: #16191e;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+}
+.image-lightbox-close:hover { background: #292e35; }
+.image-lightbox-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  padding: 7px 11px;
+  border: 1px solid #4e5660;
+  border-radius: 999px;
+  background: rgba(17,20,24,.92);
+  color: #c9d0d7;
+  font-size: 12px;
+  white-space: nowrap;
+}
+body.lightbox-open { overflow: hidden !important; }
+
+@media (max-width: 700px) {
+  .image-lightbox { padding: 12px; }
+  .image-lightbox-inner {
+    width: 100vw;
+    height: 90vh;
+  }
+  .image-lightbox-close {
+    top: 10px;
+    right: 10px;
+  }
+}
+</style>
+
+
+<style id="bulk-check-zebra-v6">
+/* ===== v6: zebra subsection headers + whole-section / whole-phase checkboxes ===== */
+
+/* Stronger zebra separation for subsection / phase headers */
+.sectionbody > details.group:nth-of-type(odd) > .grouphead,
+.section-inner > details.group:nth-of-type(odd) > .group-head {
+  background:#20242a !important;
+}
+.sectionbody > details.group:nth-of-type(even) > .grouphead,
+.section-inner > details.group:nth-of-type(even) > .group-head {
+  background:#2c3138 !important;
+}
+
+/* Main Quest phases get a subtle purple zebra identity instead of one flat purple look */
+#content > details.section:nth-of-type(4) .sectionbody > details.group:nth-of-type(odd) > .grouphead,
+#content > details.big-section:nth-of-type(4) .section-inner > details.group:nth-of-type(odd) > .group-head {
+  background:#26202f !important;
+}
+#content > details.section:nth-of-type(4) .sectionbody > details.group:nth-of-type(even) > .grouphead,
+#content > details.big-section:nth-of-type(4) .section-inner > details.group:nth-of-type(even) > .group-head {
+  background:#342a40 !important;
+}
+
+/* Bulk check control used in top-level sections and subsection/phase headers */
+.bulk-check-wrap {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  flex:0 0 auto;
+  padding:6px 9px;
+  border:1px solid #626b76;
+  border-radius:8px;
+  background:#101216;
+  color:#e6ebef;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  cursor:pointer;
+  user-select:none;
+}
+.bulk-check-wrap:hover {
+  background:#1b1f24;
+  border-color:#89939e;
+}
+.bulk-check-wrap input {
+  appearance:none;
+  -webkit-appearance:none;
+  width:19px;
+  height:19px;
+  margin:0;
+  border:2px solid #89939e;
+  border-radius:5px;
+  background:#08090b;
+  display:grid;
+  place-content:center;
+  cursor:pointer;
+}
+.bulk-check-wrap input::before {
+  content:"";
+  width:10px;
+  height:10px;
+  transform:scale(0);
+  transition:transform .08s ease-in-out;
+  clip-path:polygon(14% 44%,0 59%,39% 100%,100% 18%,84% 3%,37% 70%);
+  background:#08100b;
+}
+.bulk-check-wrap input:checked {
+  background:#77dda3;
+  border-color:#77dda3;
+}
+.bulk-check-wrap input:checked::before {
+  transform:scale(1);
+}
+.bulk-check-wrap input:indeterminate {
+  background:#f0b84b;
+  border-color:#f0b84b;
+}
+.bulk-check-wrap input:indeterminate::before {
+  transform:scale(1);
+  clip-path:none;
+  width:10px;
+  height:3px;
+  background:#17120a;
+}
+.bulk-check-wrap.complete {
+  border-color:#5ca77a;
+  background:#13261c;
+  color:#bde9cd;
+}
+.bulk-check-wrap.partial {
+  border-color:#997c35;
+  background:#292313;
+  color:#f3dda6;
+}
+
+/* Keep controls and chevrons visually separated */
+.bulk-right {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex:0 0 auto;
+}
+
+/* On narrow screens, do not let the header controls crush the title */
+@media(max-width:720px){
+  .bulk-check-wrap .bulk-label-text { display:none; }
+  .bulk-check-wrap { padding:6px; }
+  .bulk-right { gap:6px; }
+}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="eyebrow">Black Ops III Zombies • Der Eisendrache</div>
+    <h1>Visual Easter Egg Guide</h1>
+    <div class="version">v3 • corrected images • clearer bullet layout • side-EE rewards explained • offline-image ready</div>
+    <div class="controls">
+      <input class="search" id="search" placeholder="Search: Vril, prongs, Shield, Void Bow, Dead Again...">
+      <button class="navbtn" data-go="setup">1 Setup</button>
+      <button class="navbtn" data-go="buildables">2 Buildables</button>
+      <button class="navbtn" data-go="bows">3 Bows</button>
+      <button class="navbtn" data-go="main">4 Main Quest</button>
+      <button class="navbtn" data-go="side">5 Side EEs</button>
+      <button class="toolbtn" id="expand">Expand all</button>
+      <button class="toolbtn" id="reset">Reset checks</button>
+    </div>
+  </div>
+  <div class="progressbar"><div class="progressfill" id="progressfill"></div></div>
+</header>
+
+<main>
+
+<div class="readability-key" aria-label="Section color key">
+  <span class="c1"><i></i>1 Setup</span>
+  <span class="c2"><i></i>2 Buildables</span>
+  <span class="c3"><i></i>3 Bow Upgrades</span>
+  <span class="c4"><i></i>4 Main Easter Egg</span>
+  <span class="c5"><i></i>5 Side Easter Eggs</span>
+</div>
+
+  <div class="callout corrections">
+    <strong>v3 fixes:</strong>
+    corrected the <b>Pack-a-Punch indicator</b> image; restored the <b>Storm Arrow glowing</b> image;
+    added real alternate screenshots for <b>VD-06 crawler sacrifices</b> and <b>VD-07 the speaking urn</b>;
+    replaced MQ-04's confusing Wisp picture with a <b>4-bow choice graphic</b>.
+  </div>
+  <div class="callout">
+    <strong>Reading style:</strong> every instruction is now broken into short bullets. Important warnings stay separate.
+    Side Easter Eggs tell you <strong>what the reward/effect actually does</strong> before you open the steps.
+    Everything starts collapsed by default.
+  </div>
+  <div class="offline-box">
+    <strong>Offline-image support:</strong> this page tries a local copy of every screenshot first, then falls back to the original website.
+    The portable ZIP includes an image manifest and a Windows PowerShell downloader that can save the screenshots into the site's <code>assets</code> folder.
+  </div>
+
+  <details class="quick" id="quickbox">
+    <summary class="quick-summary"><div><div class="section-name">Fast Run Order</div><div class="section-sub">Open only when you want the high-level sequence.</div></div><div class="chev">›</div></summary>
+    <div class="quick-grid" id="quick"></div>
+  </details>
+
+  <div id="content"></div>
+
+  <section class="source-section" id="sources">
+    <h2>Sources & Cross-References</h2>
+    <p style="color:var(--muted)">Instructions are paraphrased and cross-checked. Screenshot cards credit the original image source.</p>
+    <div id="sourcecards"></div>
+    <div class="footer-note">Personal gameplay reference. Third-party screenshots remain credited to their original guide/source.</div>
+  </section>
+</main>
+
+<script>
+const sections = [{"id": "setup", "number": "1", "title": "Start Here — Map Setup", "subtitle": "Power → Pack-a-Punch → Low Gravity → Base Bow", "kind": "required", "groups": [{"title": "1. Turn on Power", "summary": "Required before Pack-a-Punch, Death Ray quest functions, and several map systems.", "steps": [{"id": "SET-01", "title": "Power Switch — Armory / Stamin-Up room", "do": ["Reach the Armory (the room with Stamin-Up) and flip the only Power Switch on the map."], "look": "The large lever panel shown here. Once it is on, the room and powered systems activate.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/power/power.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/001_cf9de3c5a0.webp"}]}, {"title": "2. Build Pack-a-Punch", "summary": "There are three PaP teleporter pieces. Interact with any two; Pack-a-Punch assembles at the third location.", "steps": [{"id": "PAP-01", "title": "Pack-a-Punch piece — Bastion / Death Ray", "do": ["With Power on, interact with the PaP piece on the Bastion platform outside the Power room."], "look": "The PaP teleporter frame on the Death Ray platform.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/pap/pap_bastion.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/002_93ba9c3810.webp"}, {"id": "PAP-02", "title": "Pack-a-Punch piece — Undercroft", "do": ["Interact with the PaP piece at the back of the Undercroft, between the Juggernog side and Teleporter room."], "look": "The PaP teleporter frame against the stone wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/pap/pap_undercroft.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/003_95989c2b60.webp"}, {"id": "PAP-03", "title": "Pack-a-Punch piece — Rocket Test Pad", "do": ["Teleport to the Rocket Test Pad and interact with the PaP piece on the raised platform around the rocket."], "look": "The PaP teleporter frame on the elevated rocket platform.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/pap/pap_rocket_pad.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/004_7473c584a0.webp"}, {"id": "PAP-04", "title": "Pack-a-Punch is now active", "do": ["After you interact with the second piece, Pack-a-Punch forms at the remaining third location.", "Later it can move among these three spots every few rounds."], "look": "Use the lit Pack-a-Punch indicator sign to tell which of the three PaP locations is currently active.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/pap/pap_indicator.webp", "tag": "required", "warn": "", "note": "Pack-a-Punch forms at the third location after you teleport the first two pieces. Later it can move among the three locations.", "source": "MMMR Kennedy", "asset": "assets/005_dbd867f6db.webp"}]}, {"title": "3. Activate Undercroft Low Gravity", "summary": "Needed for the Shield Window part and parts of the Storm and Wolf bow quests.", "steps": [{"id": "LOW-01", "title": "Stand on all 4 Pyramid floor plates", "do": ["Stand on each of the four square floor plates surrounding the Pyramid for about 3 seconds."], "look": "Each plate begins glowing after it is activated.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/undercroft_low_gravity/platform.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/006_900a357899.webp"}, {"id": "LOW-02", "title": "Confirm all 4 plates are glowing", "do": ["Activate all four plates.", "Low gravity then cycles on, letting you jump higher and wall-run."], "look": "The plates and room light up during the low-gravity state.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/undercroft_low_gravity/glowing_platform.webp", "tag": "required", "warn": "", "note": "MMMR Kennedy documents ~50 seconds of low gravity followed by about a 60-second reactivation cycle.", "source": "MMMR Kennedy", "asset": "assets/007_66b1718257.webp"}]}, {"title": "4. Get the Base Bow — Wrath of the Ancients", "summary": "Feed 8 zombies to each dragon. Wait for each eating animation to finish before killing the next zombie.", "steps": [{"id": "BAS-01", "title": "Dragon 1 — Lower Courtyard", "do": ["Kill zombies near the Dragon statue in the Lower Courtyard until it has eaten 8."], "look": "The Dragon past the bridge / Double Tap side near the Mystery Box area.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/dragon_statue_lower.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/008_4e01e8486d.webp"}, {"id": "BAS-02", "title": "Dragon 2 — Mission Control / Church", "do": ["Kill zombies near the Dragon above the fireplace until it has eaten 8."], "look": "The Dragon mounted above the Mission Control fireplace.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/dragon_statue_church.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/009_228f38449e.webp"}, {"id": "BAS-03", "title": "Dragon 3 — Undercroft", "do": ["Kill zombies near the Dragon beside the Pyramid until it has eaten 8."], "look": "The Dragon beside the Pyramid and Keeper statues.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/dragon_statue_undercroft.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/010_f548c6cc90.webp"}, {"id": "BAS-04", "title": "Pick up the Wrath of the Ancients", "do": ["After all three Dragons crumble, go to the Knight's Tomb room between the Church and Undercroft and take the bow from the chest."], "look": "The bow chest behind the Knight's Tomb.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/chest.webp", "tag": "required", "warn": "Do not lose track of the BASE bow. The main quest's six Teleporter prongs must be shot with the base Wrath of the Ancients.", "note": "", "source": "MMMR Kennedy", "asset": "assets/011_a3a96b507f.webp"}]}]}, {"id": "buildables", "number": "2", "title": "Buildables", "subtitle": "Rocket Shield by part/spawn + Ragnarok DG-4 by part", "kind": "mixed", "groups": [{"title": "Rocket Shield — Part 1: Rockets", "summary": "The Rockets part spawns in ONE of these 3 Lower Courtyard locations.", "steps": [{"id": "SH-R1", "title": "Rockets spawn A — wooden boxes", "do": ["Check the wooden boxes on the right side of the Lower Courtyard, just past the Gate trap."], "look": "The Rockets part lying on the boxes.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/rockets_boxes.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/012_fca5a132b0.webp"}, {"id": "SH-R2", "title": "Rockets spawn B — base of small stairs", "do": ["From the first spot, move up the courtyard and check the base of the small staircase."], "look": "The Rockets part at the bottom of the small stairs.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/rockets_stairs.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/013_3f63501582.webp"}, {"id": "SH-R3", "title": "Rockets spawn C — stairs toward Death Ray", "do": ["Check the upper stairs leading toward the Death Ray / Power-door side."], "look": "The Rockets part beside the stone wall near the stair route.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/rockets_death_ray.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/014_19cd4e18e8.webp"}]}, {"title": "Rocket Shield — Part 2: Base", "summary": "The Base part spawns in ONE of these 3 Clock Tower / Upper Courtyard locations.", "steps": [{"id": "SH-B1", "title": "Base spawn A — Clock Tower desk", "do": ["Enter the Clock Tower and check the desk opposite the entrance."], "look": "The shield Base leaning beside the desk.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/base_clocktower.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/015_ce8f75f034.webp"}, {"id": "SH-B2", "title": "Base spawn B — Wunderfizz stairs", "do": ["Check the bottom of the Upper Courtyard stairs when coming from the Wunderfizz side."], "look": "The shield Base at the stair landing.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/base_wunderfizz_stairs.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/016_0a2abf0f8f.webp"}, {"id": "SH-B3", "title": "Base spawn C — boxes by electric trap", "do": ["Check the boxes on the right side of the electric-trap doorway in the Upper Courtyard."], "look": "The shield Base leaning on the boxes.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/base_electric_trap.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/017_f7ea49b389.webp"}]}, {"title": "Rocket Shield — Part 3: Window", "summary": "The Window part spawns in ONE of these 3 Undercroft locations. LOW GRAVITY must be active.", "steps": [{"id": "SH-W1", "title": "Window spawn A — above Storm Bow box", "do": ["During low gravity, look high on the Pyramid metalwork above the Storm Bow box / workbench side."], "look": "The Window part attached high on the metal structure.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/window_storm_box.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/018_1ef1a7d2f0.webp"}, {"id": "SH-W2", "title": "Window spawn B — above PaP location", "do": ["During low gravity, look above the Pack-a-Punch teleporter location in the Undercroft."], "look": "The Window part mounted high on the wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/window_pap.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/019_578d607d57.webp"}, {"id": "SH-W3", "title": "Window spawn C — above Teleporter-room doorway", "do": ["During low gravity, look above the doorway leading to the Teleporter / Rocket Test room."], "look": "The Window part above the doorway.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/window_teleporter.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/020_4dddc6386e.webp"}, {"id": "SH-BUILD", "title": "Build the Rocket Shield", "do": ["Once you have Rockets + Base + Window, craft the Shield at a workbench in the Gatehouse, Church, or Undercroft."], "look": "Any of the map's three crafting tables can build it.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/rocket_shield/shield_built.webp", "tag": "buildable", "warn": "", "note": "A fresh shield is strongly recommended before the Keeper boss fight.", "source": "MMMR Kennedy", "asset": "assets/021_19647b6a71.webp"}]}, {"title": "Ragnarok DG-4 — 3 Parts", "summary": "Base + Handles + Spikes. All three can be assembled at a Gatehouse, Church, or Undercroft workbench.", "steps": [{"id": "RG-01", "title": "Part 1 — Base from Panzersoldat", "do": ["Kill the first Panzersoldat and pick up the Ragnarok Base it drops."], "look": "The part on the ground after the Panzer dies.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/panzer_part.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/022_9315d80511.webp"}, {"id": "RG-02", "title": "Part 2 — activate the Death Ray for the Handles", "do": ["Turn on Power, activate the relevant Wundersphere landing pads, then activate the Death Ray trap and wait for it to finish."], "look": "After the trap ends, the Handles appear floating in the air.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/death_ray.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/023_482181ab84.webp"}, {"id": "RG-03", "title": "Handles spawn — above a Death Ray orb", "do": ["If the Handles appear above one of the Death Ray orbs, use the Upper Courtyard Wundersphere route to fly through the part."], "look": "The floating handle/orb pickup.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/handle_orb.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/024_30b7be7cc2.webp"}, {"id": "RG-04", "title": "Handles alternate spawn — Rocket Pad route", "do": ["If the Handles appear behind the Wundersphere route toward the Rocket Pad, launch from the Gatehouse Wundersphere and fly through them."], "look": "The pickup must be grabbed before it despawns; if missed, reactivate the Death Ray later.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/handle_wundersphere.webp", "tag": "buildable", "warn": "", "note": "MMMR Kennedy documents about a 2-minute pickup window.", "source": "MMMR Kennedy", "asset": "assets/025_cce204cd6f.webp"}, {"id": "RG-05", "title": "Part 3 — wait at the Rocket Test switch", "do": ["At the Rocket Test Pad, stand by the inactive switch near the stairs to the Pack-a-Punch platform."], "look": "The switch before a Rocket Test begins.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/switch.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/026_5af4626f96.webp"}, {"id": "RG-06", "title": "Activate the switch during the Rocket Test", "do": ["When the Rocket Test starts, interact with the newly active switch, then immediately run into the Teleporter bunker."], "look": "The same switch lit/active during the test.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/activated_switch.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/027_9a77291b79.webp"}, {"id": "RG-07", "title": "Wait for all 3 bunker lights to turn green", "do": ["Inside the bunker, watch the panel left of the Teleporter.", "When all three lights are green, interact with the panel."], "look": "The three-light panel beside the Teleporter.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/tele_panel.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/028_a36aca800f.webp"}, {"id": "RG-08", "title": "Pick up the Spikes", "do": ["If the panel was activated in time, the Spikes appear on the Teleporter pad.", "Pick them up."], "look": "The Ragnarok Spikes on the Teleporter.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/spikes.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/029_d32345a86e.webp"}, {"id": "RG-09", "title": "Build the Ragnarok DG-4", "do": ["With Base + Handles + Spikes collected, craft the Ragnarok at any of the three workbenches."], "look": "The completed specialist weapon is required for the main-quest boss entry and damage phases.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/ragnarok_dg4/ragnarok_built.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/030_2f7692b387.webp"}]}]}, {"id": "bows", "number": "3", "title": "All 4 Bow Upgrades", "subtitle": "Storm / Lightning • Wolf • Void • Fire — every major target and location", "kind": "required", "groups": [{"title": "Storm / Lightning Bow — Kreema'ahm la Ahmahm", "summary": "Weather vane → 3 bonfires → 5 wind panels → 3 urns → electrify bonfires → forge arrow → soul charge.", "accent": "storm", "steps": [{"id": "ST-01", "title": "Start — shoot the weather vane", "do": ["On the Death Ray platform, hit the weather vane on the small tower with a CHARGED shot from the base bow."], "look": "The vane spins and drops the broken Lightning Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/weather_vane.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/031_0950fb2cdd.webp"}, {"id": "ST-02", "title": "Pick up the broken Lightning Arrow", "do": ["Pick up the arrow below the weather vane to bind the Storm Bow quest to you."], "look": "The dropped blue arrow at the base of the tower.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/storm_arrow_broken.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/032_813cfd6def.webp"}, {"id": "ST-03A", "title": "Bonfire 1 — behind Clock Tower", "do": ["Shoot a CHARGED base-bow arrow into the distant bonfire behind/outside the Clock Tower."], "look": "The wood pile on the castle-side landscape.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/bonfire_clocktower.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/033_7951ef193e.webp"}, {"id": "ST-03B", "title": "Bonfire 2 — far mountain", "do": ["Shoot the distant bonfire on the mountain behind the Wunderfizz-facing view."], "look": "The far-off wood pile on the mountain.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/bonfire_mountain.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/034_6f54933916.webp"}, {"id": "ST-03C", "title": "Bonfire 3 — Rocket Test hill", "do": ["From the Rocket Test Pad, shoot the bonfire on the hill up toward the castle."], "look": "The bonfire high on the hillside.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/bonfire_rocket_pad.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/035_7eaf6fa916.webp"}, {"id": "ST-04A", "title": "Wind panel 1 — Teleporter doorway", "do": ["During low gravity, wall-run over the blue wind panel left of the Teleporter-room doorway."], "look": "Blue wind symbol on the wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/panel_tele.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/036_147209cd9c.webp"}, {"id": "ST-04B", "title": "Wind panel 2 — opposite PaP", "do": ["Stay off the ground and wall-run over the panel opposite the Undercroft Pack-a-Punch location."], "look": "Blue wind symbol high on the wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/panel_pap.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/037_397c484343.webp"}, {"id": "ST-04C", "title": "Wind panel 3 — above Jug doorway", "do": ["Continue the wall-run route over the panel above the Juggernog-room doorway."], "look": "Blue wind symbol above the doorway.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/panel_jug.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/038_f5d320c203.webp"}, {"id": "ST-04D", "title": "Wind panel 4 — near stairs / zombie window", "do": ["Continue without touching the floor and cross the panel above the nearby zombie window."], "look": "Blue wind symbol on the wall near the stairs.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/panel_fast_travel.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/039_f77abdb74c.webp"}, {"id": "ST-04E", "title": "Wind panel 5 — right of workbench", "do": ["Cross the final panel to the right of the Undercroft workbench without touching the ground."], "look": "The last blue wind symbol beside the Keeper statue.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/panel_workbench.webp", "tag": "bow", "warn": "Touching the ground before all five panels are activated resets this wall-run pass.", "note": "", "source": "MMMR Kennedy", "asset": "assets/040_c9d485987a.webp"}, {"id": "ST-05A", "title": "Charge Urn 1 — Clock Tower", "do": ["Get about 5 zombie kills near the electrical urn in the Clock Tower until it stops taking souls."], "look": "The urn under/inside the Clock Tower area.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/urn_clocktower.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/041_9abb4fa58b.webp"}, {"id": "ST-05B", "title": "Charge Urn 2 — room above Double Tap", "do": ["Get about 5 zombie kills near the urn in the L-CAR / room above Double Tap."], "look": "The electrical urn in that room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/urn_lcar.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/042_3f2dd1f610.webp"}, {"id": "ST-05C", "title": "Charge Urn 3 — Rocket Pad bunker", "do": ["Get about 5 zombie kills near the urn inside the Rocket Test Pad bunker."], "look": "The electrical urn across from the Teleporter.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/urn_rocket_pad.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/043_e08813451e.webp"}, {"id": "ST-06", "title": "Electrify all 3 bonfires", "do": ["Near each charged urn, fully draw the base bow until the arrow becomes electrified, then KEEP IT DRAWN and fire at that urn's bonfire.", "Repeat once per urn."], "look": "A correctly upgraded bonfire has a visible electric effect.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/electric_bonfire.webp", "tag": "bow", "warn": "Do not lower the bow after taking a charge from an urn; the arrow loses the electricity.", "note": "", "source": "MMMR Kennedy", "asset": "assets/044_e4c33bb989.webp"}, {"id": "ST-07", "title": "Reforge the Storm Arrow", "do": ["Return to the weather-vane tower and interact with the blue electrical cloud / wall below where the arrow originally dropped."], "look": "After the animation, the reforged Storm Arrow appears.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/reformed_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/045_bbcd0a9000.webp"}, {"id": "ST-08", "title": "Place the arrow in the Storm box", "do": ["Take the reforged arrow to the blue Storm Bow box by the Pyramid in the Undercroft."], "look": "The blue Storm Bow altar/box.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/storm_bow_box.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/046_0ae386ffeb.webp"}, {"id": "ST-09", "title": "Charge the arrow with souls", "do": ["Kill zombies while they are on the Pyramid stairs or lower area until the arrow stops collecting souls and glows."], "look": "The arrow glowing in the Storm box when fully charged.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/storm_arrow_glowing.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/047_55ff9f2aa4.webp"}, {"id": "ST-10", "title": "Trade in the base bow and take the Storm Bow", "do": ["Interact with the charged box to place the base bow into it.", "After the animation, pick up the completed Storm Bow."], "look": "Completed Kreema'ahm la Ahmahm.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/storm_bow/storm_bow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/048_4b6ae3a3a9.webp"}]}, {"title": "Wolf Bow — Kreeholo lu Kreemasaleet", "summary": "4 paintings in story order → broken arrow → red banner skull → ghost wolf / 3 digs → low-gravity symbol → forge.", "accent": "wolf", "steps": [{"id": "WF-01A", "title": "Painting order 1 — King on throne", "do": ["Find the painting showing the King sitting on his throne and interact with it FIRST."], "look": "This image is always first in the story order; its physical room changes each game.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_king_throne.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/049_bdcd470dfc.webp"}, {"id": "WF-01B", "title": "Painting order 2 — King riding to battle", "do": ["Find the painting showing the King riding a horse and interact with it SECOND."], "look": "Listen for the positive guitar sound.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_king_riding.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/050_7409c2ee93.webp"}, {"id": "WF-01C", "title": "Painting order 3 — battle / Apothicons", "do": ["Find the battle painting and interact with it THIRD."], "look": "The castle/battle scene with the dark creature.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_apothicon.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/051_516be95354.webp"}, {"id": "WF-01D", "title": "Painting order 4 — dead King", "do": ["Find the painting showing the dead King with arrows and interact with it FOURTH."], "look": "A wolf howl confirms the full sequence.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_king_dead.webp", "tag": "bow", "warn": "If you interact with the wrong painting in the sequence, restart the painting order.", "note": "", "source": "MMMR Kennedy", "asset": "assets/052_ccf2d87672.webp"}, {"id": "WF-02A", "title": "Possible painting room — Trophy Room", "do": ["One of the four paintings will be in the room below the Clock Tower near the KRM-262."], "look": "Use this only as a location reference; the image/story painting here is randomized.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_loc_clocktower_below.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/053_fa038810e2.webp"}, {"id": "WF-02B", "title": "Possible painting room — Clock Tower", "do": ["One painting can be inside the Clock Tower near the stairs."], "look": "The exact story image in this frame changes each match.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_loc_clocktower.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/054_b21dccd648.webp"}, {"id": "WF-02C", "title": "Possible painting room — Church upper level", "do": ["One painting can be upstairs in the Church near Speed Cola."], "look": "The physical painting location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_loc_church.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/055_0ae6c2a1b6.webp"}, {"id": "WF-02D", "title": "Possible painting room — Samantha's corridor", "do": ["One painting can be in the corridor / stairs near Samantha's Room and Knight's Hall."], "look": "The physical painting location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/painting_loc_sams_room.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/056_8919975371.webp"}, {"id": "WF-03", "title": "Pick up the broken Wolf Arrow", "do": ["After the four-painting sequence, go to the Undercroft.", "A wall at the bottom of the stairs from the bow room breaks open; take the broken arrow."], "look": "The broken Wolf Arrow in the opened wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/broken_wolf_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/057_34bd20ff9c.webp"}, {"id": "WF-04", "title": "Shoot the rock below the red banner", "do": ["At the Rocket Test Pad, look at the cliff to the right of the rocket above/behind the VMP wallbuy.", "Shoot the rock directly below the red banner."], "look": "The red banner / target rock on the cliff.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/red_banner.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/058_dc8fee83b1.webp"}, {"id": "WF-05", "title": "Pick up the Wolf Skull", "do": ["The skull rolls down and lands near the gate.", "Pick it up."], "look": "The Wolf Skull on the ground.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/skull_near_gate.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/059_c145af6d69.webp"}, {"id": "WF-06", "title": "Place skull on the headless wolf skeleton", "do": ["Return to the Undercroft and place the skull on the headless skeleton beside the Wolf Bow box."], "look": "The headless wolf skeleton near the Pyramid.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/headless_skeleton.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/060_5138685bb4.webp"}, {"id": "WF-07", "title": "Follow the Ghost Wolf", "do": ["A spectral wolf spawns.", "Follow it until it stops and begins digging."], "look": "The Ghost Wolf.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/ghost_wolf.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/061_3f2ad63539.webp"}, {"id": "WF-08A", "title": "Dig site 1 — Upper Courtyard", "do": ["When the wolf stops near the Upper Courtyard Wundersphere, kill about 10 zombies near it, then pick up the bone it uncovers."], "look": "First possible dig stop in the normal quest order.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/dig_1.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/062_9e5eb190ff.webp"}, {"id": "WF-08B", "title": "Dig site 2 — Double Tap / black car", "do": ["Follow the wolf to the Double Tap area, feed it souls again, then pick up the second bone."], "look": "Second dig stop near the black German car.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/dig_2.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/063_4f5f8bd838.webp"}, {"id": "WF-08C", "title": "Dig site 3 — Undercroft PaP side", "do": ["Follow the wolf to the Undercroft, feed the third dig site, then pick up the final bone."], "look": "Third dig stop near the Undercroft PaP location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/dig_3.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/064_e8462f8bd7.webp"}, {"id": "WF-09", "title": "Wolf sits at the final wall", "do": ["After all three bones, follow the wolf until it sits facing a wall near the Juggernog side of the Undercroft."], "look": "The wolf sitting and looking at the target wall.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/dog_sitting.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/065_4d09154f98.webp"}, {"id": "WF-10", "title": "Low gravity — shoot the Wolf symbol while wall-running", "do": ["Wait for low gravity.", "Wall-run across the wall the wolf faces and shoot the glowing two-wolf-head symbol without touching the ground."], "look": "The glowing Wolf symbol visible during the wall-run.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/wolf_symbols.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/066_c2642d752d.webp"}, {"id": "WF-11", "title": "Land on the spawned platform", "do": ["A platform appears from the wall.", "Land on it and interact with the hole to place the bones."], "look": "The temporary wall platform.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/platform.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/067_2274bc7975.webp"}, {"id": "WF-12", "title": "Take the reforged Wolf Arrow", "do": ["After the skeleton forms, interact and take the reforged arrow it gives you."], "look": "The completed Wolf Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/reformed_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/068_22e218bfa3.webp"}, {"id": "WF-13", "title": "Forge the Wolf Bow", "do": ["Place the arrow in the Wolf box by the Pyramid, feed it zombie souls, then trade in the base bow when the arrow glows."], "look": "The Wolf Bow box / glowing arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/wolf_bow/glowing_arrow_in_box.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/069_69d9739c41.webp"}]}, {"title": "Void Bow — Kreegakaleet lu Gosata'ahm", "summary": "Purple wall → melee tile → 6 skulls + 6 crawlers → hear 3 names → match knight symbols → collect symbols → shoot code → forge.", "accent": "void", "steps": [{"id": "VD-01", "title": "Shoot the purple symbol above the Gatehouse", "do": ["In the Double Tap / Gatehouse area, shoot the purple wall/ceiling symbol above the gate with the base bow."], "look": "The purple symbol breaks open and drops the Void Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/purple_arrow_wall.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/070_4d77c1a5d8.webp"}, {"id": "VD-02", "title": "Pick up the broken Void Arrow", "do": ["Take the purple arrow from the floor to start the Void quest."], "look": "The broken Void Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/broken_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/071_5f8cdbe3cf.webp"}, {"id": "VD-03", "title": "Bow-melee a zombie on the glowing purple tile", "do": ["In the circular Trophy Room below the Clock Tower, put a zombie on the center purple tile and kill it using the BOW'S melee attack."], "look": "The glowing square tile in the middle of the room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/glowing_tile.webp", "tag": "bow", "warn": "Use the bow melee. A normal knife/Bowie Knife does not satisfy this step.", "note": "", "source": "MMMR Kennedy", "asset": "assets/072_b9e31e2c71.webp"}, {"id": "VD-04", "title": "Interact with the revealed urn", "do": ["After the tile breaks, interact with the urn underneath so it floats into the air."], "look": "The Void urn in the center room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/urn.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/073_5620a8849f.webp"}, {"id": "VD-05A", "title": "Keeper Skull 1 — Upper Courtyard", "do": ["Pick up the skull on the window sill / stairs leading toward the Church."], "look": "Upper Courtyard Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_upper_courtyard.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/074_9e123d930d.webp"}, {"id": "VD-05B", "title": "Keeper Skull 2 — Mule Kick", "do": ["Pick up the skull on the broken wall/ledge in the Mule Kick tunnel."], "look": "Mule Kick Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_mule_kick.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/075_d64079d415.webp"}, {"id": "VD-05C", "title": "Keeper Skull 3 — Double Tap", "do": ["Pick up the skull on the broken ledge/wall beside Double Tap."], "look": "Gatehouse Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_double_tap.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/076_a9521ddd36.webp"}, {"id": "VD-05D", "title": "Keeper Skull 4 — Samantha's Room", "do": ["Pick up the skull inside the open toy box left of the bed."], "look": "Samantha's Room Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_sams_room.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/077_d63b44eaaf.webp"}, {"id": "VD-05E", "title": "Keeper Skull 5 — Teleporter sink", "do": ["Pick up the skull in the sink to the right of the Undercroft Teleporter."], "look": "Teleporter-room Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_sink.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/078_3a07791fe0.webp"}, {"id": "VD-05F", "title": "Keeper Skull 6 — Rocket Pad truck", "do": ["Pick up the skull from the back of the truck on the left side of the Rocket Pad."], "look": "Rocket Pad Keeper Skull.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/skull_truck.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/079_e73507985d.webp"}, {"id": "VD-06", "title": "Feed 6 crawlers to the skulls", "do": ["Return to the Trophy Room.", "Create six crawlers and lead them into the purple circle; the floating skulls will eat them."], "look": "Six floating Keeper skulls around the purple ritual circle. Bring crawlers into the circle one at a time so the skulls consume them.", "image": "https://www.callofdutyzombies.com/uploads/monthly_2021_01/dev11.png.4ab3ecb54d3b1968fe0cec901f138be4.png", "tag": "bow", "warn": "", "note": "Crawl Space is an easy way to make crawlers if you have it equipped.", "source": "CallOfDutyZombies.com", "asset": "assets/080_f349e5cdd7.png"}, {"id": "VD-07", "title": "Listen to the urn's 3 words — IN ORDER", "do": ["After all six crawlers are consumed, shoot the floating urn with the Wrath of the Ancients.", "Listen carefully and write down the three spoken crest names IN ORDER."], "look": "The floating urn reacts when shot, then speaks three names. Possible names: Crown, Stag, Heart, Door, Griffin, Horn.", "image": "https://www.callofdutyzombies.com/uploads/monthly_2021_01/dev12.png.0acdc012bcdd9eb3445e6a23824582d4.png", "tag": "bow", "warn": "", "note": "If you miss the names, shoot the urn again to make it repeat them. Subtitles make this much easier.", "source": "CallOfDutyZombies.com", "asset": "assets/081_2cea3e86e5.png"}, {"id": "VD-08", "title": "Go to Knight's Hall and match each word", "do": ["In the corridor between Power and Samantha's Room, find the Knight statues whose base icon matches each of the three spoken names."], "look": "Knight's Hall / statue bases.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/knight_room.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/082_a76fc68feb.webp"}, {"id": "VD-09", "title": "Record each Knight's Apothicon symbol", "do": ["Interact with the three matching Knight statues IN THE SAME WORD ORDER and note the purple Apothicon symbol each reveals."], "look": "A revealed Apothicon symbol above the Knight.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/apothicon_symbol.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/083_87f36bffe2.webp"}, {"id": "VD-10", "title": "Collect the required purple symbol drops", "do": ["Kill zombies anywhere until the matching purple rune drops appear.", "Pick up the runes you need."], "look": "A purple symbol drop on the ground.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/symbol_drop.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/084_428efd6015.webp"}, {"id": "VD-11", "title": "Shoot the 3 floor symbols in spoken-word order", "do": ["Back in the Trophy Room, shoot the floor symbols corresponding to the three Knight outputs, preserving the original word order."], "look": "The available purple floor symbols.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/floor_symbols.webp", "tag": "bow", "warn": "Wrong order triggers the skull attack. Leave the room and retry; shoot the urn again if you need the word order.", "note": "", "source": "MMMR Kennedy", "asset": "assets/085_9b6e481bb4.webp"}, {"id": "VD-12", "title": "Take the reforged Void Arrow", "do": ["When the voice confirms the name, interact with the beam of light to receive the reforged arrow."], "look": "The purple beam / completed arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/beam_of_light.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/086_19d2f93531.webp"}, {"id": "VD-13", "title": "Forge the Void Bow", "do": ["Place the arrow in the Void box by the Pyramid, feed it souls, then trade in the base bow once the arrow glows."], "look": "The Void box / fully charged Void Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/void_bow/glowing_void_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/087_5492553950.webp"}]}, {"title": "Fire Bow — Kreeaho'ahm nal Ahmhogaroc", "summary": "Clock Tower wall → timed Rocket Pad target → 3 airborne circles → fireplace symbol → magma path → Death Ray fireball → forge.", "accent": "fire", "steps": [{"id": "FR-01", "title": "Shoot the marked Clock Tower wall", "do": ["At the top of the Clock Tower, shoot the marked wall with the base bow to break it open."], "look": "The marked wall / Fire Arrow starting point.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/arrow_wall.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/088_2159edf739.webp"}, {"id": "FR-02", "title": "Pick up the broken Fire Arrow", "do": ["Take the arrow from the opened Clock Tower wall."], "look": "The broken Fire Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/broken_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/089_217cfc33a0.webp"}, {"id": "FR-03", "title": "Rocket Test — shoot the glowing orange rock FAST", "do": ["Go to the Rocket Test Pad and wait safely in the Teleporter tunnel during a test.", "As soon as the doors reopen, run out, look right, and shoot the glowing orange rock above the VMP wallbuy."], "look": "The temporary glowing orange target on the structure.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/glowing_rock.webp", "tag": "bow", "warn": "You only have a few seconds after the Rocket Test. If the glow disappears, wait for another test.", "note": "", "source": "MMMR Kennedy", "asset": "assets/090_66b46ddde7.webp"}, {"id": "FR-04", "title": "Confirm the fireball above the Death Ray", "do": ["A successful hit sends a ball of fire toward the castle where it settles above the Bastion / Death Ray."], "look": "The large fireball hovering above the castle.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/big_fire_ball.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/091_0bf4f15cc7.webp"}, {"id": "FR-05A", "title": "Airborne circle 1 — Gatehouse / Double Tap", "do": ["Launch from a Wundersphere and shoot this ritual circle WHILE AIRBORNE.", "A successful hit leaves it glowing orange."], "look": "Circle on the ground near Double Tap.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/circle_gatehouse.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/092_91db807338.webp"}, {"id": "FR-05B", "title": "Airborne circle 2 — Death Ray", "do": ["While airborne from a Wundersphere, shoot the ritual circle between the Death Ray trap and Wundersphere."], "look": "Circle on the Bastion / Death Ray platform.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/circle_death_ray.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/093_02c661748e.webp"}, {"id": "FR-05C", "title": "Airborne circle 3 — Clock Tower / Wunderfizz", "do": ["While airborne from a Wundersphere, shoot the ritual circle outside the Clock Tower near Wunderfizz."], "look": "Circle in front of the Clock Tower / Wunderfizz area.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/circle_clocktower.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/094_42753ed46b.webp"}, {"id": "FR-06", "title": "Charge all 3 circles", "do": ["Stand inside each activated circle and get about 10 zombie kills while YOU are standing in the circle.", "Repeat for all three."], "look": "A completed circle sends a beam of fire into the sky.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/circle_hit.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/095_903f5eb3fc.webp"}, {"id": "FR-07", "title": "Read the Clock Tower Keeper symbol", "do": ["Return to the Clock Tower and interact with the mechanism where you got the arrow.", "The gears reveal a Keeper symbol."], "look": "Clock mechanism and displayed Keeper symbol.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/keeper_symbol.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/096_0d1b40f106.webp"}, {"id": "FR-08A", "title": "Possible fireplace — Church", "do": ["Check the fireplace at the back of the Church near Speed Cola / workbench for the matching symbol."], "look": "Church fireplace.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/fireplace_church.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/097_b03e43accf.webp"}, {"id": "FR-08B", "title": "Possible fireplace — Richtofen's Room", "do": ["Check the room across from Samantha's Room for the matching symbol."], "look": "Richtofen's Room fireplace.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/fireplace_richtofens_room.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/098_6505c4bfa9.webp"}, {"id": "FR-08C", "title": "Possible fireplace — Lower Courtyard", "do": ["Check the room up the stairs from the first Dragon / Vesper wallbuy for the matching symbol."], "look": "Lower Courtyard / supply-room fireplace.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/fireplace_supply_depot.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/099_9fefcb5bb2.webp"}, {"id": "FR-09", "title": "Move the magma rock into the correct fireplace", "do": ["Only one ritual circle remains lit.", "Stand inside it and fire a CHARGED shot toward the correct fireplace.", "Stand on the spawned magma rock and repeat, moving it step-by-step into the fireplace."], "look": "A magma rock spawned by your charged shot.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/magma_rock.webp", "tag": "bow", "warn": "You have a maximum of 4 placements/shots to reach the fireplace.", "note": "", "source": "MMMR Kennedy", "asset": "assets/100_7e48c3641f.webp"}, {"id": "FR-10", "title": "Interact with the glowing fireplace", "do": ["When the magma reaches the correct fireplace, it glows reddish-pink.", "Interact with the fire to place your arrow."], "look": "The fireplace with pink/red fire.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/pink_fire.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/101_2fa07710a5.webp"}, {"id": "FR-11", "title": "Interact with the lowered Death Ray fireball", "do": ["Return to the Death Ray.", "Move around and interact with the now-lowered giant fireball until it triggers."], "look": "The fireball lowered to interaction height.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/ball_of_fire_lowered.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/102_dd08431438.webp"}, {"id": "FR-12", "title": "Pick up the reforged Fire Arrow", "do": ["The fireball explodes and leaves the reforged arrow.", "Pick it up."], "look": "The reforged Fire Arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/reformed_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/103_9ed4ff4a63.webp"}, {"id": "FR-13", "title": "Forge the Fire Bow", "do": ["Place the arrow in the Fire box by the Pyramid, feed it zombie souls, then trade in the base bow when the arrow glows."], "look": "The Fire box / fully charged arrow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/glowing_fire_arrow.webp", "tag": "bow", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/104_ca8ef53649.webp"}]}]}, {"id": "main", "number": "4", "title": "My Brother's Keeper — Main Quest", "subtitle": "Corrected order: BASE-bow prongs → UPGRADED-bow Wisps → time travel → Death Ray → Vril Device → Keeper → Boss", "kind": "required", "groups": [{"title": "Before You Start the Main Quest", "summary": "You need Power, the base bow, the required number of upgraded bows, and eventually the Ragnarok DG-4.", "steps": [{"id": "MQ-00", "title": "Bow requirement — choose the correct game setting", "do": ["RANKED: solo needs 1 upgraded bow; 2 players need 2; 3 players need 3; 4 players need all 4.", "LOCAL or UNRANKED requires all 4 regardless of player count."], "look": "Set the lobby to Ranked if you want the normal player-count requirement.", "image": "", "tag": "required", "warn": "This is a common reason the Keeper ritual will not progress.", "note": "", "source": "MMMR Kennedy"}]}, {"title": "Phase 1 — Charge the Teleporter and Hunt the 4 Wisps", "summary": "IMPORTANT: Six prongs = BASE bow. Wisps = UPGRADED bow.", "steps": [{"id": "MQ-01", "title": "Switch back to the BASE Wrath of the Ancients", "do": ["If you are holding an upgraded bow, place it back in its altar/box and pick the base Wrath of the Ancients back up from its chest."], "look": "You should be holding the unupgraded bow before approaching the Teleporter.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/chest.webp", "tag": "required", "warn": "This fixes the mistake in the previous version of the site: the prongs are NOT shot with the upgraded bow.", "note": "", "source": "MMMR Kennedy", "asset": "assets/011_a3a96b507f.webp"}, {"id": "MQ-02", "title": "Shoot all 6 Teleporter prongs with the BASE bow", "do": ["In the Undercroft Teleporter room, shoot each of the six prongs around the top of the Teleporter with the Wrath of the Ancients."], "look": "The six prongs surrounding the top of the Teleporter.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/teleporter.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/105_6b442dc167.webp"}, {"id": "MQ-03", "title": "Confirm each prong glows", "do": ["A prong glows after it is hit.", "Once all six are done, a Margwa-like growl plays and the glow stops."], "look": "A correctly hit prong glowing gold/yellow.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/glowing_prong.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/106_41a1ebec43.webp"}, {"id": "MQ-04", "title": "Immediately pick up an UPGRADED bow", "do": ["After the Margwa-like growl, immediately swap the base Wrath of the Ancients for ANY completed elemental bow.", "Use that upgraded bow for the Wisp hunt."], "look": "Pick ONE: Storm / Lightning, Void, Fire, or Wolf. The next four Wisp shots must be made with an upgraded bow.", "image": "", "tag": "required", "warn": "", "note": "The previous Wisp screenshot was confusing here. This is a transition step, so the guide now shows a four-bow choice graphic instead of implying that you must use one specific bow.", "source": "MMMR Kennedy / custom guide graphic", "visual": "bow_choice"}, {"id": "MQ-W1", "title": "Possible Wisp 1 — Church clock", "do": ["Check the clock above the Dragon head in Mission Control / Church.", "Shoot it only if it is visibly electrified."], "look": "Electrified Church clock.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_church.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/107_2f142f7d1b.webp"}, {"id": "MQ-W2", "title": "Possible Wisp 2 — Church radio by M8A7", "do": ["Check the radio equipment to the right of the M8A7 wallbuy.", "Shoot only the active/electrified object."], "look": "Electrified radio equipment.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_m8a7.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/108_b4e465cbcf.webp"}, {"id": "MQ-W3", "title": "Possible Wisp 3 — Upper Courtyard clock", "do": ["Check the clock in the Barracks / Upper Courtyard near the stairs up from the Kuda wallbuy."], "look": "Electrified Upper Courtyard clock.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_clock_barracks.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/109_65915ae1c9.webp"}, {"id": "MQ-W4", "title": "Possible Wisp 4 — Power Room telephone", "do": ["Check the telephone near the Power Switch."], "look": "Electrified telephone.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_power.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/110_d5cf2a7381.webp"}, {"id": "MQ-W5", "title": "Possible Wisp 5 — globe near Samantha's Room", "do": ["Check the globe in the Living Quarters near Samantha's Room."], "look": "Electrified globe.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_living_quarters.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/111_1d5fc408fc.webp"}, {"id": "MQ-W6", "title": "Possible Wisp 6 — boxes above Double Tap", "do": ["Check the boxes in the Gatehouse room above Double Tap, left of the workbench."], "look": "Electrified object on/near the boxes.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_gatehouse.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/112_3e83cc0f98.webp"}, {"id": "MQ-W7", "title": "Possible Wisp 7 — back of black car", "do": ["Check the back/wheel area of the black car near Double Tap."], "look": "Electrified car object.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_car.webp", "tag": "wisp", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/113_c1937a27f9.webp"}, {"id": "MQ-W8", "title": "Possible Wisp 8 — Spawn / Quick Revive", "do": ["Check beside Quick Revive in Spawn."], "look": "Electrified Spawn object.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_spawn.webp", "tag": "wisp", "warn": "Only ONE Wisp is active at a time. Shooting a possible location that is NOT currently electrified fails the sequence.", "note": "", "source": "MMMR Kennedy", "asset": "assets/114_4b4c4c50d1.webp"}, {"id": "MQ-05", "title": "After 4 correct Wisps, use the purple Teleporter", "do": ["Once four Wisps have been hit, return to the Undercroft Teleporter.", "It should glow purple.", "All players must enter and activate it."], "look": "Purple glow on the Teleporter pad.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/purple_tele.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/115_4a64a62463.webp"}]}, {"title": "Phase 2 — Time Travel #1: Fuses, Soul Canister, Safe Code", "summary": "You have limited time in the past. Grab both quest items and write the 3-symbol code down.", "steps": [{"id": "MQ-06", "title": "Pick up the Death Ray Fuses", "do": ["In the past Teleporter room, grab the Death Ray Fuses from the side of the room."], "look": "The small fuse pickup highlighted in the past room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/fuses.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/116_d0d908561b.webp"}, {"id": "MQ-07", "title": "Pick up the Soul Canister", "do": ["Grab the blue Soul Canister before the time-travel sequence ends."], "look": "The glowing canister in the past room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/canister.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/117_e9d02598cc.webp"}, {"id": "MQ-08", "title": "Write down Dr. Groph's 3-symbol safe code", "do": ["Watch the safe display as Dr.", "Groph enters the code.", "Record the three symbols from TOP to BOTTOM."], "look": "The safe's three-symbol display.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/safe_code.webp", "tag": "required", "warn": "The code changes each time you time travel. If you enter it wrong later, you must repeat the Wisp/time-travel sequence.", "note": "", "source": "MMMR Kennedy", "asset": "assets/118_9e9c4186b0.webp"}]}, {"title": "Phase 3 — Open the Safe", "summary": "Fuse the Death Ray → Protect → enter code → take the safe contents.", "steps": [{"id": "MQ-09", "title": "Insert the Fuses into the Death Ray console", "do": ["Back in the present, insert the fuses into the side of the Death Ray console.", "The Death Ray must have been activated at least once during the match."], "look": "Fuse slot / sparking side of the Death Ray console.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_fuse.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/119_88fceb479e.webp"}, {"id": "MQ-10", "title": "Set the Death Ray to PROTECT", "do": ["Go to the opposite side of the Death Ray console and switch its setting from Destroy to Protect."], "look": "The Protect / Destroy selector.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_switch.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/120_b353590564.webp"}, {"id": "MQ-11", "title": "Enter Groph's code at the Clock Tower terminal", "do": ["At the computer terminal near the Clock Tower, input the three symbols in the same top-to-bottom order you recorded."], "look": "The four-symbol input terminal.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/simon_says_clocktower.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/121_808a595300.webp"}, {"id": "MQ-12", "title": "Open the Teleporter-room safe and take EVERYTHING", "do": ["Return to the Undercroft Teleporter room.", "The safe is now open; interact with it to take the coils/quest items inside."], "look": "The safe open in the Teleporter room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/open_safe.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/122_a3aaae2ee2.webp"}]}, {"title": "Phase 4 — Tesla Coils, Simon Says, Shoot Down Dempsey's Rocket", "summary": "Install coils → Destroy → both Simon Says → back to Protect → green button → GET THE VRIL GENERATOR.", "steps": [{"id": "MQ-13", "title": "Install Tesla Coil / Fuse — Pylon 1", "do": ["Insert one of the safe components into the missing slot on the first Death Ray pylon."], "look": "First pylon beside the Death Ray.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/pylon_1.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/123_c85f3bca4d.webp"}, {"id": "MQ-14", "title": "Install Tesla Coil / Fuse — Pylon 2", "do": ["Insert the second component into the other Death Ray pylon."], "look": "Second pylon on the other side.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/pylon_2.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/124_4b20ad92ec.webp"}, {"id": "MQ-15", "title": "Switch the Death Ray back to DESTROY", "do": ["Use the Protect/Destroy selector and put the machine back on Destroy before doing Simon Says."], "look": "The same selector on the Death Ray console.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_switch.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/120_b353590564.webp"}, {"id": "MQ-16", "title": "Simon Says #1 — Clock Tower terminal", "do": ["Start the memory game at the Clock Tower terminal.", "Memorize where the four symbols appear, then press the matching smaller screen each time the main display shows a symbol."], "look": "Clock Tower Simon Says terminal.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/simon_says_clocktower.webp", "tag": "required", "warn": "Hellhounds spawn continuously while the memory game is active.", "note": "", "source": "MMMR Kennedy", "asset": "assets/121_808a595300.webp"}, {"id": "MQ-17", "title": "Simon Says #2 — Rocket Test Pad terminal", "do": ["Complete the same memory game at the Rocket Test Pad terminal near the Pack-a-Punch location."], "look": "Rocket Pad Simon Says terminal.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/simon_says_rocket_pad.webp", "tag": "required", "warn": "If you fail the second terminal, both terminals reset. Waiting until a Rocket Test has just finished makes this safer.", "note": "", "source": "MMMR Kennedy", "asset": "assets/125_104fe62c7f.webp"}, {"id": "MQ-18", "title": "Confirm both Death Ray orbs are glowing", "do": ["A completed Simon Says terminal makes one Death Ray orb glow.", "After both games, both sides should be ready."], "look": "Brightly glowing Death Ray orb.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_orb_glow.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/126_b4c49e0fe8.webp"}, {"id": "MQ-19", "title": "IMPORTANT — set the Death Ray BACK TO PROTECT", "do": ["Return to the Death Ray console and switch from Destroy back to Protect before firing the rocket-down sequence."], "look": "Protect / Destroy selector.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_switch.webp", "tag": "required", "warn": "The Steam guide and Zombies Codex explicitly include this Protect switch before pressing the green button.", "note": "", "source": "MMMR Kennedy", "asset": "assets/120_b353590564.webp"}, {"id": "MQ-20", "title": "Press the glowing green button", "do": ["Press the green button on the rear of the Death Ray console.", "The Tesla coils fire into the sky and destroy the rocket."], "look": "The glowing green activation button / Death Ray firing.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/death_ray_button.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/127_622c77b513.webp"}, {"id": "MQ-21", "title": "Find Dempsey's crashed cryopod", "do": ["Go to the Upper Courtyard / second courtyard where the rocket debris and Dempsey's cryopod crash."], "look": "Dempsey's pod near the Electric Trap doorway.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/dempsey_pod.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/128_406aa5d817.webp"}, {"id": "MQ-22", "title": "PICK UP THE VRIL GENERATOR / GOLDEN ROD", "do": ["Immediately approach the crash and pick up the Vril Generator (also called the Golden Rod in newer guides) from the wreckage."], "look": "The Golden Rod / Vril Generator in the crashed-pod debris.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/golden_rod.webp", "tag": "required", "warn": "Do not skip this. You need this exact item later at the Knight's Tomb to spawn the Ghost Keeper.", "note": "", "source": "MMMR Kennedy", "asset": "assets/129_21568984f9.webp"}]}, {"title": "Phase 5 — Time Travel #2 and Keeper Stone", "summary": "The prongs were a one-time activation. When the next Wisp set appears, shoot 4 with an upgraded bow and use the purple Teleporter again.", "steps": [{"id": "MQ-23", "title": "Repeat the 4-Wisp hunt for the second time travel", "do": ["If the Teleporter is no longer purple, advance to the next round and repeat the four-Wisp hunt using an upgraded bow.", "The possible locations are the same eight shown above."], "look": "An active Wisp looks electrically charged.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/wisp_example.webp", "tag": "required", "warn": "", "note": "You normally do NOT need to shoot the six Teleporter prongs again; after the first activation, new Wisps spawn at the start of rounds until the second time travel.", "source": "MMMR Kennedy", "asset": "assets/130_108729f5c8.webp"}, {"id": "MQ-24", "title": "In the past, interact with the machine by the Kronorium", "do": ["After teleporting to the past again, interact with the machine to the left of the Kronorium / Teleporter."], "look": "The machine beside the Kronorium.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/machine.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/131_a3aaf8d9e6.webp"}, {"id": "MQ-25", "title": "Pick up the Keeper Stone tablet", "do": ["The machine opens a crate near the entrance.", "Take the ornate stone tablet from the box."], "look": "The opened crate / Keeper Stone tablet.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/stone_tablet.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/132_9cfa86b3c2.webp"}]}, {"title": "Phase 6 — Spawn and Charge the Ghost Keeper", "summary": "Insert Vril Generator → follow Keeper → 4 ritual circles → place Keeper Stone at Double Tap → Soul Canister at Pyramid.", "steps": [{"id": "MQ-26", "title": "Insert the Vril Generator / Golden Rod into the Knight's Tomb", "do": ["Go to the Knight's Tomb in front of the base-bow chest and insert the Vril Generator / Golden Rod."], "look": "Knight's Tomb socket.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/knights_tomb.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/133_9f697064de.webp"}, {"id": "MQ-27", "title": "Follow the Ghost Keeper", "do": ["A spectral Keeper appears.", "Follow it until it stops and creates a ritual circle."], "look": "The Ghost Keeper traveling through the map.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/ghost_keeper.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/134_e28a988bbc.webp"}, {"id": "MQ-28A", "title": "Possible Keeper circle — Upper Courtyard", "do": ["If the Keeper stops near the Upper Courtyard Wundersphere, stand inside the circle and kill zombies with the bow matching the circle's glow."], "look": "Upper Courtyard Keeper circle.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/keeper_courtyard.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/135_2092a8642c.webp"}, {"id": "MQ-28B", "title": "Possible Keeper circle — Mule Kick tunnel", "do": ["If the Keeper stops in front of Mule Kick, fill the circle with kills from the matching elemental bow."], "look": "Mule Kick Keeper circle.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/keeper_mule_kick_tunnel.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/136_9c6e226b24.webp"}, {"id": "MQ-28C", "title": "Possible Keeper circle — Gatehouse / Double Tap", "do": ["If the Keeper stops near Double Tap, fill the circle with the correct elemental bow."], "look": "Gatehouse Keeper circle.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/keeper_gatehouse.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/137_0938e7bd83.webp"}, {"id": "MQ-28D", "title": "Possible Keeper circle — Knight's Hall / Power side", "do": ["The fourth stop can be near Knight's Hall / Power.", "Again, use the elemental bow matching the circle color."], "look": "Fourth Keeper ritual area.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/keeper_knights_hall.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/138_e2fd8a7e4f.webp"}, {"id": "MQ-29", "title": "Place the Keeper Stone when the Keeper stops by Double Tap", "do": ["At the Double Tap / Gatehouse stop, interact with the wall slot to the left of the Keeper and insert the stone tablet from the second time travel."], "look": "The Keeper Stone wall slot.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/where_to_place_tablet.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/139_45c909e06a.webp"}, {"id": "MQ-30", "title": "Match the correct bow color at every circle", "do": ["Kill from inside the circle using the bow matching its glow:", "Storm = dark blue", "Void = purple", "Fire = orange/red", "Wolf = light blue"], "look": "If the correct bow is being used, souls visibly leave killed zombies and travel into the Keeper.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/keeper_colors.webp", "tag": "required", "warn": "If kills are not feeding the Keeper, the bow does not match the current circle.", "note": "", "source": "MMMR Kennedy", "asset": "assets/140_0dc505240a.webp"}, {"id": "MQ-31", "title": "Place the Soul Canister at the new Pyramid corner", "do": ["After the Keeper completes the route and returns underground, place the Soul Canister you took during Time Travel #1 at the indicated Pyramid point."], "look": "The glowing canister placement point near the Pyramid.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/canister_pyramid.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/141_fce0d56f72.webp"}]}, {"title": "Phase 7 — Enter and Defeat the Corrupted Keeper", "summary": "Fresh shield + ammo + Ragnarok recommended before starting. This is the point of no return for the fight.", "steps": [{"id": "MQ-32", "title": "All players stand on separate blue Pyramid plates", "do": ["Make sure every player has a Ragnarok DG-4.", "Stand on the required glowing blue anti-gravity plates around the Pyramid."], "look": "The blue floor plates around the Pyramid.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/boss_blue_tiles.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/142_1e8e7fd36b.webp"}, {"id": "MQ-33", "title": "Plant the Ragnaroks together", "do": ["Plant the Ragnarok DG-4s simultaneously on the active plates to enter the boss arena."], "look": "Ragnarok placement on the glowing plate.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/where_to_plant_rags.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/143_f645ec2e9d.webp"}, {"id": "MQ-34", "title": "Boss cue — white/lightning wisp appears under Keeper", "do": ["Survive the skeletons while watching the Keeper.", "When he teleports to the center and the bright energy/wisp appears below him, prepare the Ragnarok."], "look": "The center-arena stun cue.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/boss_wisp.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/144_a25e590444.webp"}, {"id": "MQ-35", "title": "Plant Ragnarok under the Keeper", "do": ["Place the Ragnarok on the center energy point to interrupt the Keeper's lethal attack and expose the glowing symbol on his chest."], "look": "Keeper stunned above the planted Ragnarok.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/boss_ragnarok.webp", "tag": "required", "warn": "If you miss the stun, hide behind a pillar before the Keeper releases the wipe attack.", "note": "", "source": "MMMR Kennedy", "asset": "assets/145_33417bf3eb.webp"}, {"id": "MQ-36", "title": "Damage the glowing chest", "do": ["Unload into the Keeper's exposed chest symbol until he disappears.", "Kill the Panzers between phases, then repeat the stun/damage cycle."], "look": "The bright exposed chest weak point.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/boss_chest.webp", "tag": "required", "warn": "", "note": "Repeat for roughly three damage phases.", "source": "MMMR Kennedy", "asset": "assets/146_fb0e750baa.webp"}, {"id": "MQ-37", "title": "Return to the Undercroft and charge the Summoning Key", "do": ["After the Keeper dies and you return, interact with the Summoning Key at the Pyramid, then take it back."], "look": "Summoning Key at the Pyramid.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/summoning_key_pyramid.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/147_5161079c91.webp"}, {"id": "MQ-38", "title": "Place the Summoning Key at the Clock Tower terminal", "do": ["Take the charged key to the Clock Tower terminal where you entered the safe code and interact to finish the quest."], "look": "Final terminal / key placement.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/main_ee/final_computer.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/148_7f8c89f3c8.webp"}]}]}, {"id": "side", "number": "5", "title": "Side Easter Eggs & Extras", "subtitle": "Every side Easter egg starts with WHAT IT DOES, then the steps. Dead Again is now its own section.", "kind": "optional", "groups": [{"title": "Disco Room Party", "summary": "Stop the globe's moon and rocket close together in Mission Control.", "steps": [{"id": "SE-D1", "title": "Find the globe in Mission Control", "do": ["In the Church / Mission Control room, locate the globe with the small moon and rocket orbiting it."], "look": "The moving moon and rocket around the globe.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/disco_room/rocket_and_moon.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/149_42ebe28475.webp"}, {"id": "SE-D2", "title": "Shoot the moon, then the rocket beside it", "do": ["Shoot the moon to stop it.", "Before it resumes moving, shoot the rocket when it is close beside the moon."], "look": "Both pieces stopped close together.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/disco_room/rocket_and_moon.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/149_42ebe28475.webp"}, {"id": "SE-D3", "title": "Confirm the Disco Room", "do": ["If timed correctly, the room gets a disco-light effect and party music for about a minute."], "look": "Disco lighting in Mission Control.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/disco_room/disco.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/150_5148d0a134.webp"}], "effect": "Cosmetic / fun effect: Mission Control becomes a disco with party lighting and music for about 1 minute. No combat buff."}, {"title": "Panzer Claw Helmet", "summary": "Shoot down each of 3 claws, lure a Panzer under/in front of it, then trigger the claw to kill the Panzer. Each claw can be used once.", "steps": [{"id": "SE-PC1", "title": "Claw 1 — Knight's Hall / HVK side", "do": ["Shoot the hanging claw above the zombie spawn near the HVK-30 area so it drops into its usable position."], "look": "First Panzer claw location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/panzer_claw_helmet/claw_hvk.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/151_7a9d887e34.webp"}, {"id": "SE-PC2", "title": "Claw 2 — Lower Courtyard walkway", "do": ["Shoot down the claw along the long walkway on the Lower Courtyard / Wunderfizz-side route."], "look": "Second Panzer claw location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/panzer_claw_helmet/claw_lower_courtyard.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/152_3b4f2d9c38.webp"}, {"id": "SE-PC3", "title": "Claw 3 — Mule Kick tunnel", "do": ["Shoot down the claw embedded in the rock just inside the Spawn-to-Mule-Kick tunnel."], "look": "Third Panzer claw location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/panzer_claw_helmet/claw_tunnel.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/153_d71077d869.webp"}, {"id": "SE-PC4", "title": "Kill one Panzer with each claw", "do": ["For each claw: lure a Panzer directly into position, then shoot/melee the claw again to make it strike and kill the Panzer."], "look": "Use all three claws successfully across Panzer rounds.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/panzer_claw_helmet/claw_lower_courtyard.webp", "tag": "optional", "warn": "You effectively get one kill attempt per claw, so line the Panzer up carefully.", "note": "", "source": "MMMR Kennedy", "asset": "assets/152_3b4f2d9c38.webp"}, {"id": "SE-PC5", "title": "Helmet awarded automatically", "do": ["After all three claw kills, the Panzer Claw Helmet is equipped automatically."], "look": "In solo, look at your character's shadow to confirm the helmet.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/panzer_claw_helmet/shadow.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/154_a60508e75d.webp"}], "effect": "Permanent defensive reward for the match: halves Panzersoldat damage from melee, the flamethrower, and Shock Charge attacks."}, {"title": "Plunger Melee Easter Egg", "summary": "Requires the base bow and Ragnarok DG-4. Clock at 9:35 → special wall-run/time travel → pick up Plunger.", "steps": [{"id": "SE-PL1", "title": "Open the Fire-Bow Clock Tower wall", "do": ["Shoot/open the marked Fire Bow wall at the top of the Clock Tower so you can access the clock mechanism."], "look": "The Fire Bow wall / clock mechanism area.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/wrath_of_the_ancients/fire_bow/arrow_wall.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/088_2159edf739.webp"}, {"id": "SE-PL2", "title": "Place the Ragnarok at the clock gears", "do": ["Place the Ragnarok DG-4 in front of the clock gears and use the nearby lever to start/stop the clock."], "look": "The Clock Tower lever used for the Plunger sequence.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/plunger/lever.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/155_8c51c5e2ea.webp"}, {"id": "SE-PL3", "title": "Stop the outside clock at about 9:35", "do": ["Use the lever to stop the Clock Tower's exterior clock at 9:35.", "Wait for the confirmation effect."], "look": "Clock face at the target time.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/plunger/clock.webp", "tag": "optional", "warn": "", "note": "Some older guides describe the successful display as landing around 9:36 because of the animation timing; aim for 9:35.", "source": "MMMR Kennedy", "asset": "assets/156_e5418e8a10.webp"}, {"id": "SE-PL4", "title": "Wall-run the special circular symbol", "do": ["Return to the Undercroft during low gravity and repeatedly wall-run across the circular symbol near the workbench until the time-travel effect triggers."], "look": "Circular wall-run symbol.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/plunger/wallrun_circle.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/157_14b4ee4204.webp"}, {"id": "SE-PL5", "title": "Pick up the Plunger in the past", "do": ["In the past room, grab the Plunger from the table to the right of the Teleporter."], "look": "Plunger pickup on the table.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/plunger/plunger.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/158_c927c8962b.webp"}, {"id": "SE-PL6", "title": "Power the Plunger by killing a Panzer", "do": ["Kill a Panzersoldat by any method WHILE HOLDING the Plunger.", "The Plunger catches fire for 60 seconds."], "look": "While the Plunger is burning, any melee hit is an instant kill — including another Panzersoldat.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/plunger/flaming_plunger.webp", "tag": "optional", "warn": "", "note": "Only the player who gets the Panzer kill receives the charge. Additional Panzer kills add more time.", "source": "MMMR Kennedy", "asset": "assets/159_531b4f5552.webp"}], "effect": "Secret melee weapon: after you kill a Panzer while holding the Plunger, it burns for 60 seconds and one-hit kills anything you melee — including another Panzer. More Panzer kills can add more time."}, {"title": "Skeleton Zombies", "summary": "Requires In Plain Sight + base Wrath of the Ancients. Shoot 3 skulls while IPS is active.", "steps": [{"id": "SE-SK1", "title": "Equip In Plain Sight", "do": ["Have In Plain Sight in your GobbleGum loadout and activate it when you are ready to see/shoot the hidden skulls."], "look": "The skull targets are only visible during the effect.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/skeleton_mode/in_plain_sight.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/160_079f63fdcc.webp"}, {"id": "SE-SK2", "title": "Hidden skull — Mule Kick area", "do": ["While In Plain Sight is active, shoot the hidden skull target in the Mule Kick area with the base bow."], "look": "Mule Kick skull target.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/skeleton_mode/skull_mule_kick.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/161_ec464a0b82.webp"}, {"id": "SE-SK3", "title": "Hidden skull — Upper Courtyard stained glass", "do": ["Shoot the hidden skull at the Upper Courtyard / stained-glass area."], "look": "Upper Courtyard skull target.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/skeleton_mode/skull_upper_courtyard.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/162_76410a30fc.webp"}, {"id": "SE-SK4", "title": "Hidden skull — Gatehouse / Double Tap", "do": ["Shoot the third hidden skull in the Gatehouse / Double Tap area."], "look": "Gatehouse skull target.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/skeleton_mode/skull_gatehouse.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/163_b10f04f2b5.webp"}, {"id": "SE-SK5", "title": "Cancel Skeleton mode", "do": ["If you want normal zombies back, interact with the skull-chair object in the Church."], "look": "Skeleton-mode cancel object.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/skeleton_mode/skull_chair.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/164_6e6bf3f20f.webp"}], "effect": "Fun visual mode: newly spawning normal Zombies are replaced by skeleton models until you cancel the effect in the Church."}, {"title": "BRM Wallbuy + Free Death Machine", "summary": "Low-gravity wall-run secrets in the Undercroft.", "steps": [{"id": "SE-BRM1", "title": "Free Death Machine — hit the separate blue tile", "do": ["During low gravity, wall-run across the lone blue tile facing the Pack-a-Punch side that is not part of the normal Storm Bow sequence."], "look": "The special blue wall tile.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/brm_wallbuy/death_machine_tile.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/165_9bd6ff3a57.webp"}, {"id": "SE-BRM2", "title": "BRM wallbuy — hit all 6 pressure tiles", "do": ["During low gravity, wall-run across the six required blue pressure symbols around the Undercroft."], "look": "The blue pressure-tile route.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/brm_wallbuy/tiles.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/166_3141dd14de.webp"}, {"id": "SE-BRM3", "title": "BRM wallbuy appears", "do": ["After completing the tile sequence, the BRM wallbuy becomes available left of the Undercroft workbench."], "look": "Unlocked BRM wallbuy location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/brm_wallbuy/brm.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/167_411bafb484.webp"}], "effect": "Two useful rewards: the separate bonus tile spawns a free Death Machine and starts a Rocket Test; completing the full Undercroft tile sequence permanently reveals a BRM wall-buy for the rest of the match."}, {"title": "Dead Again — Secret Song", "summary": "Interact with all 3 teddy bears in any order.", "effect": "Plays the map’s main secret song, \"Dead Again.\" This is an audio Easter egg; it does not give a gameplay buff.", "steps": [{"id": "SE-M1", "title": "Teddy 1 — Samantha's Room", "do": ["Interact with the teddy bear sitting on the chair inside Samantha's bedroom."], "look": "Teddy bear on the chair.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/song_ee/bear_sams_room.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/168_9793c4a314.webp"}, {"id": "SE-M2", "title": "Teddy 2 — Rocket Test Pad truck", "do": ["Interact with the teddy bear in the passenger seat of the truck closest to the VMP wall-buy."], "look": "Teddy visible inside the truck cab.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/song_ee/bear_rocket_pad.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/169_90dfabecdd.webp"}, {"id": "SE-M3", "title": "Teddy 3 — Juggernog jail cell", "do": ["Interact with the teddy bear in the jail cell in the Undercroft Juggernog room, left of the KN-44 wall-buy."], "look": "Teddy inside the jail cell.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/song_ee/bear_jug.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/170_224db1b011.webp"}]}, {"title": "Other Music Extras — Requiem + Samantha's Lullaby", "summary": "Optional music triggers separate from Dead Again.", "effect": "Plays the Requiem track from the 3 gramophones or Samantha's Lullaby from the bedroom music box. Music-only Easter eggs.", "steps": [{"id": "SE-M4", "title": "Requiem — Gramophone 1", "do": ["Interact with the gramophone on the stairs between the Pyramid and grave / Knight's Tomb room."], "look": "Undercroft / stairs gramophone.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/music_box_gramophones/gramophone_pyramid.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/171_87e320f10f.webp"}, {"id": "SE-M5", "title": "Requiem — Gramophone 2", "do": ["Interact with the gramophone in the Church / Mission Control near Speed Cola."], "look": "Church gramophone.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/music_box_gramophones/gramophone_control.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/172_0a7b1602ca.webp"}, {"id": "SE-M6", "title": "Requiem — Gramophone 3", "do": ["Interact with the gramophone in Samantha's Room."], "look": "Samantha's Room gramophone.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/music_box_gramophones/gramophone_samantha.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/173_dffa2308eb.webp"}, {"id": "SE-M7", "title": "Samantha's Lullaby — music box", "do": ["Interact with the music box on the table/nightstand beside Samantha's bed."], "look": "Music box on the nightstand.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/music_box_gramophones/music_box.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/174_25495f7c97.webp"}]}, {"title": "Second Gondola / Better Gondola Rewards", "summary": "A small opening-round secret that modifies the later gondola/fuse reward.", "steps": [{"id": "SE-G1", "title": "Round 1 — grenade the LEFT gondola immediately", "do": ["As soon as the match starts, throw at least one grenade at the LEFT gondola docked at Spawn.", "The blast only needs to hit it."], "look": "The left gondola before it leaves the station.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/second_gondola/first_gondola.webp", "tag": "optional", "warn": "You only have about 12 seconds before the gondola leaves. If you miss the window, this Easter egg is locked out for that player for the rest of the match.", "note": "", "source": "MMMR Kennedy", "asset": "assets/175_557668cfc1.webp"}, {"id": "SE-G2", "title": "Use Tram Fuses normally — count to 5", "do": ["Use Tram Fuses at the center console throughout the game.", "The first four behave normally."], "look": "Keep track of how many fuses YOU have used. Progress is tracked separately for each player.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/second_gondola/second_gondola.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/176_9b33435202.webp"}, {"id": "SE-G3", "title": "5th Fuse — special LEFT gondola arrives", "do": ["Use your fifth Tram Fuse.", "The left gondola arrives instead of the normal right gondola.", "Take the special reward."], "look": "Reward is always ONE of: Pack-a-Punched Man-O-War, Pack-a-Punched Haymaker, or Monkey Bombs.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/second_gondola/second_gondola.webp", "tag": "optional", "warn": "", "note": "Each player can trigger their own special left gondola once per match in co-op.", "source": "MMMR Kennedy", "asset": "assets/176_9b33435202.webp"}], "effect": "Better tram reward: your fifth Tram Fuse calls the special left gondola, which always contains a Pack-a-Punched Man-O-War, a Pack-a-Punched Haymaker, or Monkey Bombs."}, {"title": "Free Mega GobbleGum", "summary": "Online only: carry the potted plant through a past-time-travel visit, then harvest it in the present.", "steps": [{"id": "SE-GG1", "title": "Pick up the small plant", "do": ["Take the small plant from the shelf in the Teleporter room."], "look": "Small plant on the shelf.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/free_mega_gobblegum/plant.webp", "tag": "optional", "warn": "This Easter egg only works in an ONLINE game. Offline/local games do not spawn the plant.", "note": "", "source": "MMMR Kennedy", "asset": "assets/177_62136e0b04.webp"}, {"id": "SE-GG2", "title": "Place the plant during a time-travel visit", "do": ["While in the past, place the plant on the matching shelf."], "look": "Plant placement location in the past room.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/free_mega_gobblegum/place_plant.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/178_39e6e964e7.webp"}, {"id": "SE-GG3", "title": "Collect the grown plant in the present", "do": ["After returning to the present, interact with the grown plant to receive the free Mega GobbleGum reward."], "look": "Grown plant / reward location.", "image": "https://mmmrkennedy.com/games/BO3/der_eisendrache/pictures/free_mega_gobblegum/grown_plant.webp", "tag": "optional", "warn": "", "note": "Only one Mega GobbleGum is awarded per match, to the first player who interacts with the grown plant.", "source": "MMMR Kennedy", "asset": "assets/179_6f99e2cdd1.webp"}], "effect": "One free Mega GobbleGum for the match. Online games only; the first player to interact with the grown plant gets it."}]}];
+const sources = [{"name": "MMMR Kennedy — Der Eisendrache Visual Guide", "url": "https://mmmrkennedy.com/games/BO3/der_eisendrache/der_eisendrache_guide", "purpose": "Primary visual source, main-quest sequence, bow steps, and side Easter egg effects."}, {"name": "Steam Community — Guide for Der Eisendrache [2020 updated]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=639386288&l=german", "purpose": "Cross-reference for bow quests, Death Ray sequence, Vril / Golden Rod flow, buildables, and side Easter eggs."}, {"name": "CallOfDutyZombies.com — Acquiring an Upgraded Bow", "url": "https://www.callofdutyzombies.com/easteregg/guides/call_of_duty_black_ops_iii_zombies/main-easter-eggs/der-eisendrache-my-brothers-keeper/acquiring-an-upgraded-bow-r173/", "purpose": "Alternate screenshots for Void Bow VD-06 and VD-07 and independent bow-step cross-check."}, {"name": "Zombies Codex — Der Eisendrache", "url": "https://www.zombiescodex.com/black-ops-3/der-eisendrache/", "purpose": "Independent main-quest and side-Easter-egg verification."}, {"name": "CallOfDutyZombies.com — Der Eisendrache Buildables Parts", "url": "https://www.callofdutyzombies.com/topic/185780-der-eisendrache-buildables-parts/", "purpose": "Independent Shield and Ragnarok buildable-location cross-check."}, {"name": "User-provided YouTube reference", "url": "https://youtu.be/hHjeVQxbEJE?si=DTIPbfO_B7eYWlEu", "purpose": "Additional visual reference supplied by the user."}];
+const quick = ["Power", "Pack-a-Punch (useful setup; not the main quest trigger)", "Activate Low Gravity", "Feed all 3 Dragons → get BASE Wrath of the Ancients", "Upgrade the required bow(s)", "Build Ragnarok DG-4", "MAIN QUEST: BASE bow → shoot all 6 Teleporter prongs", "Swap to ANY UPGRADED bow → shoot 4 Wisps", "Time Travel #1 → Death Ray Fuses + Soul Canister + Groph code", "Insert Fuses → Death Ray to Protect → enter code → open safe", "Install Tesla coils → Death Ray to Destroy → complete both Simon Says terminals", "Set Death Ray back to Protect → press green button → shoot down Dempsey's rocket", "Pick up the Vril Generator / Golden Rod from the crash", "Repeat Wisp hunt → Time Travel #2 → Keeper Stone", "Insert Vril / Golden Rod at Knight's Tomb → follow and charge the Keeper", "Place Keeper Stone at Double Tap stop → place Soul Canister at the Pyramid", "Plant Ragnaroks on blue plates → boss fight", "Charge Summoning Key → place at Clock Tower terminal → ending"];
+const SAVE_KEY = "der_eisendrache_visual_guide_v3_progress";
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+
+function renderQuick(){
+  document.getElementById("quick").innerHTML=quick.map((x,i)=>`<div class="quick-item"><span class="quick-num">${i+1}.</span><span>${esc(x)}</span></div>`).join("");
+}
+
+function bowChoiceVisual(){
+  return `<div class="bow-choice">
+    <div class="bow-choice-title">AFTER THE 6 BASE-BOW PRONGS → PICK ANY COMPLETED UPGRADED BOW</div>
+    <div class="bow-grid">
+      <div class="bow-chip storm">STORM / LIGHTNING<small>dark blue</small></div>
+      <div class="bow-chip void">VOID<small>purple</small></div>
+      <div class="bow-chip fire">FIRE<small>orange / red</small></div>
+      <div class="bow-chip wolf">WOLF<small>light blue</small></div>
+    </div>
+    <div class="bow-arrow">↓</div>
+    <div class="bow-caption">Use the upgraded bow to shoot the 4 Wisps</div>
+  </div>`;
+}
+
+function imgHTML(s){
+  if(s.visual==="bow_choice") return bowChoiceVisual();
+  if(!s.image) return `<div class="noimg">No screenshot is needed for this rule / transition step.</div>`;
+  const local=s.asset||"";
+  return `<a class="imgwrap" href="${esc(s.image)}">
+    <img loading="lazy" src="${esc(local)}" data-remote="${esc(s.image)}" data-fallback="0" alt="${esc(s.title)}"
+      onerror="if(this.dataset.fallback==='0'){this.dataset.fallback='1';this.src=this.dataset.remote;}else{this.parentElement.classList.add('failed');}">
+    <div class="fallback">Screenshot could not be loaded locally or from the source.<br><u>Click to enlarge</u></div>
+    <div class="imgcredit"><span>Screenshot: ${esc(s.source||"source guide")}</span><span>Click to enlarge</span></div>
+  </a>`;
+}
+
+function cardHTML(s){
+  const bullets=(s.do||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+  return `<article class="card" data-id="${esc(s.id)}" data-search="${esc((s.id+" "+s.title+" "+(s.do||[]).join(" ")+" "+(s.look||"")+" "+(s.warn||"")+" "+(s.note||"")).toLowerCase())}">
+    <div class="card-head">
+      <label class="check"><input type="checkbox" class="cb" data-key="${esc(s.id)}"><span class="fake"></span></label>
+      <div><div class="card-code">${esc(s.id)}</div><h3>${esc(s.title)}</h3><div class="badges"><span class="badge ${esc(s.tag)}">${esc(s.tag)}</span></div></div>
+    </div>
+    <div class="card-body">
+      <div class="label">Do this</div><ul class="todo">${bullets}</ul>
+      ${s.look?`<div class="label">Look for</div><p class="look">${esc(s.look)}</p>`:""}
+      ${s.warn?`<div class="warn"><strong>IMPORTANT:</strong> ${esc(s.warn)}</div>`:""}
+      ${s.note?`<div class="note"><strong>NOTE:</strong> ${esc(s.note)}</div>`:""}
+    </div>
+    ${imgHTML(s)}
+  </article>`;
+}
+
+function render(){
+  document.getElementById("content").innerHTML=sections.map(sec=>{
+    const total=sec.groups.reduce((n,g)=>n+g.steps.length,0);
+    const groups=sec.groups.map(g=>`<details class="group">
+      <summary class="group-head">
+        <div>
+          <div class="group-title">${esc(g.title)}</div>
+          <div class="group-summary">${esc(g.summary||"")}</div>
+          ${g.effect?`<div class="group-effect"><strong>WHAT IT DOES:</strong> ${esc(g.effect)}</div>`:""}
+        </div><div class="chev">›</div>
+      </summary>
+      <div class="group-body"><div class="cards">${g.steps.map(cardHTML).join("")}</div></div>
+    </details>`).join("");
+    return `<details class="big-section" id="${esc(sec.id)}">
+      <summary class="section-summary">
+        <div><div class="section-name"><span class="section-num">${esc(sec.number)}.</span>${esc(sec.title)}</div><div class="section-sub">${esc(sec.subtitle)}</div></div>
+        <div style="display:flex;align-items:center;gap:9px"><div class="section-count"><span class="sec-done">0</span> / <span class="sec-total">${total}</span></div><div class="chev">›</div></div>
+      </summary>
+      <div class="section-inner">${groups}</div>
+    </details>`;
+  }).join("");
+}
+
+function renderSources(){
+  document.getElementById("sourcecards").innerHTML=sources.map(s=>`<div class="source-card"><h3>${esc(s.name)}</h3><p>${esc(s.purpose)}</p><a href="${esc(s.url)}">Open source ↗</a></div>`).join("");
+}
+function loadSaved(){try{return JSON.parse(localStorage.getItem(SAVE_KEY)||"{}")}catch(e){return {}}}
+function applySaved(){
+  const saved=loadSaved();
+  document.querySelectorAll(".cb").forEach(cb=>{cb.checked=!!saved[cb.dataset.key];cb.addEventListener("change",saveAll)});
+  updateProgress();
+}
+function saveAll(){
+  const o={};document.querySelectorAll(".cb").forEach(cb=>o[cb.dataset.key]=cb.checked);
+  localStorage.setItem(SAVE_KEY,JSON.stringify(o));updateProgress();
+}
+function updateProgress(){
+  const all=[...document.querySelectorAll(".cb")],done=all.filter(x=>x.checked).length;
+  document.getElementById("progressfill").style.width=(all.length?done/all.length*100:0)+"%";
+  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("done",c.querySelector(".cb").checked));
+  document.querySelectorAll("details.big-section").forEach(sec=>{
+    const a=[...sec.querySelectorAll(".cb")];sec.querySelector(".sec-done").textContent=a.filter(x=>x.checked).length;
+  });
+}
+function doSearch(q){
+  q=q.trim().toLowerCase();
+  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hidden",!!q&&!c.dataset.search.includes(q)));
+  document.querySelectorAll("details.group").forEach(g=>{
+    const has=[...g.querySelectorAll(".card")].some(c=>!c.classList.contains("hidden"));
+    g.classList.toggle("hidden",!!q&&!has);if(q&&has)g.open=true;
+  });
+  document.querySelectorAll("details.big-section").forEach(sec=>{
+    const has=[...sec.querySelectorAll(".card")].some(c=>!c.classList.contains("hidden"));
+    sec.classList.toggle("hidden",!!q&&!has);if(q&&has)sec.open=true;
+  });
+}
+
+renderQuick();render();renderSources();applySaved();
+
+document.getElementById("search").addEventListener("input",e=>doSearch(e.target.value));
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>{
+  const el=document.getElementById(b.dataset.go);el.open=true;el.scrollIntoView({behavior:"smooth",block:"start"});
+}));
+let expanded=false;
+document.getElementById("expand").addEventListener("click",()=>{
+  expanded=!expanded;
+  document.querySelectorAll("details.big-section,details.group,details.quick").forEach(d=>d.open=expanded);
+  document.getElementById("expand").textContent=expanded?"Collapse all":"Expand all";
+});
+document.getElementById("reset").addEventListener("click",()=>{
+  if(confirm("Clear all checked steps?")){localStorage.removeItem(SAVE_KEY);document.querySelectorAll(".cb").forEach(x=>x.checked=false);updateProgress();}
+});
+</script>
+
+<script id="image-lightbox-script-v5">
+(function(){
+  function initImageLightbox(){
+    if(document.getElementById('imageLightbox')) return;
+
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `
+<div id="imageLightbox" class="image-lightbox" aria-hidden="true">
+  <button id="imageLightboxClose" class="image-lightbox-close" type="button" aria-label="Close enlarged image">×</button>
+  <div class="image-lightbox-inner">
+    <img id="imageLightboxImg" class="image-lightbox-img" alt="Expanded guide image">
+  </div>
+  <div class="image-lightbox-hint">Click image/background or press Esc to close</div>
+</div>
+`;
+    const lightbox = wrap.firstElementChild;
+    document.body.appendChild(lightbox);
+
+    const big = document.getElementById('imageLightboxImg');
+    const close = document.getElementById('imageLightboxClose');
+
+    function openLightbox(img){
+      const src = img.currentSrc || img.src || img.dataset.remote;
+      if(!src) return;
+      big.src = src;
+      big.alt = img.alt || 'Expanded guide image';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.classList.add('lightbox-open');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      document.body.classList.remove('lightbox-open');
+      big.removeAttribute('src');
+    }
+
+    document.addEventListener('click', function(e){
+      const holder = e.target.closest('.img, .imgwrap');
+      if(holder){
+        const img = holder.querySelector('img');
+        if(img){
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(img);
+          return;
+        }
+      }
+    }, true);
+
+    close.addEventListener('click', function(e){
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    lightbox.addEventListener('click', function(e){
+      if(e.target === lightbox || e.target === big || e.target.classList.contains('image-lightbox-inner')){
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initImageLightbox);
+  } else {
+    initImageLightbox();
+  }
+})();
+</script>
+
+
+<script id="bulk-check-zebra-script-v6">
+(function(){
+  function stopSummaryToggle(el){
+    ['click','mousedown','pointerdown','touchstart'].forEach(function(evt){
+      el.addEventListener(evt,function(e){ e.stopPropagation(); }, {passive:false});
+    });
+  }
+
+  function makeBulkControl(kind){
+    const label=document.createElement('label');
+    label.className='bulk-check-wrap';
+    label.title=kind==='section' ? 'Mark every step in this entire section' : 'Mark every step in this phase / subsection';
+
+    const cb=document.createElement('input');
+    cb.type='checkbox';
+    cb.className='bulk-check';
+    cb.setAttribute('aria-label', kind==='section' ? 'Mark entire section complete' : 'Mark entire phase complete');
+
+    const text=document.createElement('span');
+    text.className='bulk-label-text';
+    text.textContent=kind==='section' ? 'Section' : 'Phase';
+
+    label.appendChild(cb);
+    label.appendChild(text);
+    stopSummaryToggle(label);
+    return {label,cb};
+  }
+
+  function childStepBoxes(container){
+    return Array.from(container.querySelectorAll('.cb'));
+  }
+
+  function syncOne(control, boxes){
+    const total=boxes.length;
+    const checked=boxes.filter(x=>x.checked).length;
+
+    control.checked = total>0 && checked===total;
+    control.indeterminate = checked>0 && checked<total;
+
+    const wrap=control.closest('.bulk-check-wrap');
+    if(wrap){
+      wrap.classList.toggle('complete', total>0 && checked===total);
+      wrap.classList.toggle('partial', checked>0 && checked<total);
+    }
+  }
+
+  function syncBulkChecks(){
+    document.querySelectorAll('details.group').forEach(function(group){
+      const cb=group.querySelector(':scope > summary .bulk-check');
+      if(cb) syncOne(cb, childStepBoxes(group));
+    });
+
+    document.querySelectorAll('details.section, details.big-section').forEach(function(section){
+      const cb=section.querySelector(':scope > summary .bulk-check');
+      if(cb) syncOne(cb, childStepBoxes(section));
+    });
+  }
+
+  function persistAfterBulk(boxes){
+    if(!boxes.length) return;
+    // Existing guide listeners save ALL step states whenever one normal step checkbox changes.
+    boxes[0].dispatchEvent(new Event('change',{bubbles:true}));
+    setTimeout(syncBulkChecks,0);
+  }
+
+  function initBulkChecks(){
+    if(document.documentElement.dataset.bulkChecksV6==='1'){
+      syncBulkChecks();
+      return;
+    }
+    document.documentElement.dataset.bulkChecksV6='1';
+
+    /* Subsections / phases */
+    document.querySelectorAll('details.group').forEach(function(group){
+      const summary=group.querySelector(':scope > summary');
+      if(!summary || summary.querySelector('.bulk-check-wrap')) return;
+
+      const made=makeBulkControl('phase');
+      const chevron=summary.querySelector('.chev');
+
+      const right=document.createElement('div');
+      right.className='bulk-right';
+      right.appendChild(made.label);
+      if(chevron){
+        chevron.parentNode.removeChild(chevron);
+        right.appendChild(chevron);
+      }
+      summary.appendChild(right);
+
+      made.cb.addEventListener('change',function(e){
+        e.stopPropagation();
+        const boxes=childStepBoxes(group);
+        boxes.forEach(function(box){ box.checked=made.cb.checked; });
+        persistAfterBulk(boxes);
+      });
+    });
+
+    /* Top-level sections */
+    document.querySelectorAll('details.section, details.big-section').forEach(function(section){
+      const summary=section.querySelector(':scope > summary');
+      if(!summary || summary.querySelector('.bulk-check-wrap')) return;
+
+      const made=makeBulkControl('section');
+
+      // Der Eisendrache already has a right-side wrapper containing count + chevron.
+      let existingRight=null;
+      Array.from(summary.children).forEach(function(child){
+        if(child.querySelector && (child.querySelector('.section-count') || child.querySelector('.chev'))){
+          if(child !== summary.firstElementChild) existingRight=child;
+        }
+      });
+
+      if(existingRight){
+        existingRight.classList.add('bulk-right');
+        existingRight.insertBefore(made.label, existingRight.firstChild);
+      } else {
+        const chevron=summary.querySelector(':scope > .chev');
+        const right=document.createElement('div');
+        right.className='bulk-right';
+        right.appendChild(made.label);
+        if(chevron){
+          chevron.parentNode.removeChild(chevron);
+          right.appendChild(chevron);
+        }
+        summary.appendChild(right);
+      }
+
+      made.cb.addEventListener('change',function(e){
+        e.stopPropagation();
+        const boxes=childStepBoxes(section);
+        boxes.forEach(function(box){ box.checked=made.cb.checked; });
+        persistAfterBulk(boxes);
+      });
+    });
+
+    document.addEventListener('change',function(e){
+      if(e.target && e.target.classList && e.target.classList.contains('cb')){
+        setTimeout(syncBulkChecks,0);
+      }
+    });
+
+    syncBulkChecks();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initBulkChecks);
+  }else{
+    initBulkChecks();
+  }
+
+  // Existing guide render functions finish synchronously, but this second pass makes the
+  // enhancement resilient if a browser delays inline script execution.
+  setTimeout(initBulkChecks,50);
+})();
+</script>
+
+</body>
+</html>

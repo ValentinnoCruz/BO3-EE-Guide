@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadows of Evil Visual Easter Egg Guide — High Contrast v6</title>
+<style>
+:root{
+ --bg:#080c11;--panel:#101820;--panel2:#17212b;--zebra1:#101820;--zebra2:#1a2530;
+ --sub1:#0d151d;--sub2:#141e27;--line:#2a3b4a;--text:#f2f5f7;--muted:#aab5c0;
+ --accent:#88cfff;--green:#8fe3b3;--gold:#e9c878;--red:#ff9a8e;--shadow:0 10px 28px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(#080c11,#0b1117 42%,#070a0e);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.48}
+a{color:#8ed6ff}header{position:sticky;top:0;z-index:40;background:rgba(8,12,17,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{max-width:1500px;margin:auto;padding:15px 18px 11px}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:900}
+h1{margin:3px 0 6px;font-size:clamp(28px,4vw,44px);line-height:1}.sub{font-size:13px;color:var(--muted);margin-bottom:10px}
+.controls{display:flex;gap:7px;flex-wrap:wrap}.search{flex:1;min-width:230px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#090f15;color:var(--text)}
+button{font:inherit}.btn{border:1px solid var(--line);background:#111a23;color:var(--text);border-radius:10px;padding:9px 11px;cursor:pointer;font-weight:780}.btn:hover{border-color:var(--accent)}
+.progressbar{height:3px;background:#161b22}.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--green))}
+main{max-width:1500px;margin:auto;padding:20px 18px 70px}.callout{padding:14px 16px;border:1px solid #365064;border-radius:13px;background:#101922;color:#c9d6df;margin-bottom:13px}
+.callout strong{color:#fff}.warning{border-color:#76523f;background:#231913;color:#efd2c0}.verified{border-color:#39634d;background:#102119;color:#cce7d6}
+
+details.section,details.group,details.quick{border:1px solid var(--line);border-radius:14px;margin:12px 0;overflow:hidden;background:#0d141b}
+summary{list-style:none;cursor:pointer}summary::-webkit-details-marker{display:none}
+.sectionhead,.grouphead,.quickhead{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px}
+#content > details.section:nth-of-type(odd) > .sectionhead{background:var(--zebra1);border-left:5px solid #55728b}
+#content > details.section:nth-of-type(even) > .sectionhead{background:var(--zebra2);border-left:5px solid #788995}
+#content > details.section:nth-of-type(odd)[open] > .sectionhead,
+#content > details.section:nth-of-type(even)[open] > .sectionhead{border-bottom:1px solid var(--line)}
+.sectionbody > details.group:nth-of-type(odd) > .grouphead{background:var(--sub1)}
+.sectionbody > details.group:nth-of-type(even) > .grouphead{background:var(--sub2)}
+.sectionhead:hover,.grouphead:hover,.quickhead:hover{filter:brightness(1.08)}
+.quickhead{background:#111a23;border-left:5px solid #55728b}
+.sectionname{font-size:clamp(21px,2.5vw,30px);font-weight:900}.num{color:var(--accent);margin-right:8px}.desc{font-size:13px;color:var(--muted);margin-top:3px}
+.chev{font-size:23px;color:var(--accent);transition:.18s}details[open]>.sectionhead .chev,details[open]>.grouphead .chev,details[open]>.quickhead .chev{transform:rotate(90deg)}
+.sectionbody{padding:0 11px 13px;background:#0a1117}.groupbody{padding:0 11px 11px;background:#0b1218}.grouptitle{font-size:18px;font-weight:880}
+.effect{margin-top:7px;padding:8px 10px;border-left:3px solid var(--green);background:#102019;border-radius:0 8px 8px 0;color:#cce9d8;font-size:12.5px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:11px;padding-top:11px}
+.card{border:1px solid #263746;border-radius:12px;background:#111a23;overflow:hidden;box-shadow:var(--shadow)}
+.cards .card:nth-child(even){background:#17212a}.card.done{opacity:.62;border-color:#31674d}
+.cardhead{display:flex;gap:10px;padding:13px 13px 8px}.cbwrap{width:23px;height:23px;min-width:23px;position:relative}.cbwrap input{position:absolute;opacity:0}
+.fake{width:23px;height:23px;border:2px solid #5a6f82;border-radius:7px;display:block}.cbwrap input:checked+.fake{border-color:var(--green);background:#153526}
+.cbwrap input:checked+.fake:after{content:"✓";position:absolute;left:3px;top:-5px;font-size:22px;color:var(--green);font-weight:900}
+.code{font-size:10px;color:#90cbff;font-weight:900;letter-spacing:.12em}.card h3{font-size:17px;line-height:1.25;margin:2px 0}.card.done h3{text-decoration:line-through}
+.badge{display:inline-block;margin-top:6px;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)}
+.body{padding:0 13px 13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#8497a8;font-weight:900;margin-top:8px}
+.todo{padding-left:20px;margin:4px 0}.todo li{margin:5px 0;font-size:13.5px}.todo li::marker{color:var(--green)}.look{color:var(--muted);font-size:13px;margin:4px 0}
+.warn,.note{padding:8px 10px;border-radius:8px;margin-top:9px;font-size:12.5px}.warn{border:1px solid #76483f;background:#251513;color:#ffd0c6}.note{border:1px solid #405568;background:#101b25;color:#cce0f0}
+.img{display:block;border-top:1px solid #1b2a38;background:#05080c}.img img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.img .fallback{display:none;padding:30px;text-align:center;color:#ffb4aa}.img.failed img{display:none}.img.failed .fallback{display:block}.credit{display:flex;justify-content:space-between;padding:7px 9px;font-size:10px;color:#74889b;background:#081019}.credit span:last-child{color:#8bd8ff}
+.quickgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:3px 18px;padding:0 15px 15px;background:#0b1218}.q{display:flex;gap:8px;color:var(--muted);font-size:14px;padding:4px}.qn{color:var(--green);font-weight:900}
+.sources{border-top:1px solid var(--line);margin-top:36px;padding-top:22px}.source{padding:12px;border:1px solid var(--line);border-radius:10px;background:#111a23;margin:8px 0}.source:nth-child(even){background:#18232d}.source h3{margin:0 0 3px;font-size:15px}.source p{margin:0;color:var(--muted);font-size:13px}.hidden{display:none!important}
+@media(max-width:750px){header{position:relative}.cards{grid-template-columns:1fr}.quickgrid{grid-template-columns:1fr}}
+</style>
+<style id="readability-v3">
+/* ===== Readability v3: stronger hierarchy, full-width steps, light theme ===== */
+:root{
+  --bg:#eef2f5 !important;
+  --panel:#ffffff !important;
+  --panel2:#f7f9fb !important;
+  --zebra1:#ffffff !important;
+  --zebra2:#e9eef3 !important;
+  --sub1:#f4f7f9 !important;
+  --sub2:#e8eef3 !important;
+  --line:#c7d0d8 !important;
+  --text:#17212b !important;
+  --muted:#566675 !important;
+  --accent:#1769aa !important;
+  --green:#276d49 !important;
+  --gold:#7b5b13 !important;
+  --red:#9b302b !important;
+  --shadow:0 3px 12px rgba(20,35,50,.10) !important;
+}
+body{
+  background:#eef2f5 !important;
+  color:var(--text) !important;
+}
+header{
+  background:rgba(255,255,255,.97) !important;
+  border-bottom:1px solid var(--line) !important;
+  box-shadow:0 2px 8px rgba(20,35,50,.08);
+}
+.eyebrow{color:#1769aa !important}
+.sub{color:#566675 !important}
+.search,.btn{
+  background:#fff !important;
+  color:#17212b !important;
+  border-color:#bfc9d2 !important;
+}
+.progressbar{background:#dfe5ea !important}
+.progressfill{background:#1769aa !important}
+
+main{max-width:1280px !important}
+
+.callout{
+  background:#fff !important;
+  color:#283745 !important;
+  border:1px solid #c7d0d8 !important;
+  border-left:6px solid #1769aa !important;
+  box-shadow:0 2px 8px rgba(20,35,50,.07);
+}
+.callout.warning{
+  background:#fff4d6 !important;
+  border-left-color:#d2a51f !important;
+  color:#553f12 !important;
+}
+.callout.verified{
+  background:#eaf6ef !important;
+  border-left-color:#4d986d !important;
+  color:#234d36 !important;
+}
+
+/* FAST RUN: make it read like a numbered checklist instead of a loose grid */
+details.quick{
+  background:#fff !important;
+  border:1px solid #c7d0d8 !important;
+  box-shadow:0 3px 12px rgba(20,35,50,.08) !important;
+}
+.quickhead{
+  background:#1d2b38 !important;
+  color:#fff !important;
+  border-left:0 !important;
+}
+.quickhead .sectionname,.quickhead .desc{color:#fff !important}
+.quickgrid{
+  display:block !important;
+  padding:0 !important;
+  background:#fff !important;
+}
+.q{
+  display:grid !important;
+  grid-template-columns:46px 1fr !important;
+  gap:10px !important;
+  padding:12px 16px !important;
+  border-top:1px solid #d5dde4 !important;
+  color:#263746 !important;
+  font-size:14px !important;
+}
+.q:nth-child(even){background:#eef2f5 !important}
+.qn{
+  display:grid !important;
+  place-items:center !important;
+  width:30px !important;height:30px !important;
+  border-radius:50% !important;
+  background:#1769aa !important;color:#fff !important;
+}
+
+/* MAIN SECTION HEADERS: solid, unmistakable bands */
+details.section{
+  background:#fff !important;
+  border:1px solid #bfc9d2 !important;
+  box-shadow:0 4px 14px rgba(20,35,50,.09) !important;
+  margin:20px 0 !important;
+}
+#content > details.section > .sectionhead{
+  background:#1d2b38 !important;
+  border-left:0 !important;
+  color:#fff !important;
+  padding:20px !important;
+}
+#content > details.section:nth-of-type(even) > .sectionhead{
+  background:#294155 !important;
+}
+.sectionhead .sectionname{color:#fff !important}
+.sectionhead .desc{color:#d7e1e8 !important}
+.sectionhead .num{
+  display:inline-grid !important;
+  place-items:center !important;
+  width:34px !important;height:34px !important;
+  margin-right:10px !important;
+  border-radius:7px !important;
+  background:#fff !important;
+  color:#1d2b38 !important;
+}
+.sectionhead .chev{color:#fff !important}
+.sectionbody{
+  background:#f3f6f8 !important;
+  padding:16px !important;
+}
+
+/* SUBSECTION HEADERS: another strong visual level */
+details.group{
+  background:#fff !important;
+  border:1px solid #c5cfd7 !important;
+  margin:0 0 18px !important;
+  box-shadow:none !important;
+}
+.sectionbody > details.group > .grouphead{
+  background:#dfe7ed !important;
+  padding:15px 17px !important;
+  border-left:6px solid #57748a !important;
+}
+.sectionbody > details.group:nth-of-type(even) > .grouphead{
+  background:#cfdbe4 !important;
+  border-left-color:#7b8f9d !important;
+}
+.grouptitle{
+  color:#17212b !important;
+  font-size:19px !important;
+}
+.grouphead .desc{color:#4f6070 !important}
+.grouphead .chev{color:#294155 !important}
+.effect{
+  background:#e7f5ec !important;
+  color:#254f38 !important;
+  border-left-color:#4b9a6a !important;
+}
+.groupbody{
+  background:#fff !important;
+  padding:0 !important;
+}
+
+/* BIG CHANGE: one full-width step per row, no dense card grid */
+.cards{
+  display:block !important;
+  padding:0 !important;
+}
+.card{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(280px,390px) !important;
+  grid-template-rows:auto 1fr !important;
+  column-gap:22px !important;
+  margin:0 !important;
+  border:0 !important;
+  border-top:1px solid #cbd4dc !important;
+  border-radius:0 !important;
+  background:#fff !important;
+  box-shadow:none !important;
+  overflow:hidden !important;
+}
+.card:first-child{border-top:0 !important}
+.card:nth-child(even){background:#edf2f6 !important}
+.card:not(:has(.img)){
+  grid-template-columns:1fr !important;
+}
+.cardhead{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  padding:18px 18px 6px !important;
+  gap:12px !important;
+}
+.body{
+  grid-column:1 !important;
+  grid-row:2 !important;
+  padding:0 18px 20px !important;
+}
+.img{
+  grid-column:2 !important;
+  grid-row:1 / span 2 !important;
+  align-self:center !important;
+  margin:18px !important;
+  border:1px solid #bdc8d1 !important;
+  border-radius:9px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  box-shadow:0 2px 7px rgba(20,35,50,.10) !important;
+}
+.img img{
+  aspect-ratio:16/9 !important;
+}
+.credit{
+  background:#fff !important;
+  color:#5c6d7c !important;
+  border-top:1px solid #d4dce2 !important;
+}
+.credit span:last-child{color:#1769aa !important}
+
+.code{
+  display:inline-block !important;
+  background:#1769aa !important;
+  color:#fff !important;
+  padding:3px 7px !important;
+  border-radius:5px !important;
+  letter-spacing:.08em !important;
+  margin-bottom:4px !important;
+}
+.card h3{
+  color:#17212b !important;
+  font-size:19px !important;
+  margin:3px 0 !important;
+}
+.badge{
+  background:#fff !important;
+  border-color:#bac5ce !important;
+  color:#5a4a1c !important;
+}
+.label{
+  color:#50606f !important;
+  margin-top:14px !important;
+}
+.todo li{
+  font-size:14px !important;
+  margin:8px 0 !important;
+  color:#1c2833 !important;
+}
+.todo li::marker{color:#276d49 !important}
+.look{color:#4f6070 !important}
+.warn{
+  background:#fff4d6 !important;
+  color:#5d4512 !important;
+  border:0 !important;
+  border-left:5px solid #d2a51f !important;
+}
+.note{
+  background:#e9f3fa !important;
+  color:#294b60 !important;
+  border:0 !important;
+  border-left:5px solid #68a6cc !important;
+}
+.card.done{
+  opacity:.55 !important;
+}
+.card.done h3{color:#53616c !important}
+
+/* SOURCES */
+.sources{color:#17212b !important}
+.source{
+  background:#fff !important;
+  border-color:#c5cfd7 !important;
+  color:#17212b !important;
+}
+.source:nth-child(even){background:#edf2f6 !important}
+.source p{color:#566675 !important}
+
+/* Mobile: keep the same strong hierarchy, put image below text */
+@media(max-width:820px){
+  header{position:relative !important}
+  .card,.card:not(:has(.img)){
+    grid-template-columns:1fr !important;
+  }
+  .cardhead{grid-column:1 !important;grid-row:1 !important}
+  .body{grid-column:1 !important;grid-row:2 !important}
+  .img{
+    grid-column:1 !important;
+    grid-row:3 !important;
+    margin:0 18px 18px !important;
+  }
+}
+</style>
+
+
+<style id="high-contrast-v4">
+/* HIGH-CONTRAST DARK READABILITY PASS
+   One section = one accent color. Neutral content areas. Hard visual separators. */
+:root{
+  --hc-bg:#090a0c;
+  --hc-surface:#131519;
+  --hc-surface2:#1d2026;
+  --hc-surface3:#262a31;
+  --hc-line:#444a53;
+  --hc-line-strong:#606874;
+  --hc-text:#f7f8fa;
+  --hc-muted:#c2c8d0;
+  --hc-dim:#9099a4;
+  --hc-cyan:#49c8e8;
+  --hc-amber:#f0b84b;
+  --hc-green:#67d39a;
+  --hc-purple:#b58cff;
+  --hc-coral:#ff8178;
+  --hc-yellow:#ffd86b;
+  --hc-blue:#79cfff;
+}
+html{background:var(--hc-bg)!important}
+body{
+  background:var(--hc-bg)!important;
+  color:var(--hc-text)!important;
+  font-size:15px!important;
+}
+header{
+  background:rgba(9,10,12,.97)!important;
+  border-bottom:2px solid var(--hc-line)!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.35)!important;
+}
+h1{color:#fff!important}
+.search{
+  background:#101216!important;
+  color:#fff!important;
+  border:1px solid #59616c!important;
+}
+.search::placeholder{color:#8e98a4!important}
+.btn,.navbtn,.toolbtn{
+  background:#171a1f!important;
+  color:#f4f6f8!important;
+  border:1px solid #505761!important;
+  box-shadow:none!important;
+}
+.btn:hover,.navbtn:hover,.toolbtn:hover{background:#22262d!important}
+button[data-go="setup"]{border-bottom:4px solid var(--hc-cyan)!important}
+button[data-go="pap"],button[data-go="buildables"]{border-bottom:4px solid var(--hc-amber)!important}
+button[data-go="bows"]{border-bottom:4px solid var(--hc-green)!important}
+button[data-go="main"]{border-bottom:4px solid var(--hc-purple)!important}
+button[data-go="side"]{border-bottom:4px solid var(--hc-coral)!important}
+.progressbar{background:#20242a!important;height:5px!important}
+.progressfill{background:#79cfff!important}
+
+main{max-width:1320px!important}
+
+/* Keep the opening area quiet. Technical/meta boxes are hidden so the quest starts sooner. */
+.readability-key{
+  display:flex;flex-wrap:wrap;gap:8px 14px;
+  margin:2px 0 18px;padding:11px 13px;
+  background:#111318;border:1px solid #3d434c;border-radius:10px;
+  color:#c8ced5;font-size:12px;font-weight:750
+}
+.readability-key span{display:inline-flex;align-items:center;gap:6px}
+.readability-key i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.readability-key .c1 i{background:var(--hc-cyan)}
+.readability-key .c2 i{background:var(--hc-amber)}
+.readability-key .c3 i{background:var(--hc-green)}
+.readability-key .c4 i{background:var(--hc-purple)}
+.readability-key .c5 i{background:var(--hc-coral)}
+
+/* Fast route: a real numbered list instead of floating tiles */
+details.quick{
+  background:#111318!important;
+  border:2px solid #414751!important;
+  box-shadow:none!important;
+  border-radius:12px!important
+}
+.quick-summary,.quickhead{
+  background:#181b20!important;
+  color:#fff!important;
+  border:0!important;
+  padding:16px 18px!important
+}
+.quick-grid,.quickgrid{
+  display:block!important;
+  background:#0f1114!important;
+  padding:0!important
+}
+.quick-item,.q{
+  display:grid!important;
+  grid-template-columns:48px 1fr!important;
+  gap:10px!important;
+  align-items:start!important;
+  margin:0!important;
+  padding:11px 16px!important;
+  color:#e8ebef!important;
+  border-top:1px solid #3a4048!important
+}
+.quick-item:nth-child(even),.q:nth-child(even){background:#191c21!important}
+.quick-num,.qn{
+  display:grid!important;place-items:center!important;
+  width:31px!important;height:31px!important;
+  border-radius:7px!important;
+  background:#303640!important;
+  color:#fff!important;font-weight:900!important
+}
+
+/* Notes and warnings are deliberately different from normal content */
+.warn{
+  background:#332a12!important;
+  color:#ffe7a5!important;
+  border:1px solid #8c7022!important;
+  border-left:6px solid var(--hc-yellow)!important;
+  border-radius:7px!important
+}
+.note{
+  background:#112637!important;
+  color:#d5edff!important;
+  border:1px solid #345c79!important;
+  border-left:6px solid var(--hc-blue)!important;
+  border-radius:7px!important
+}
+.group-effect,.effect{
+  background:#12291f!important;
+  color:#d6f3e2!important;
+  border-left:6px solid var(--hc-green)!important;
+  border-radius:7px!important
+}
+
+/* Stronger text hierarchy */
+.label{
+  color:#b9c1ca!important;
+  font-size:11px!important;
+  letter-spacing:.13em!important;
+  font-weight:900!important;
+  margin-top:14px!important
+}
+.todo li{
+  color:#f2f4f6!important;
+  font-size:14.5px!important;
+  margin:8px 0!important;
+  line-height:1.52!important
+}
+.look{
+  color:#c4cbd3!important;
+  line-height:1.5!important
+}
+.badge{background:#0f1114!important;border-color:#59616c!important;color:#e5e8eb!important}
+.fake{border-color:#77818c!important}
+.card.done{opacity:.55!important}
+
+/* Mobile */
+@media(max-width:850px){
+  header{position:relative!important}
+}
+</style>
+
+<style>
+main > .callout:not(.warning){display:none!important}
+.sitebar{display:none!important}
+</style>
+
+<style id="soe-high-contrast-layout">
+/* Per-section accent identity */
+#content > details.section:nth-of-type(1){--section-accent:var(--hc-cyan)}
+#content > details.section:nth-of-type(2){--section-accent:var(--hc-amber)}
+#content > details.section:nth-of-type(3){--section-accent:var(--hc-green)}
+#content > details.section:nth-of-type(4){--section-accent:var(--hc-purple)}
+#content > details.section:nth-of-type(5){--section-accent:var(--hc-coral)}
+
+details.section{
+  background:#0e1013!important;
+  border:2px solid #40464f!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.28)!important;
+  border-radius:12px!important;
+  margin:20px 0!important
+}
+#content > details.section > .sectionhead{
+  background:#15181d!important;
+  border:0!important;
+  border-left:9px solid var(--section-accent)!important;
+  padding:19px 20px!important
+}
+.sectionname{color:#fff!important;font-size:clamp(22px,2.4vw,30px)!important}
+.sectionhead .desc{color:#bcc4cd!important}
+.num{
+  display:inline-grid!important;place-items:center!important;
+  width:34px!important;height:34px!important;
+  border-radius:7px!important;margin-right:10px!important;
+  background:var(--section-accent)!important;color:#08090b!important;
+  font-weight:950!important
+}
+.sectionhead .chev{color:var(--section-accent)!important}
+.sectionbody{background:#0b0d10!important;padding:16px!important}
+
+details.group{
+  background:#121419!important;
+  border:1px solid #464d56!important;
+  border-radius:10px!important;
+  margin:0 0 18px!important;
+  overflow:hidden!important
+}
+.sectionbody > details.group > .grouphead,
+.sectionbody > details.group:nth-of-type(even) > .grouphead{
+  background:#22262c!important;
+  border:0!important;
+  border-left:5px solid var(--section-accent)!important;
+  padding:14px 16px!important
+}
+.grouptitle{color:#fff!important;font-size:18px!important}
+.grouphead .desc{color:#b8c0c9!important}
+.grouphead .chev{color:var(--section-accent)!important}
+.groupbody{background:#0d0f12!important;padding:0!important}
+
+/* One step per horizontal row */
+.cards{display:block!important;padding:0!important}
+.card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(280px,400px)!important;
+  grid-template-rows:auto 1fr!important;
+  column-gap:22px!important;
+  border:0!important;
+  border-left:6px solid var(--section-accent)!important;
+  border-top:2px solid #383e46!important;
+  border-radius:0!important;
+  background:#131519!important;
+  box-shadow:none!important;
+  transform:none!important
+}
+.card:first-child{border-top:0!important}
+.card:nth-child(even){background:#1d2026!important}
+.cardhead{
+  grid-column:1!important;grid-row:1!important;
+  padding:18px 18px 6px!important
+}
+.body{
+  grid-column:1!important;grid-row:2!important;
+  padding:0 18px 20px!important
+}
+.img{
+  grid-column:2!important;grid-row:1 / span 2!important;
+  align-self:center!important;
+  margin:18px!important;
+  border:2px solid #4d555f!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+  background:#08090b!important
+}
+.credit{background:#101216!important;color:#aeb7c1!important;border-top:1px solid #3d444d!important}
+.code{
+  display:inline-block!important;
+  background:var(--section-accent)!important;
+  color:#08090b!important;
+  border-radius:5px!important;
+  padding:3px 7px!important;
+  margin-bottom:4px!important;
+  font-weight:950!important
+}
+.card h3{color:#fff!important;font-size:19px!important}
+.card:not(:has(.img)){grid-template-columns:1fr!important}
+
+@media(max-width:850px){
+  .card,.card:not(:has(.img)){grid-template-columns:1fr!important}
+  .cardhead{grid-column:1!important;grid-row:1!important}
+  .body{grid-column:1!important;grid-row:2!important}
+  .img{grid-column:1!important;grid-row:3!important;margin:0 18px 18px!important}
+}
+</style>
+
+
+<style id="image-lightbox-v5">
+/* In-page image expansion */
+.img, .imgwrap {
+  cursor: zoom-in !important;
+}
+.img .credit span:last-child,
+.imgwrap .imgcredit span:last-child {
+  color: #aeb8c2 !important;
+}
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  background: rgba(0,0,0,.90);
+  backdrop-filter: blur(5px);
+}
+.image-lightbox.open { display: flex; }
+.image-lightbox-inner {
+  position: relative;
+  width: min(96vw, 1500px);
+  height: min(94vh, 1000px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 2px solid #626b76;
+  border-radius: 10px;
+  background: #07080a;
+  box-shadow: 0 18px 60px rgba(0,0,0,.65);
+  cursor: zoom-out;
+}
+.image-lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 100000;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #6b747f;
+  border-radius: 50%;
+  background: #16191e;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+}
+.image-lightbox-close:hover { background: #292e35; }
+.image-lightbox-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  padding: 7px 11px;
+  border: 1px solid #4e5660;
+  border-radius: 999px;
+  background: rgba(17,20,24,.92);
+  color: #c9d0d7;
+  font-size: 12px;
+  white-space: nowrap;
+}
+body.lightbox-open { overflow: hidden !important; }
+
+@media (max-width: 700px) {
+  .image-lightbox { padding: 12px; }
+  .image-lightbox-inner {
+    width: 100vw;
+    height: 90vh;
+  }
+  .image-lightbox-close {
+    top: 10px;
+    right: 10px;
+  }
+}
+</style>
+
+
+<style id="bulk-check-zebra-v6">
+/* ===== v6: zebra subsection headers + whole-section / whole-phase checkboxes ===== */
+
+/* Stronger zebra separation for subsection / phase headers */
+.sectionbody > details.group:nth-of-type(odd) > .grouphead,
+.section-inner > details.group:nth-of-type(odd) > .group-head {
+  background:#20242a !important;
+}
+.sectionbody > details.group:nth-of-type(even) > .grouphead,
+.section-inner > details.group:nth-of-type(even) > .group-head {
+  background:#2c3138 !important;
+}
+
+/* Main Quest phases get a subtle purple zebra identity instead of one flat purple look */
+#content > details.section:nth-of-type(4) .sectionbody > details.group:nth-of-type(odd) > .grouphead,
+#content > details.big-section:nth-of-type(4) .section-inner > details.group:nth-of-type(odd) > .group-head {
+  background:#26202f !important;
+}
+#content > details.section:nth-of-type(4) .sectionbody > details.group:nth-of-type(even) > .grouphead,
+#content > details.big-section:nth-of-type(4) .section-inner > details.group:nth-of-type(even) > .group-head {
+  background:#342a40 !important;
+}
+
+/* Bulk check control used in top-level sections and subsection/phase headers */
+.bulk-check-wrap {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  flex:0 0 auto;
+  padding:6px 9px;
+  border:1px solid #626b76;
+  border-radius:8px;
+  background:#101216;
+  color:#e6ebef;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  cursor:pointer;
+  user-select:none;
+}
+.bulk-check-wrap:hover {
+  background:#1b1f24;
+  border-color:#89939e;
+}
+.bulk-check-wrap input {
+  appearance:none;
+  -webkit-appearance:none;
+  width:19px;
+  height:19px;
+  margin:0;
+  border:2px solid #89939e;
+  border-radius:5px;
+  background:#08090b;
+  display:grid;
+  place-content:center;
+  cursor:pointer;
+}
+.bulk-check-wrap input::before {
+  content:"";
+  width:10px;
+  height:10px;
+  transform:scale(0);
+  transition:transform .08s ease-in-out;
+  clip-path:polygon(14% 44%,0 59%,39% 100%,100% 18%,84% 3%,37% 70%);
+  background:#08100b;
+}
+.bulk-check-wrap input:checked {
+  background:#77dda3;
+  border-color:#77dda3;
+}
+.bulk-check-wrap input:checked::before {
+  transform:scale(1);
+}
+.bulk-check-wrap input:indeterminate {
+  background:#f0b84b;
+  border-color:#f0b84b;
+}
+.bulk-check-wrap input:indeterminate::before {
+  transform:scale(1);
+  clip-path:none;
+  width:10px;
+  height:3px;
+  background:#17120a;
+}
+.bulk-check-wrap.complete {
+  border-color:#5ca77a;
+  background:#13261c;
+  color:#bde9cd;
+}
+.bulk-check-wrap.partial {
+  border-color:#997c35;
+  background:#292313;
+  color:#f3dda6;
+}
+
+/* Keep controls and chevrons visually separated */
+.bulk-right {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex:0 0 auto;
+}
+
+/* On narrow screens, do not let the header controls crush the title */
+@media(max-width:720px){
+  .bulk-check-wrap .bulk-label-text { display:none; }
+  .bulk-check-wrap { padding:6px; }
+  .bulk-right { gap:6px; }
+}
+</style>
+
+</head><body>
+<header><div class="top"><div class="eyebrow">Black Ops III Zombies • Morg City</div><h1>Shadows of Evil Visual Easter Egg Guide</h1>
+<div class="sub">Readability v3 • full-width steps • strong hierarchy • zebra rows</div>
+<div class="controls"><input id="search" class="search" placeholder="Search: ritual, sword, flag, Margwa, Shield...">
+<button class="btn nav" data-go="setup">1 Setup</button><button class="btn nav" data-go="pap">2 PaP</button><button class="btn nav" data-go="buildables">3 Gear</button>
+<button class="btn nav" data-go="main">4 Main EE</button><button class="btn nav" data-go="side">5 Side EEs</button><button id="expand" class="btn">Expand all</button><button id="reset" class="btn">Reset checks</button></div></div>
+<div class="progressbar"><div id="progress" class="progressfill"></div></div></header>
+<main>
+
+<div class="readability-key" aria-label="Section color key">
+  <span class="c1"><i></i>1 Setup</span>
+  <span class="c2"><i></i>2 Pack-a-Punch</span>
+  <span class="c3"><i></i>3 Gear</span>
+  <span class="c4"><i></i>4 Main Easter Egg</span>
+  <span class="c5"><i></i>5 Side Easter Eggs</span>
+</div>
+
+<div class="callout"><strong>READABILITY REDESIGN:</strong> One step now uses one full-width row. Main sections use solid dark headers, subsections use gray headers, and individual steps alternate white/gray so your eye has a clear place to land.</div>
+<div class="callout verified"><strong>VERIFICATION PASS COMPLETE:</strong> Core quest flow, PaP rituals, Sword + upgrade, Shield/Civil Protector, Flag mechanics, Shadowman fight, 4-player finale, and the listed side Easter eggs were cross-checked against the current MMMR Kennedy visual guide, the Steam 2024-updated community guide, CallOfDutyZombies, and a July 2026 Shadows main-quest guide.</div>
+<div class="callout warning"><strong>FULL STORY ENDING:</strong> You still need <strong>4 players</strong> for the Giant Gateworm finale and ending cutscene. With 1–3 players, the quest stops after capturing the Shadowman.</div>
+<div class="callout"><strong>Important verified clarifications:</strong> the four PaP character rituals can be done in any order; the four Flag districts can also be completed in any order; a failed Flag can be retried immediately in the same round; only a successfully completed Flag district forces the next round.</div>
+<details class="quick"><summary class="quickhead"><div><div class="sectionname">Fast Run Order</div><div class="desc">High-level verified route.</div></div><div class="chev">›</div></summary><div id="quick" class="quickgrid"></div></details>
+<div id="content"></div>
+<section class="sources"><h2>Sources & Cross-References</h2><div id="sources"></div></section>
+</main>
+<script>
+const DATA=[{"id": "setup", "number": "1", "title": "Map Setup — Beast Mode, Power & Travel", "subtitle": "Shadows of Evil has NO normal power switch. You power individual machines/doors with Beast Mode.", "groups": [{"title": "How Power Works", "summary": "Use Beast Mode to shock fuse boxes beside perks and special doors.", "effect": "This is the map's power system. Once you shock a fuse box, that perk/door stays powered for the rest of the game.", "steps": [{"id": "SET-01", "title": "Enter Beast Mode", "do": ["Interact with a flaming purple Beast Mode chalice.", "Beast Mode lasts about 25 seconds.", "Use SHOCK on fuse boxes.", "Use MELEE on Beast-marked crates and doors.", "Use GRAPPLE on glowing grapple points."], "look": "A purple-flamed chalice like this one.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/beast_mode/beast_mode_chalice.webp", "tag": "required", "warn": "", "note": "Verified charge rule: in co-op, a player normally gets one Beast charge per round. In solo you can hold up to 3 charges, but only 1 charge is replenished at the start of each round. A chalice that has been used stays inactive for the rest of that round.", "source": "MMMR Kennedy", "asset": "assets/soe_001_82f4a45e.webp"}, {"id": "SET-02", "title": "Power each perk machine individually", "do": ["Find the fuse box beside the perk machine.", "Enter Beast Mode.", "Shock the fuse box.", "The perk is now powered permanently for that game."], "look": "A small electrical box with a lightning-bolt symbol.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/power/fuse_box.webp", "tag": "required", "warn": "", "note": "Juggernog, Speed Cola, and Double Tap rotate between Canals / Waterfront / Footlight. The broken bottle sign at each district entrance tells you which perk is there: red = Jug, green = Speed, orange = Double Tap.", "source": "MMMR Kennedy", "asset": "assets/soe_002_009d9d8b.webp"}, {"id": "SET-03", "title": "Open the district power staircases", "do": ["Each major district has a staircase/door that only Beast Mode can power.", "Grapple to the upper route.", "Shock the district fuse box.", "The staircase opens permanently."], "look": "These powered routes are important for Shield pieces, Fumigators, perk access, and side quests.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/power/fuse_box.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_002_009d9d8b.webp"}]}, {"title": "Rift Portals / Underground Access", "summary": "Open each Rift door in Beast Mode, then activate the portal normally.", "effect": "Rifts connect Canals, Waterfront, and Footlight directly to the Underground / Pack-a-Punch area.", "steps": [{"id": "SET-R1", "title": "Canals Rift", "do": ["Go into the canal near the Mystery Box location.", "In Beast Mode, melee the Rift door open.", "Return to normal and interact with the portal to activate it."], "look": "Orange circular Rift portal.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rift_portals/rift.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_003_1b86ef3a.webp"}, {"id": "SET-R2", "title": "Waterfront Rift", "do": ["Find the alley to the right of the Waterfront Mystery Box area.", "Melee the Rift door open in Beast Mode.", "Activate the Rift normally."], "look": "Orange circular Rift portal.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rift_portals/rift.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_003_1b86ef3a.webp"}, {"id": "SET-R3", "title": "Footlight Rift", "do": ["Find the Rift door near where Jessica's ritual-item box falls.", "Melee the door open in Beast Mode.", "Activate the Rift normally."], "look": "Orange circular Rift portal.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rift_portals/rift.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_003_1b86ef3a.webp"}]}, {"title": "Fumigator & Harvest Pods", "summary": "Each player needs a Fumigator to open Harvest Pods.", "effect": "Purple pods can give weapons, power-ups, and the Margwa Tentacle required for the Apothicon Servant.", "steps": [{"id": "SET-F1", "title": "Find a Fumigator", "do": ["Pick up one Fumigator per player.", "There are multiple possible spawn points around Spawn/Junction and the districts."], "look": "It is a small handheld fumigation device. Common early spawns include the truck near Quick Revive and the metal grate by Nero's stairs.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/fumigator_pods/spawn_quick.webp", "tag": "utility", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_004_da177377.webp"}, {"id": "SET-F2", "title": "Let pods grow for better loot", "do": ["Green pods are the lowest tier.", "Red pods are better.", "Purple pods give the best loot and are the only ones that can drop the Margwa Tentacle.", "Use the Fumigator to open the pod."], "look": "Harvest Pods change color as they mature.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/fumigator_pods/purple_pod.webp", "tag": "utility", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_005_0edc05e8.webp"}]}]}, {"id": "pap", "number": "2", "title": "Unlock Pack-a-Punch — All 5 Rituals", "subtitle": "Summoning Key → 4 character rituals (ANY order) → 4 Gateworms → final Underground ritual. This guide lists a clean route; the four character rituals are not order-locked.", "groups": [{"title": "Start — Get the Summoning Key", "summary": "You need the Summoning Key before ANY ritual can be started.", "steps": [{"id": "PAP-00", "title": "Ritual order — what is actually fixed", "do": ["Get the Summoning Key before starting any ritual.", "Complete the four character rituals in ANY order.", "Only one ritual can be active on the map at a time.", "A Margwa spawns after the 2nd completed character ritual.", "Another Margwa spawns after the 4th completed character ritual.", "A third Margwa spawns after the final Underground Pack-a-Punch ritual."], "look": "The guide uses Nero → Jack → Floyd → Jessica only to keep the walkthrough easy to follow.", "image": "", "tag": "verified", "warn": "", "note": "The order shown below is a recommended organizational route, not a quest requirement.", "source": "Verified cross-reference"}, {"id": "PAP-01", "title": "Open the Summoning Key crate", "do": ["In Spawn, enter Beast Mode.", "Go to the truck left of the RK5 wallbuy.", "Melee the marked crate on the back of the truck."], "look": "The chained/marked crate on the truck.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/summoning_key_crate.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_006_8f306569.webp"}, {"id": "PAP-02", "title": "Pick up the Summoning Key", "do": ["Return to normal form.", "Pick up the glowing Summoning Key from the opened crate."], "look": "Small glowing orb/key in the truck crate.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/summoning_key.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_007_2cbbe714.webp"}]}, {"title": "Ritual 1 — Nero / Junction — Lawyer's Pen", "summary": "Crane fuse → Pen → Nero's ritual room → Gateworm.", "steps": [{"id": "PAP-N1", "title": "Shock the crane fuse", "do": ["Enter Beast Mode in Junction.", "Shock the crane's fuse box.", "The crane moves and drops the Lawyer's Pen box."], "look": "Fuse box in the Junction tied to the crane.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/nero_spawn/crane_fuse.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_008_6710854d.webp"}, {"id": "PAP-N2", "title": "Open Nero's route", "do": ["While still in Beast Mode, grapple to Nero's upper room.", "Shock the fuse box outside his room to open the staircase from Spawn."], "look": "The fire escape / upper route above the Spawn exit.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/power/spawn_grapple.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_009_3e4684c5.webp"}, {"id": "PAP-N3", "title": "Pick up the Lawyer's Pen", "do": ["Return to normal.", "Pick up the Lawyer's Pen from the box dropped by the crane."], "look": "Glowing ritual item in the fallen box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/nero_spawn/lawyers_pen.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_010_c4386b30.webp"}, {"id": "PAP-N4", "title": "Complete Nero's ritual", "do": ["Bring the Pen to Nero's ritual table.", "Place the item.", "Start the ritual.", "Survive the Keepers until the ritual ends.", "Pick up the Gateworm."], "look": "Ritual table in Nero's room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/nero_spawn/ritual_table.webp", "tag": "required", "warn": "Players cannot enter the ritual room after the ritual starts. Get everyone inside first.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_011_952e6a39.webp"}]}, {"title": "Ritual 2 — Jack Vincent / Canals — Detective's Badge", "summary": "Ethereal-wall fuse → Badge box → Ruby Rabbit → Gateworm.", "steps": [{"id": "PAP-C1", "title": "Shock the fuse through the ethereal wall", "do": ["Go to the far end of Canals.", "Enter Beast Mode.", "Shock the fuse box through the see-through ethereal wall."], "look": "Fuse visible through the wall while in Beast Mode.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/ethereal_wall.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_012_310bb455.webp"}, {"id": "PAP-C2", "title": "Melee the Badge box", "do": ["While still in Beast Mode, go toward the Rift area.", "Melee the marked box in the canal wall."], "look": "The marked box embedded in the canal wall.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/badge_box.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_013_2afb8503.webp"}, {"id": "PAP-C3", "title": "Open the Ruby Rabbit stairs", "do": ["Grapple to the top of the Ruby Rabbit.", "Run down inside.", "Shock the fuse box to open the normal staircase."], "look": "Ruby Rabbit grapple route and fuse box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/ruby_fuse.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_014_cc9e1ed6.webp"}, {"id": "PAP-C4", "title": "Pick up the Detective's Badge", "do": ["Return to normal.", "Pick up the Badge from the broken box in the canal."], "look": "Glowing Badge in the opened wall box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/badge_pickup.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_015_0307c1ce.webp"}, {"id": "PAP-C5", "title": "Complete Jack's ritual", "do": ["Take the Badge to the top floor of the Ruby Rabbit.", "Place it on the ritual table.", "Start the ritual.", "Survive the Keepers.", "Pick up the Gateworm."], "look": "Ruby Rabbit ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/ritual_table.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_016_be90f7b7.webp"}]}, {"title": "Ritual 3 — Floyd / Waterfront — Championship Belt", "summary": "Grapple → knock Belt box down → open Boxing Gym → ritual → Gateworm.", "steps": [{"id": "PAP-W1", "title": "Grapple to the Belt box", "do": ["Enter Beast Mode in Waterfront.", "Grapple to the fire escape above the Mystery Box area.", "Melee the marked Belt box."], "look": "Upper Waterfront grapple point.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/floyd_waterfront/grapple.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_017_c2161ddb.webp"}, {"id": "PAP-W2", "title": "Open the Boxing Gym", "do": ["Drop back down toward the water.", "Run to the Boxing Gym.", "Melee the Beast-only gym door open."], "look": "Marked door at the front of the Boxing Gym.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/floyd_waterfront/gym_door.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_018_b6c4ab87.webp"}, {"id": "PAP-W3", "title": "Pick up the Championship Belt", "do": ["Return to normal.", "Pick up the Belt from the fallen box."], "look": "Glowing Belt pickup in Waterfront.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/floyd_waterfront/belt.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_019_ddf7d2e5.webp"}, {"id": "PAP-W4", "title": "Complete Floyd's ritual", "do": ["Bring the Belt into the Boxing Gym.", "Place it on the ritual table in the ring.", "Start the ritual.", "Survive the Keepers.", "Pick up the Gateworm."], "look": "Ritual table in the boxing ring.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/floyd_waterfront/ritual_table.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_020_50656d94.webp"}]}, {"title": "Ritual 4 — Jessica / Footlight — Producer's Toupee", "summary": "Upper route → knock Toupee box down → power Black Lace → ritual → Gateworm.", "steps": [{"id": "PAP-F1", "title": "Reach the upper Footlight route", "do": ["Enter Beast Mode near the district entrance.", "Grapple to the upper level.", "Use the ramp to jump to the ledge holding the ritual-item box."], "look": "Upper Footlight ledge beside the Mystery Box route.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/box.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_021_d91eeea2.webp"}, {"id": "PAP-F2", "title": "Knock down the Toupee box", "do": ["Melee the marked box while in Beast Mode.", "The box falls to street level."], "look": "Marked ritual-item box on the ledge.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/box.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_021_d91eeea2.webp"}, {"id": "PAP-F3", "title": "Power/open Black Lace", "do": ["Jump back across.", "Go toward Black Lace Burlesque.", "Grapple over.", "Shock the fuse box on the back of the sign."], "look": "Electrical box behind the Black Lace sign.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/black_lace_fuse_box.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_022_d594707a.webp"}, {"id": "PAP-F4", "title": "Pick up the Producer's Toupee", "do": ["Return to normal.", "Pick up the Toupee from the fallen box."], "look": "Glowing Toupee ritual item.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/toupee.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_023_fe75e4ad.webp"}, {"id": "PAP-F5", "title": "Complete Jessica's ritual", "do": ["Take the Toupee onto the Black Lace stage.", "Place it on the ritual table.", "Start the ritual.", "Survive the Keepers.", "Pick up the Gateworm."], "look": "Black Lace ritual table on the stage.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/ritual_table.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_024_9007ce1d.webp"}]}, {"title": "Final Ritual — Underground", "summary": "Use all 4 Gateworms to rebuild the room and activate Pack-a-Punch.", "steps": [{"id": "PAP-X1", "title": "Enter the Underground with all 4 Gateworms", "do": ["Use any Rift portal to reach the Underground.", "Approach the wall covered in glowing symbols.", "The wall dissolves once the four district rituals are complete."], "look": "Glowing-symbol wall leading to the final ritual room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/glowing_symbols.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_025_b442ad44.webp"}, {"id": "PAP-X2", "title": "Place all 4 Gateworms", "do": ["Place one Gateworm on each pedestal.", "Two repair the wall-run sections.", "Two repair the center bridge."], "look": "Follow the blue energy beams to the four pedestals.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/gateworm_pedistals.webp", "tag": "required", "warn": "You can fall into the pit while wall-running. Keep moving and jump the final gap.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_026_7d6bba95.webp"}, {"id": "PAP-X3", "title": "Start the final ritual", "do": ["Cross to the ritual table near the entrance side.", "Interact to start the fifth ritual.", "Survive the Keepers until it completes."], "look": "Final ritual table in the Pack-a-Punch room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/ritual_table.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_027_09c771fd.webp"}, {"id": "PAP-X4", "title": "Pack-a-Punch unlocked", "do": ["After the final ritual, a Margwa spawns.", "The blue Pack-a-Punch Rift becomes usable on the far side of the room."], "look": "Large blue Rift used as Pack-a-Punch.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/pap.webp", "tag": "required", "warn": "", "note": "This completion is also required before obtaining the Apothicon Sword.", "source": "MMMR Kennedy", "asset": "assets/soe_028_d72f2902.webp"}]}]}, {"id": "buildables", "number": "3", "title": "Weapons & Buildables", "subtitle": "Apothicon Sword • Keeper Sword upgrade • Rocket Shield • Civil Protector • Apothicon Servant", "groups": [{"title": "Apothicon Sword — Every Player Needs One", "summary": "Ride the train to read 3 symbols → open the Sword wall → charge an Egg at 4 statues.", "effect": "Required for the main quest. The Sword is a rechargeable Specialist weapon with powerful melee and slam attacks.", "steps": [{"id": "SW-01", "title": "Train Ride 1 — Waterfront → Footlight — get TWO symbols", "do": ["Start at the Waterfront train station.", "Send the train to Footlight.", "Face the direction the train is moving.", "Watch out the RIGHT side.", "Record the Waterfront symbol.", "Keep watching the RIGHT side and record the Footlight symbol before the train stops."], "look": "Two separate red Apothicon symbols appear in building windows during this single ride.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/symbol_canals.webp", "tag": "sword", "warn": "", "note": "This two-ride route is easier for a first-time player than trying to associate every symbol with a separate train ride.", "source": "MMMR Kennedy", "asset": "assets/soe_029_6aab6315.webp"}, {"id": "SW-02", "title": "Train Ride 2 — Footlight → Canals — get the LAST symbol", "do": ["From Footlight, send the train to Canals.", "Face the direction of travel.", "Watch out the RIGHT side.", "Record the remaining Canals symbol."], "look": "You should now have all 3 red symbols written down.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/symbol_waterfront.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_030_81d5485c.webp"}, {"id": "SW-03", "title": "Verify all 3 symbols before leaving the train system", "do": ["Confirm you wrote down 3 different symbol shapes.", "Do NOT copy symbols from the screenshots — they randomize every match.", "Only one player needs to identify the symbols and open the Egg chamber for the team."], "look": "Your three recorded symbols will be selected from the 9-symbol wall Underground.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/symbol_footlight.webp", "tag": "sword", "warn": "The screenshots are location references only. The actual symbol shapes in your match will be different.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_031_069d6ef3.webp"}, {"id": "SW-04", "title": "Shock the 3 matching symbols underground", "do": ["Go to the Underground.", "Enter Beast Mode.", "Shock ONLY the 3 symbols you saw from the train."], "look": "Symbol wall left of the GobbleGum machine.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/wall_with_symbols.webp", "tag": "sword", "warn": "If you shock a wrong symbol, the board resets. Retry on the next round.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_032_a314b296.webp"}, {"id": "SW-05", "title": "Pick up your Egg", "do": ["The symbol wall disappears.", "Approach the stone Sword structure.", "Each player takes their own Egg."], "look": "Stone structure containing the Sword Eggs.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/stone_structure.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_033_e8452afe.webp"}, {"id": "SW-06A", "title": "Charge Statue 1 — Underground", "do": ["Melee open the tall wooden box in Beast Mode.", "Place the Egg on the Apothicon statue.", "Kill about 12 zombies near it.", "Pick the Egg back up when it stops taking souls."], "look": "Statue directly in front of the Sword area.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/wooden_box_underground.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_034_c1eb3c09.webp"}, {"id": "SW-06B", "title": "Charge Statue 2 — Canals", "do": ["Open the tall wooden box behind the Ruby Rabbit.", "Place the Egg.", "Feed it zombie souls.", "Pick it back up."], "look": "Wooden box at the back of Canals.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/wooden_box_canals.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_035_73520398.webp"}, {"id": "SW-06C", "title": "Charge Statue 3 — Waterfront", "do": ["Open the tall wooden box in the destroyed building at the front of Waterfront.", "Place the Egg and charge it with zombie kills."], "look": "Upper ruined Waterfront building.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/wooden_box_waterfront.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_036_a2e7fde3.webp"}, {"id": "SW-06D", "title": "Charge Statue 4 — Footlight", "do": ["Open the tall wooden box in the covered area near the Vesper wallbuy.", "Place the Egg and charge it with zombie kills."], "look": "Wooden box at the front of Footlight.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/wooden_box_footlight.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_037_95e383aa.webp"}, {"id": "SW-07", "title": "Claim the Apothicon Sword", "do": ["Return the fully charged Egg to the Sword structure Underground.", "Wait for the animation.", "Pick up your Sword."], "look": "Your character's Sword becomes available from the stone structure.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/stone_structure.webp", "tag": "sword", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_033_e8452afe.webp"}]}, {"title": "Upgrade the Sword → Keeper Sword", "summary": "Character ritual table → 4 Margwa challenges → return Sword to Ghost Keeper.", "effect": "REQUIRED for the main quest. Upgraded secondary attack summons a floating sword that attacks enemies by itself.", "steps": [{"id": "USW-01", "title": "Get the upgrade Egg from your character's Ghost Keeper", "do": ["Go to YOUR character's original ritual room.", "Interact with the Ghost Keeper above/on the ritual table.", "Take the new Egg."], "look": "Ghost Keeper hovering at the ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/keeper_sword/ghost_keeper.webp", "tag": "sword", "warn": "", "note": "Nero = Junction • Jack = Canals • Floyd = Waterfront • Jessica = Footlight.", "source": "MMMR Kennedy", "asset": "assets/soe_038_bf658b9c.webp"}, {"id": "USW-02", "title": "Complete 4 Margwa ritual circles", "do": ["Place the upgrade Egg on a glowing ritual symbol in a district.", "A Margwa spawns.", "Kill the Margwa(s) to charge that location.", "Repeat for Junction, Canals, Waterfront, and Footlight.", "Only one upgrade ritual per player can be completed each round."], "look": "Ground ritual symbols are near: Junction crane area, Ruby Rabbit entrance, Boxing Gym entrance, and Black Lace entrance.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/keeper_sword/symbol_junction.webp", "tag": "sword", "warn": "A later ritual can spawn TWO Margwas.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_039_0eda9365.webp"}, {"id": "USW-03", "title": "Return the Sword to the Ghost Keeper", "do": ["After all 4 upgrade rituals, return to your character's ritual room.", "Interact with the Ghost Keeper to give it your Sword.", "Wait a few seconds.", "Take the upgraded Keeper Sword."], "look": "Ghost Keeper at your character's ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/keeper_sword/ghost_keeper.webp", "tag": "sword", "warn": "Do NOT use the upgraded Sword's floating-sword secondary inside the Pack-a-Punch room; the visual guide warns this can crash the game.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_038_bf658b9c.webp"}]}, {"title": "Rocket Shield — Part 1: Window — Footlight", "summary": "The Window spawns in ONE of these 3 powered upper-Footlight spots.", "steps": [{"id": "SH-F1", "title": "Window spawn A — bench across from perk", "do": ["Check the bench across from the rotating perk machine."], "look": "Upper Footlight perk area.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/window_bench.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_040_7b70df06.webp"}, {"id": "SH-F2", "title": "Window spawn B — fence left of perk", "do": ["Check along the fence to the left of the perk machine."], "look": "Upper Footlight.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/window_perk.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_041_09582d9a.webp"}, {"id": "SH-F3", "title": "Window spawn C — chair in stair room", "do": ["Check the chair in the stair room right of the Mystery Box area."], "look": "Powered Footlight staircase room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/window_chair.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_042_e0fbb898.webp"}]}, {"title": "Rocket Shield — Part 2: Base — Canals", "summary": "The Base spawns in ONE of these 3 powered upper-Canals spots.", "steps": [{"id": "SH-C1", "title": "Base spawn A — Lion statue room", "do": ["Check the wall left of the Harvest Pod in the room with the lion statues."], "look": "Powered Canals room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/base_stairs.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_043_75bb559b.webp"}, {"id": "SH-C2", "title": "Base spawn B — elevated bridge", "do": ["Check the bridge leading to the perk-machine room."], "look": "Upper Canals bridge.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/base_bridge.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_044_e08de4a3.webp"}, {"id": "SH-C3", "title": "Base spawn C — perk room window", "do": ["Check the window inside the perk-machine room."], "look": "Upper Canals perk room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/base_window.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_045_64a83d9e.webp"}]}, {"title": "Rocket Shield — Part 3: Rockets — Waterfront", "summary": "The Rockets spawn in ONE of these 3 powered upper-Waterfront spots.", "steps": [{"id": "SH-W1", "title": "Rockets spawn A — top of powered stairs", "do": ["Check immediately at the top of the powered Waterfront staircase."], "look": "Upper Waterfront.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rocket_stairs.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_046_91c64e7b.webp"}, {"id": "SH-W2", "title": "Rockets spawn B — perk room window", "do": ["Check under the window across from the Beast Mode chalice inside the perk room."], "look": "Upper Waterfront perk room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rocket_window.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_047_e80f4943.webp"}, {"id": "SH-W3", "title": "Rockets spawn C — ruined room by outside door", "do": ["Check the room with the tall wooden Sword-statue box, left of the door outside."], "look": "Destroyed upper Waterfront building.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rockets_door.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_048_ac280b5c.webp"}, {"id": "SH-BUILD", "title": "Build the Rocket Shield", "do": ["Take Window + Base + Rockets to any crafting table.", "Craft it in Waterfront, Canals, or Footlight."], "look": "Rocket Shield blocks hits from behind and has a powerful boost attack.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rockets_door.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_048_ac280b5c.webp"}]}, {"title": "Civil Protector — All Fuse Spawns", "summary": "Collect ONE blue fuse from each district, then install them Underground.", "effect": "After all 3 fuses are installed, pay 2,000 points at a Civil Protector call box. The robot follows players, kills enemies, and can revive downed players before it eventually expires.", "steps": [{"id": "CP-F1", "title": "Footlight fuse A — HVK/crafting-table corner", "do": ["Check the corner between the crafting table and HVK-30 wallbuy."], "look": "Upper Footlight near train station.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/footlight_hvk.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_049_66b9f793.webp"}, {"id": "CP-F2", "title": "Footlight fuse B — bridge pillar", "do": ["Check the pillar on the bridge left of the crafting table."], "look": "Upper Footlight bridge.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/footlight_bridge.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_050_b351d095.webp"}, {"id": "CP-F3", "title": "Footlight fuse C — covered barrel", "do": ["Check the cloth-covered barrel up the stairs on the perk-machine side."], "look": "Upper Footlight.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/footlight_barrel.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_051_5cad5adc.webp"}, {"id": "CP-C1", "title": "Canals fuse A — KN-44 bridge side", "do": ["Check the bridge near the train station across from the KN-44 wallbuy."], "look": "Upper Canals.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/canals_kn44.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_052_9a34df86.webp"}, {"id": "CP-C2", "title": "Canals fuse B — fruit cart", "do": ["Check the fruit cart in the middle of the same bridge."], "look": "Upper Canals bridge.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/canals_bridge.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_053_0254c306.webp"}, {"id": "CP-C3", "title": "Canals fuse C — perk-side box", "do": ["Check the box on the perk-machine-room side of the bridge."], "look": "Upper Canals.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/canals_perk.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_054_d91f13a3.webp"}, {"id": "CP-W1", "title": "Waterfront fuse A — box by Mystery Box", "do": ["Check the box left of the Mystery Box location near the train station."], "look": "Upper Waterfront.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/waterfront_box.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_055_d630f25e.webp"}, {"id": "CP-W2", "title": "Waterfront fuse B — railing", "do": ["Check the railing across from the Mystery Box location."], "look": "Upper Waterfront.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/waterfront_railing.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_056_7392fc8c.webp"}, {"id": "CP-W3", "title": "Waterfront fuse C — barrel by Beast chalice", "do": ["Check the barrel near the Beast Mode chalice across the M8A7 bridge."], "look": "Upper Waterfront.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/waterfront_barrel.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_057_c48595cc.webp"}, {"id": "CP-10", "title": "Install all 3 fuses Underground", "do": ["Go Underground.", "Find the fuse box right of the Footlight Rift.", "Insert all 3 district fuses.", "Civil Protector call boxes are now active."], "look": "Fuse panel in the Underground.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/civil_protector/fuse_box.webp", "tag": "buildable", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_058_acec447b.webp"}]}, {"title": "Apothicon Servant", "summary": "Margwa Heart + Xenomatter + Margwa Tentacle.", "effect": "Wonder Weapon that creates a purple vortex and instantly kills normal zombies sucked into it regardless of round.", "steps": [{"id": "AS-01", "title": "Part 1 — Margwa Heart", "do": ["Kill your first Margwa.", "Pick up the Heart it drops."], "look": "Heart on the ground after the Margwa dies.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_servant/margwa_heart.webp", "tag": "wonder", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_059_d3ee86a8.webp"}, {"id": "AS-02", "title": "Part 2 — Xenomatter", "do": ["Starting on Round 13, kill Parasites and Insanity Elementals (Meatballs).", "Each eligible kill has roughly a 10% chance to drop Xenomatter.", "Pick up the green Xenomatter before it disappears."], "look": "Small alien-material pickup.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_servant/xenomatter.webp", "tag": "wonder", "warn": "", "note": "Cross-checked against the current visual guide and current map references: use Round 13+ as the reliable rule.", "source": "MMMR Kennedy", "asset": "assets/soe_060_8e1d6e3f.webp"}, {"id": "AS-03", "title": "Part 3 — Margwa Tentacle", "do": ["Let Harvest Pods mature to PURPLE.", "Open purple pods with a Fumigator until a Tentacle drops."], "look": "Tentacle reward from a purple pod.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_servant/tentacle.webp", "tag": "wonder", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_061_040c5675.webp"}, {"id": "AS-04", "title": "Build the Apothicon Servant", "do": ["Craft it at the Waterfront, Canals, or Footlight crafting table."], "look": "Only one player can hold the built Servant at a time; additional players can obtain it from the Mystery Box after it has been built.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_servant/tentacle.webp", "tag": "wonder", "warn": "", "note": "On Shadows of Evil it cannot be Pack-a-Punched through normal gameplay.", "source": "MMMR Kennedy", "asset": "assets/soe_061_040c5675.webp"}]}]}, {"id": "main", "number": "4", "title": "Main Quest — Apocalypse Averted", "subtitle": "Verified flow: upgraded Swords → Nero's book → 4 district Flag completions → Shadowman → 4-player Giant Gateworm finale. Flag DISTRICT order is flexible.", "groups": [{"title": "Prerequisites", "summary": "Do these before touching Nero's book.", "steps": [{"id": "MQ-00", "title": "Have 4 players for the full Easter Egg", "do": ["If you want the actual final step and ending cutscene, start with FOUR players.", "With fewer than 4, you can still complete Pack-a-Punch, upgrade swords, defend flags, and defeat/capture the Shadowman.", "The quest ends there without the final Gateworm sequence."], "look": "", "image": "", "tag": "required", "warn": "For your friend's story run, use 4 players.", "note": "", "source": "MMMR Kennedy"}, {"id": "MQ-01", "title": "Unlock Pack-a-Punch", "do": ["Complete all 5 rituals in Section 2."], "look": "Pack-a-Punch blue Rift should be active.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/pap.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_028_d72f2902.webp"}, {"id": "MQ-02", "title": "EVERY player gets an Upgraded Keeper Sword", "do": ["Each player must obtain an Apothicon Sword.", "Each player must complete their own 4 Margwa sword-upgrade rituals.", "Each player must claim their upgraded Keeper Sword."], "look": "All player HUDs should show the upgraded Sword ready.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/apothicon_sword/keeper_sword/ghost_keeper.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_038_bf658b9c.webp"}]}, {"title": "Phase 1 — Start the Flag Step", "summary": "Nero's book → flag drops Underground.", "steps": [{"id": "MQ-03", "title": "Interact with Nero's floating book", "do": ["Go to Nero's ritual room.", "Find the open book on the floor in front of the large bookshelf.", "Interact with it.", "The book begins floating."], "look": "Open book on the carpet near the bookshelf.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/book.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_062_e63b0d7f.webp"}, {"id": "MQ-04", "title": "Pick up the Flag Underground", "do": ["Go Underground near Widow's Wine.", "Pick up the Flag.", "Normal zombies despawn.", "Meatballs and Parasites begin spawning rapidly.", "Choose ANY district that still needs its two Flag defenses."], "look": "The Flag falls from the ceiling near Widow's Wine.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/flag.webp", "tag": "required", "warn": "Picking up the Flag despawns normal enemies and starts Meatball + Parasite attacks.", "note": "Verified: the 8 spark locations can be tackled in any order. The easiest method is to do BOTH spots in one district, deliver the Flag to that district's ritual Keeper, then finish the round.", "source": "MMMR Kennedy", "asset": "assets/soe_063_be8d706c.webp"}]}, {"title": "Flag District — Junction (guide order only)", "summary": "Two Junction markers → Nero's Ghost Keeper. You may do another district first.", "steps": [{"id": "MQ-J1", "title": "Junction defense 1 — Footlight entrance", "do": ["Place the Flag on the lightning marker.", "Defend it for about 30 seconds.", "Kill Meatballs before they reach it.", "Shoot the Shadowman whenever he appears."], "look": "Lightning marker in front of the Footlight entrance.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/footlight_entrance.webp", "tag": "flag", "warn": "Shoot the Shadowman as soon as he appears; leaving him active makes the defense much harder.", "note": "If the Flag is destroyed or the carrier goes down, the Flag reappears Underground and you can retry IMMEDIATELY in the same round. Only a SUCCESSFUL district completion forces you to advance the round.", "source": "MMMR Kennedy", "asset": "assets/soe_064_139697d6.webp"}, {"id": "MQ-J2", "title": "Junction defense 2 — GobbleGum side", "do": ["Move the Flag to the second Junction lightning marker.", "Defend it again until it pulses red."], "look": "Marker near the Junction GobbleGum machine / Stamin-Up side.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/junction_stamin.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_065_a4609511.webp"}, {"id": "MQ-J3", "title": "Give the Flag to Nero's Ghost Keeper", "do": ["Carry the charged Flag to Nero's ritual room.", "Place it at the Ghost Keeper.", "End the current round before the next district Flag will spawn."], "look": "Ghost Keeper above Nero's ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/ghost_keeper.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_066_d6e742d1.webp"}]}, {"title": "Flag District — Footlight (guide order only)", "summary": "Two Footlight markers → Jessica's Ghost Keeper. District order is flexible.", "steps": [{"id": "MQ-F1", "title": "Footlight defense 1 — Vesper/front entrance", "do": ["Defend the Flag on the marker near the Vesper wallbuy at the front of the district."], "look": "Lightning marker at the Footlight entrance.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/footlight_entrance.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_064_139697d6.webp"}, {"id": "MQ-F2", "title": "Footlight defense 2 — KN-44 / Black Lace street", "do": ["Move the Flag to the street marker near the KN-44 wallbuy / Black Lace.", "Defend until it pulses red."], "look": "Second Footlight marker.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/footlight_kn44.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_067_a3c6b56f.webp"}, {"id": "MQ-F3", "title": "Give Flag to Jessica's Keeper", "do": ["Take it to the Black Lace ritual table.", "Place it at Jessica's Ghost Keeper.", "End the round."], "look": "Black Lace ritual room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/ritual_table.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_024_9007ce1d.webp"}]}, {"title": "Flag District — Waterfront (guide order only)", "summary": "Two Waterfront markers → Floyd's Ghost Keeper. District order is flexible.", "steps": [{"id": "MQ-W1", "title": "Waterfront defense 1 — district entrance", "do": ["Defend the Flag immediately inside Waterfront from Junction."], "look": "Entrance marker.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/waterfront_stairs.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_068_594f55d3.webp"}, {"id": "MQ-W2", "title": "Waterfront defense 2 — train-station stairs", "do": ["Move to the second marker near the bottom of the train-station stairs.", "Defend until it pulses red."], "look": "Waterfront Mystery Box / station-side marker.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/waterfront_mystery_box.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_069_a10e9ff9.webp"}, {"id": "MQ-W3", "title": "Give Flag to Floyd's Keeper", "do": ["Take it to the Boxing Gym ritual table.", "Give it to Floyd's Ghost Keeper.", "End the round."], "look": "Boxing Gym ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/floyd_waterfront/ritual_table.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_020_50656d94.webp"}]}, {"title": "Flag District — Canals (guide order only)", "summary": "Two Canals markers → Jack's Ghost Keeper. District order is flexible.", "steps": [{"id": "MQ-C1", "title": "Canals defense 1 — district entrance", "do": ["Defend the Flag at the marker right inside the Canals entrance from Junction."], "look": "Canals entrance marker.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/canals_entrance.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_070_e3970f4f.webp"}, {"id": "MQ-C2", "title": "Canals defense 2 — across from Ruby Rabbit", "do": ["Move to the second marker across the canal from Ruby Rabbit.", "Defend until the Flag pulses red."], "look": "Ruby Rabbit-side Canals marker.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/canals_rabbit.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_071_ed17b4f2.webp"}, {"id": "MQ-C3", "title": "Give Flag to Jack's Keeper", "do": ["Take it to the Ruby Rabbit ritual table.", "Give it to Jack's Ghost Keeper."], "look": "Ruby Rabbit ritual room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jack_canals/ritual_table.webp", "tag": "flag", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_016_be90f7b7.webp"}]}, {"title": "Phase 6 — Give the Keepers Your Swords", "summary": "All 4 Keepers appear in the Pack-a-Punch room.", "steps": [{"id": "MQ-20", "title": "Return to Pack-a-Punch", "do": ["After all four district Keepers receive a Flag, go to the Pack-a-Punch room.", "Four Ghost Keepers appear beside the Gateworm pedestals."], "look": "Keepers around the Pack-a-Punch room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/keeper_pap_room.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_072_c6c3a7ce.webp"}, {"id": "MQ-21", "title": "Each player gives one Keeper their upgraded Sword", "do": ["Each of the four players chooses a Keeper.", "Interact to hand over your upgraded Keeper Sword.", "When the fourth Sword is given, the Shadowman fight starts."], "look": "Keeper/Gateworm pedestal positions around the room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/keeper_pap_room.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_072_c6c3a7ce.webp"}]}, {"title": "Phase 7 — Shadowman Boss Fight", "summary": "Break shield → shoot him around the room → force him above the ritual table → capture him.", "steps": [{"id": "MQ-22", "title": "Activate Keepers / break the Shadowman's shield", "do": ["The Keepers beam the Shadowman and remove his shield.", "When he is stunned, everyone shoots him immediately."], "look": "Shadowman in the center with Keepers firing at him.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/keeper_pap_room.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_072_c6c3a7ce.webp"}, {"id": "MQ-23", "title": "Shoot the Shadowman toward the ritual table", "do": ["As soon as the Keepers break his shield, focus-fire the Shadowman.", "Keep shooting him as he teleports backward around the room.", "Force him directly above the ritual table near the entrance.", "You initially have about 9 seconds before he resets."], "look": "Shadowman hovering over the table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/shadowman_above_table.webp", "tag": "required", "warn": "If the window expires, he returns to the center with his shield and a Margwa spawns.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_073_29b08d5e.webp"}, {"id": "MQ-24", "title": "Capture the Shadowman", "do": ["When he is directly above the ritual table, interact with the table.", "The Shadowman is pulled into the Summoning Key."], "look": "Ritual table under the Shadowman.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/shadowman_above_table.webp", "tag": "required", "warn": "", "note": "If you fail a capture attempt, reactivate all four Keepers to break his shield again. The game gives roughly 2 additional seconds on each later attempt.", "source": "MMMR Kennedy", "asset": "assets/soe_073_29b08d5e.webp"}]}, {"title": "Phase 8 — FINAL 4-Player Gateworm Sequence", "summary": "Cleanse corruption → kill purple Margwas → infinite Beast Mode → hit Gateworm with train → electrify rails + all 3 Keepers.", "effect": "Completing this step triggers the full ending cutscene and gives the Shadows of Evil Gateworm completion icon.", "steps": [{"id": "MQ-25", "title": "Cleanse the red corruption", "do": ["After the Shadowman is captured, all four players become corrupted.", "When red mist appears, find and walk through a WHITE ORB.", "A white orb always appears on the Pack-a-Punch ritual table.", "Cleanse within about 15 seconds or you will be downed.", "Corruption returns roughly every 30–45 seconds until the finale is completed."], "look": "Bright white orb in the Underground / ritual area.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/white_orb.webp", "tag": "required", "warn": "If you fail to cleanse within about 15 seconds, you are downed. Corruption returns periodically.", "note": "If corrupted while in Beast Mode and you fail to cleanse, the current visual guide documents a 40% loss to the Beast meter instead of an immediate human-form down.", "source": "MMMR Kennedy", "asset": "assets/soe_074_c0f4cf60.webp"}, {"id": "MQ-26", "title": "Kill a purple-mouth Margwa to activate Beast chalices", "do": ["Normal zombies stop spawning.", "Purple-mouth Margwas spawn instead.", "Kill one to activate Beast Mode chalices around the map."], "look": "Special purple-mouth Margwa.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/purple_margwa.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_075_945b4a34.webp"}, {"id": "MQ-27", "title": "Use infinite-duration Beast Mode", "do": ["During this phase, Beast Mode does not expire from time.", "Margwas CAN still attack and damage your Beast meter.", "Position players before calling the train."], "look": "Beast Mode is used for rail and Keeper shocks.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/beast_mode/beast_mode_chalice.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_001_82f4a45e.webp"}, {"id": "MQ-28", "title": "Know the target — Giant Gateworm + 3 Keepers", "do": ["The Giant Gateworm sits where the three train tracks meet in Junction.", "Three Keepers surround it.", "The train must physically hit and remove the Giant Gateworm.", "While the Gateworm is gone, ALL 3 train rails must be electrified.", "At the same time, ALL 3 Keepers must be shocked in Beast Mode.", "If all conditions overlap, the Keepers fire the final beam."], "look": "Giant Gateworm and Keeper setup in Junction.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/keepers_and_big_gateworm.webp", "tag": "required", "warn": "", "note": "If the timing fails, the Giant Gateworm respawns and you can set up another attempt.", "source": "MMMR Kennedy", "asset": "assets/soe_076_c824f101.webp"}, {"id": "MQ-29", "title": "Players 1 & 2 — wait in train stations in Beast Mode", "do": ["Take Beast Mode at two train stations.", "Wait beside the station rail fuse box.", "When the train starts moving, repeatedly shock the fuse box."], "look": "Station fuse box above/near the train doors.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/train_fuse_example.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_077_01f988b1.webp"}, {"id": "MQ-30", "title": "Player 3 — CALL THE TRAIN, then shock your station", "do": ["Stay human until everyone is ready.", "Call the train from your station.", "Immediately enter Beast Mode.", "Shock your rail fuse box while the train is moving."], "look": "The rails glow blue when successfully electrified.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/electric_rails.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_078_20751d49.webp"}, {"id": "MQ-31", "title": "Player 4 — shock all 3 Keepers", "do": ["Enter Beast Mode.", "Wait in the Canals below the Giant Gateworm.", "As soon as the train is called, repeatedly shock the bottom of ALL THREE Keepers.", "Keep shocking until they fire the final beam."], "look": "Canals position below the Junction Gateworm.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/where_to_stand_junction.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_079_e63c30bf.webp"}, {"id": "MQ-32", "title": "Train Station rail fuse — Canals", "do": ["Shock the fuse above the back train door while the train is moving."], "look": "Canals train fuse box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/train_fuse_canals.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_080_0ea0442b.webp"}, {"id": "MQ-33", "title": "Train Station rail fuse — Waterfront", "do": ["Shock the fuse above the back train door while the train is moving."], "look": "Waterfront train fuse box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/train_fuse_waterfront.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_081_5b6b22eb.webp"}, {"id": "MQ-34", "title": "Train Station rail fuse — Footlight", "do": ["Shock the fuse between the train doors while the train is moving."], "look": "Footlight train fuse box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/train_fuse_footlight.webp", "tag": "role", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_082_0b1d9954.webp"}, {"id": "MQ-35", "title": "Final beam → cutscene", "do": ["If the train destroys the Giant Gateworm while the rails and all three Keepers are electrified, the Keepers fire a beam into the sky.", "A few seconds later, the ending cutscene starts."], "look": "This is the full Shadows of Evil story ending.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/keepers_and_big_gateworm.webp", "tag": "required", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_076_c824f101.webp"}]}]}, {"id": "side", "number": "5", "title": "Side Easter Eggs & Upgrades", "subtitle": "Each section explains WHAT IT DOES before the steps.", "groups": [{"title": "Goddard Apparatus — Upgraded Rocket Shield", "summary": "Get 12 consecutive 'bowling strikes' with the Shield boost.", "effect": "Upgrades the Rocket Shield with more durability and FOUR rocket boosts instead of three.", "steps": [{"id": "SE-SH1", "title": "Get a 10+ zombie Shield strike", "do": ["Line up a large horde.", "Use the Rocket Shield boost through at least 10 zombies in one charge.", "Listen for the bowling-strike sound."], "look": "A successful charge must kill/hit at least 10 zombies.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rockets_door.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_048_ac280b5c.webp"}, {"id": "SE-SH2", "title": "Repeat 12 times without failing", "do": ["Repeat the 10+ zombie strike 12 times.", "If a charge hits fewer than 10, the streak resets.", "After the 12th success, the Shield upgrades automatically."], "look": "A cheering sound confirms the upgrade.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/rocket_shield/rockets_door.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_048_ac280b5c.webp"}]}, {"title": "Margwa Mask", "summary": "Kill 6 Margwas → shoot 6 hidden hearts from the train in only 2 rides → collect the invisible mask.", "effect": "You take 25% LESS damage from Margwa slam attacks and deal 15% MORE damage to Margwas.", "steps": [{"id": "SE-MM1", "title": "Kill 6 Margwas", "do": ["Accumulate six Margwa kills in the match."], "look": "Main quest and Sword upgrades can spawn enough Margwas.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/main_ee/purple_margwa.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_075_945b4a34.webp"}, {"id": "SE-MM2", "title": "Shoot all 6 Margwa hearts from the moving train", "do": ["The six hearts appear after the kill requirement.", "Shoot all six within TWO train rides.", "Recommended route: Waterfront → Footlight, then Footlight → Canals."], "look": "Hearts are placed on signs/buildings around the train route.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/margwa_mask/heart_gas_electric.webp", "tag": "optional", "warn": "If you do not get all six within two rides, they reset and must all be shot again.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_083_8aac62c4.webp"}, {"id": "SE-MM3", "title": "Pick up the invisible Mask", "do": ["A Mask spawns in a ritual room.", "Look for a flashing/glinting spot.", "Interact with the flash to equip it."], "look": "You may need a teammate or your shadow to confirm the mask visually.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/margwa_mask/mask_flash.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_084_426f6c87.webp"}]}, {"title": "Upgraded Lil' Arnies", "summary": "100 Arnie kills → sacrifice Top Hat, Cane, Bow Tie → finish at Black Lace.", "effect": "Upgraded Arnies are purple, last longer, deal more damage, and take more damage from Margwas; Max Ammo refills the upgraded version afterward.", "steps": [{"id": "SE-LA1", "title": "Get 100 Lil' Arnie kills", "do": ["Obtain Lil' Arnies from the Mystery Box.", "Get 100 total Arnie kills across the team."], "look": "There is no on-screen confirmation at 100.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/lil_arnies/top_hat.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_085_a917acbb.webp"}, {"id": "SE-LA2", "title": "Throw an Arnie at Nero's Top Hat", "do": ["Find the Top Hat on a mannequin head in Nero's room.", "Throw a Lil' Arnie directly at it."], "look": "The item disappears when accepted.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/lil_arnies/top_hat.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_085_a917acbb.webp"}, {"id": "SE-LA3", "title": "Throw an Arnie at the Cane in Ruby Rabbit", "do": ["Find the Cane leaning against the green couch on the bottom floor.", "Throw a Lil' Arnie at it."], "look": "The Cane disappears.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/lil_arnies/cane.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_086_4c618b96.webp"}, {"id": "SE-LA4", "title": "Throw an Arnie at the Bow Tie in Boxing Gym", "do": ["Find the Bow Tie on a shelf in the back changing room.", "Throw a Lil' Arnie at it."], "look": "The Bow Tie disappears.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/lil_arnies/bow_tie.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_087_c966b407.webp"}, {"id": "SE-LA5", "title": "Finish at Black Lace ritual table", "do": ["Throw a Lil' Arnie at Jessica's ritual table in Black Lace.", "After the animation, collect the three upgraded Arnies."], "look": "Upgraded Arnies appear purple.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/jessica_footlight/ritual_table.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_024_9007ce1d.webp"}]}, {"title": "Upgraded Trip Mines — Devil-O-Donuts or Holly's Cream Cakes", "summary": "Choose a side and destroy the OPPOSING carts with Trip Mine explosions.", "effect": "Trip Mines get a stronger, larger explosion and visually turn into donuts or cream cakes. Both paths perform the same; the difference is cosmetic.", "steps": [{"id": "SE-TM1", "title": "Buy Trip Mines", "do": ["Buy Trip Mines from the wall outside the Boxing Gym in Waterfront."], "look": "Trip Mine wallbuy.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/trip_mines/trip_mine_wallbuy.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_088_bf1ea58e.webp"}, {"id": "SE-TM2", "title": "Choose your side", "do": ["To help DEVIL-O-DONUTS: damage Holly's carts.", "To help HOLLY'S: damage Devil-O-Donuts carts.", "Do not damage a cart belonging to the side you are helping."], "look": "Correct hits play an audio cue.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/trip_mines/hollys_cart.webp", "tag": "optional", "warn": "Hitting your own side's cart permanently locks you out of the upgrade for that game.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_089_64277238.webp"}, {"id": "SE-TM3", "title": "Destroy all required opposing carts", "do": ["Use Trip Mine explosions beside each opposing cart.", "After the final correct cart, your Trip Mines upgrade automatically."], "look": "The placed mines visually become the chosen pastry.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/trip_mines/devil_cart.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_090_14f24b46.webp"}]}, {"title": "Free Mega GobbleGum", "summary": "Widow's Wine grenades into 4 lion mouths → white gum → Ice Cream Shop → wait 1 round.", "effect": "Awards one free random Mega GobbleGum.", "steps": [{"id": "SE-GG1", "title": "Get Widow's Wine", "do": ["Buy Widow's Wine in the Underground."], "look": "Widow's Wine perk machine.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/free_mega_gobblegum/lions.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_091_839bdc3e.webp"}, {"id": "SE-GG2", "title": "Grenade all 4 lion statues", "do": ["Open the powered Canals staircase room.", "Throw one Widow's Wine grenade into EACH lion statue's mouth."], "look": "Four lion heads mounted around the room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/free_mega_gobblegum/lions.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_091_839bdc3e.webp"}, {"id": "SE-GG3", "title": "Take the white GobbleGum", "do": ["After all four lions are hit, a plain white GobbleGum appears in one lion's mouth.", "Pick it up."], "look": "Small white gum in a lion mouth.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/free_mega_gobblegum/white_gum.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_092_53fe97ab.webp"}, {"id": "SE-GG4", "title": "Plant it at the Ice Cream Shop", "do": ["Go to the Ice Cream Shop in Junction.", "Interact with the plate in the window.", "Complete one full round.", "Return and collect the grown gum."], "look": "Plate in the shop window.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/free_mega_gobblegum/ice_cream.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_093_768b398d.webp"}]}, {"title": "Sal's Laundry Ticket — Free 500 Points", "summary": "Grenade the laundry ticket out of Chang's Laundry.", "effect": "Gives the player who picks it up 500 points.", "steps": [{"id": "SE-SAL1", "title": "Cook a grenade at Chang's Laundry", "do": ["Just outside Spawn, aim at the piece of paper on the hanging laundry.", "Cook and throw the grenade so it explodes beside the paper."], "look": "Paper/ticket inside Chang's Laundry.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/sals_laundry/ticket.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_094_37e9f3bf.webp"}, {"id": "SE-SAL2", "title": "Pick up the ticket", "do": ["If successful, the paper lands on the box in front of the shop.", "Pick it up for 500 points."], "look": "Ticket on the outside box.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/sals_laundry/ticket_box.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_095_3b90d584.webp"}]}, {"title": "Snakeskin Boots — Secret Song", "summary": "Interact with 3 wooden clocks.", "effect": "Plays 'Snakeskin Boots' by Jack Wall / Malukah. Music-only Easter egg.", "steps": [{"id": "SE-SB1", "title": "Clock 1 — Ruby Rabbit", "do": ["Interact with the wooden clock on the bottom floor of Ruby Rabbit, left of the entrance."], "look": "Clock on the table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/snakeskin_boots_song/clock_rabbit.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_096_b049f911.webp"}, {"id": "SE-SB2", "title": "Clock 2 — Footlight train station", "do": ["Interact with the clock on the bench right of the GobbleGum machine."], "look": "Clock on the train-station bench.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/snakeskin_boots_song/clock_train.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_097_76120a48.webp"}, {"id": "SE-SB3", "title": "Clock 3 — Boxing Gym", "do": ["Interact with the clock on the desk on the upper level of the Boxing Gym."], "look": "Clock on the upstairs desk.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/snakeskin_boots_song/clock_gym.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_098_b1499e1e.webp"}]}, {"title": "Cold Hard Cash — Second Secret Song", "summary": "Collect Mic Stand + Wire + Microphone, then activate the Footlight stage.", "effect": "Plays 'Cold Hard Cash'. Music-only Easter egg.", "steps": [{"id": "SE-CH1", "title": "Mic Stand — Nero's Room", "do": ["Pick up the Mic Stand between the large saw and knife-throwing board."], "look": "Stage equipment in Nero's room.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/cold_hard_cash_song/mic_stand.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_099_0f43fb28.webp"}, {"id": "SE-CH2", "title": "Wire — Canals", "do": ["Pick up the Wire under the stairs leading down to the canal near the ethereal-wall PAP step."], "look": "Wire under the stairs.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/cold_hard_cash_song/wire.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_100_0b95fb72.webp"}, {"id": "SE-CH3", "title": "Microphone — Underground", "do": ["Pick up the Microphone left of the crafting bench near the Waterfront Rift."], "look": "Microphone pickup.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/cold_hard_cash_song/microphone.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_101_cf215d32.webp"}, {"id": "SE-CH4", "title": "Activate the stage", "do": ["The 3 items automatically appear on the Black Lace stage.", "Interact with the Mic Stand to start the song."], "look": "Stage in front of Jessica's ritual table.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/cold_hard_cash_song/stage.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_102_f6ba0832.webp"}]}, {"title": "Noire Mode", "summary": "Hidden interaction in the Boxing Gym.", "effect": "Turns the entire game view black-and-white for the rest of the match. It cannot be turned off.", "steps": [{"id": "SE-NR1", "title": "Go upstairs in the Boxing Gym", "do": ["Find the row of boxer photographs above the window overlooking the ring."], "look": "Photo row above the ring.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/noire_mode/pictures.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_103_bb558313.webp"}, {"id": "SE-NR2", "title": "Perform the hidden reload interaction", "do": ["Crouch at the front-right corner of the desk.", "Hold Reload while looking at your feet.", "Slowly move your crosshair straight upward toward the specified photo."], "look": "The correct photo is left of the cipher picture.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/noire_mode/picture.webp", "tag": "optional", "warn": "Noire Mode cannot be deactivated once triggered.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_104_bfe649d1.webp"}]}, {"title": "Richtofen Jump Scare", "summary": "Pack-a-Punch + scoped sniper → aim at the glowing ship window.", "effect": "Triggers a brief Richtofen face/jump-scare visual.", "steps": [{"id": "SE-JS1", "title": "Get a scoped sniper", "do": ["Unlock Pack-a-Punch.", "Get a scoped sniper from the Mystery Box."], "look": "There are no sniper wallbuys on the map.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/jumpscare/ship_window.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_105_72b4394d.webp"}, {"id": "SE-JS2", "title": "Aim at the glowing ship window", "do": ["From Waterfront near the Boxing Gym, aim at the glowing window on the large ship in the harbor.", "Zoom in with the sniper scope."], "look": "Small glowing window on the distant ship.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/jumpscare/ship_window.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_105_72b4394d.webp"}]}, {"title": "Mob of the Dead Plane Fly-Over", "summary": "Automatic visual Easter egg after Pack-a-Punch is opened.", "effect": "The Mob of the Dead plane flies over Morg City — a story/reference Easter egg.", "steps": [{"id": "SE-PLANE1", "title": "Unlock Pack-a-Punch", "do": ["Complete the 5 rituals."], "look": "Pack-a-Punch must be active.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/pap/pap.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_028_d72f2902.webp"}, {"id": "SE-PLANE2", "title": "Return to Junction", "do": ["The first time any player enters Junction after PaP is opened, look overhead.", "The plane flies roughly Waterfront → Canals."], "look": "Watch the sky above Junction.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/plane_flyover/plane.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_106_467ed76a.webp"}]}, {"title": "Shadowman Round Skip", "summary": "At the VERY START of the match, shoot the Shadowman above Spawn.", "effect": "Lets you instantly jump to Round 5, 10, or 15 and awards increasing starting points.", "steps": [{"id": "SE-RS1", "title": "Shoot the Shadowman before he disappears", "do": ["At Round 1, look at the fire escape above the door from Spawn to Junction.", "Shoot the Shadowman repeatedly."], "look": "Shadowman standing above the Spawn exit.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/round_skip/shadowman.webp", "tag": "optional", "warn": "If nobody damages him for about 5 seconds, he disappears and the skip is locked for that match.", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_107_ff5ae155.webp"}, {"id": "SE-RS2", "title": "Choose how far to skip", "do": ["Stop after Round 5 for 1000 points.", "Keep shooting to Round 10 for 4000 total points.", "Keep shooting to Round 15 for 11000 total points."], "look": "The round number jumps immediately as damage thresholds are reached.", "image": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/pictures/round_skip/shadowman.webp", "tag": "optional", "warn": "", "note": "", "source": "MMMR Kennedy", "asset": "assets/soe_107_ff5ae155.webp"}]}]}], QUICK=["Beast Mode → power/open the routes you need", "Summoning Key → complete all 4 character rituals in ANY order", "Underground → place 4 Gateworms → final ritual → Pack-a-Punch", "Sword symbols: Waterfront → Footlight (2 symbols, look RIGHT), then Footlight → Canals (1 symbol, look RIGHT)", "Every player: Egg → charge all 4 statues → claim Apothicon Sword", "Every player: Arch-Ovum → 4 Margwa rituals (max 1 successful upgrade ritual per player per round) → upgraded Keeper Sword", "Nero's book → Flag appears Underground", "Choose any unfinished district → defend BOTH spark locations → deliver Flag to that district Keeper", "Repeat one successful district per round until all 4 Keepers are complete", "Pack-a-Punch room → each player gives one Keeper their upgraded Sword", "Shadowman → break shield → push him above ritual table → capture him", "4-player finale: cleanse corruption → kill purple Margwa → infinite Beast Mode", "Call train → electrify all 3 rails → train hits Giant Gateworm → shock all 3 Keepers", "Final beam → ending cutscene"], SOURCES=[{"name": "Verification pass — Call of Duty: Zombies Guides (updated July 2026)", "url": "https://www.codzombiesguides.com/main-quests/black-ops-3/shadows-of-evil/", "purpose": "Current independent cross-check for the 4-player requirement, flexible Flag location order, same-round Flag retries, and main-quest sequence."}, {"name": "MMMR Kennedy — Shadows of Evil Visual Guide", "url": "https://mmmrkennedy.com/games/BO3/shadows_of_evil/shadows_of_evil_guide", "purpose": "Primary screenshot source; map setup, buildables, full main quest, and side Easter eggs."}, {"name": "Steam Community — Guide for Shadows of Evil [2020 updated]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=550319350", "purpose": "Cross-reference for rituals, Sword, Flag step, Shadowman fight, equipment, and side Easter eggs."}, {"name": "NoodlesRuns — Complete Easter Egg Guide", "url": "https://www.youtube.com/watch?v=d80-tFA3idg", "purpose": "Video cross-reference for practical gameplay order and main-quest flow."}, {"name": "CodeNamePizza — Shadows of Evil EE Guide", "url": "https://www.youtube.com/watch?v=7drZa5q8OEk", "purpose": "Additional main-quest / Sword / Flag / boss cross-reference."}]; const KEY="soe_visual_guide_readability_v3";
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function img(s){if(!s.image)return "";return `<a class="img" href="${esc(s.image)}"><img loading="lazy" src="${esc(s.asset||s.image)}" data-remote="${esc(s.image)}" data-f="0" onerror="if(this.dataset.f==='0'&&this.src!==this.dataset.remote){this.dataset.f='1';this.src=this.dataset.remote}else{this.parentElement.classList.add('failed')}"><div class="fallback">Image could not be loaded. Click to open the source screenshot.</div><div class="credit"><span>${esc(s.source||"source")}</span><span>Click to enlarge</span></div></a>`}
+function card(s){return `<article class="card" data-search="${esc((s.id+" "+s.title+" "+s.do.join(" ")+" "+s.look+" "+s.warn+" "+s.note).toLowerCase())}"><div class="cardhead"><label class="cbwrap"><input class="cb" data-k="${esc(s.id)}" type="checkbox"><span class="fake"></span></label><div><div class="code">${esc(s.id)}</div><h3>${esc(s.title)}</h3><span class="badge">${esc(s.tag)}</span></div></div><div class="body"><div class="label">Do this</div><ul class="todo">${s.do.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>${s.look?`<div class="label">Look for</div><p class="look">${esc(s.look)}</p>`:""}${s.warn?`<div class="warn"><strong>IMPORTANT:</strong> ${esc(s.warn)}</div>`:""}${s.note?`<div class="note"><strong>NOTE:</strong> ${esc(s.note)}</div>`:""}</div>${img(s)}</article>`}
+function render(){document.getElementById("content").innerHTML=DATA.map(sec=>`<details class="section" id="${esc(sec.id)}"><summary class="sectionhead"><div><div class="sectionname"><span class="num">${sec.number}.</span>${esc(sec.title)}</div><div class="desc">${esc(sec.subtitle)}</div></div><div class="chev">›</div></summary><div class="sectionbody">${sec.groups.map(g=>`<details class="group"><summary class="grouphead"><div><div class="grouptitle">${esc(g.title)}</div><div class="desc">${esc(g.summary||"")}</div>${g.effect?`<div class="effect"><strong>WHAT IT DOES:</strong> ${esc(g.effect)}</div>`:""}</div><div class="chev">›</div></summary><div class="groupbody"><div class="cards">${g.steps.map(card).join("")}</div></div></details>`).join("")}</div></details>`).join("")}
+function state(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch{return {}}}function update(){let all=[...document.querySelectorAll(".cb")],d=0;all.forEach(c=>{c.closest(".card").classList.toggle("done",c.checked);if(c.checked)d++});document.getElementById("progress").style.width=(all.length?d/all.length*100:0)+"%"}function save(){let o={};document.querySelectorAll(".cb").forEach(c=>o[c.dataset.k]=c.checked);localStorage.setItem(KEY,JSON.stringify(o));update()}
+render();document.getElementById("quick").innerHTML=QUICK.map((q,i)=>`<div class="q"><span class="qn">${i+1}.</span><span>${esc(q)}</span></div>`).join("");document.getElementById("sources").innerHTML=SOURCES.map(s=>`<div class="source"><h3>${esc(s.name)}</h3><p>${esc(s.purpose)}</p><a href="${esc(s.url)}">Open source ↗</a></div>`).join("");
+let st=state();document.querySelectorAll(".cb").forEach(c=>{c.checked=!!st[c.dataset.k];c.addEventListener("change",save)});update();
+document.getElementById("search").addEventListener("input",e=>{let q=e.target.value.toLowerCase().trim();document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hidden",q&&!c.dataset.search.includes(q)));document.querySelectorAll("details.group").forEach(g=>{let v=[...g.querySelectorAll(".card")].some(c=>!c.classList.contains("hidden"));g.classList.toggle("hidden",q&&!v);if(q&&v)g.open=true});document.querySelectorAll("details.section").forEach(s=>{let v=[...s.querySelectorAll(".card")].some(c=>!c.classList.contains("hidden"));s.classList.toggle("hidden",q&&!v);if(q&&v)s.open=true})});
+document.querySelectorAll(".nav").forEach(b=>b.onclick=()=>{let e=document.getElementById(b.dataset.go);e.open=true;e.scrollIntoView({behavior:"smooth"})});let ex=false;document.getElementById("expand").onclick=()=>{ex=!ex;document.querySelectorAll("details").forEach(d=>d.open=ex);document.getElementById("expand").textContent=ex?"Collapse all":"Expand all"};document.getElementById("reset").onclick=()=>{if(confirm("Clear all checked steps?")){localStorage.removeItem(KEY);document.querySelectorAll(".cb").forEach(c=>c.checked=false);update()}};
+</script>
+<script id="image-lightbox-script-v5">
+(function(){
+  function initImageLightbox(){
+    if(document.getElementById('imageLightbox')) return;
+
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `
+<div id="imageLightbox" class="image-lightbox" aria-hidden="true">
+  <button id="imageLightboxClose" class="image-lightbox-close" type="button" aria-label="Close enlarged image">×</button>
+  <div class="image-lightbox-inner">
+    <img id="imageLightboxImg" class="image-lightbox-img" alt="Expanded guide image">
+  </div>
+  <div class="image-lightbox-hint">Click image/background or press Esc to close</div>
+</div>
+`;
+    const lightbox = wrap.firstElementChild;
+    document.body.appendChild(lightbox);
+
+    const big = document.getElementById('imageLightboxImg');
+    const close = document.getElementById('imageLightboxClose');
+
+    function openLightbox(img){
+      const src = img.currentSrc || img.src || img.dataset.remote;
+      if(!src) return;
+      big.src = src;
+      big.alt = img.alt || 'Expanded guide image';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.classList.add('lightbox-open');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      document.body.classList.remove('lightbox-open');
+      big.removeAttribute('src');
+    }
+
+    document.addEventListener('click', function(e){
+      const holder = e.target.closest('.img, .imgwrap');
+      if(holder){
+        const img = holder.querySelector('img');
+        if(img){
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(img);
+          return;
+        }
+      }
+    }, true);
+
+    close.addEventListener('click', function(e){
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    lightbox.addEventListener('click', function(e){
+      if(e.target === lightbox || e.target === big || e.target.classList.contains('image-lightbox-inner')){
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initImageLightbox);
+  } else {
+    initImageLightbox();
+  }
+})();
+</script>
+
+
+<script id="bulk-check-zebra-script-v6">
+(function(){
+  function stopSummaryToggle(el){
+    ['click','mousedown','pointerdown','touchstart'].forEach(function(evt){
+      el.addEventListener(evt,function(e){ e.stopPropagation(); }, {passive:false});
+    });
+  }
+
+  function makeBulkControl(kind){
+    const label=document.createElement('label');
+    label.className='bulk-check-wrap';
+    label.title=kind==='section' ? 'Mark every step in this entire section' : 'Mark every step in this phase / subsection';
+
+    const cb=document.createElement('input');
+    cb.type='checkbox';
+    cb.className='bulk-check';
+    cb.setAttribute('aria-label', kind==='section' ? 'Mark entire section complete' : 'Mark entire phase complete');
+
+    const text=document.createElement('span');
+    text.className='bulk-label-text';
+    text.textContent=kind==='section' ? 'Section' : 'Phase';
+
+    label.appendChild(cb);
+    label.appendChild(text);
+    stopSummaryToggle(label);
+    return {label,cb};
+  }
+
+  function childStepBoxes(container){
+    return Array.from(container.querySelectorAll('.cb'));
+  }
+
+  function syncOne(control, boxes){
+    const total=boxes.length;
+    const checked=boxes.filter(x=>x.checked).length;
+
+    control.checked = total>0 && checked===total;
+    control.indeterminate = checked>0 && checked<total;
+
+    const wrap=control.closest('.bulk-check-wrap');
+    if(wrap){
+      wrap.classList.toggle('complete', total>0 && checked===total);
+      wrap.classList.toggle('partial', checked>0 && checked<total);
+    }
+  }
+
+  function syncBulkChecks(){
+    document.querySelectorAll('details.group').forEach(function(group){
+      const cb=group.querySelector(':scope > summary .bulk-check');
+      if(cb) syncOne(cb, childStepBoxes(group));
+    });
+
+    document.querySelectorAll('details.section, details.big-section').forEach(function(section){
+      const cb=section.querySelector(':scope > summary .bulk-check');
+      if(cb) syncOne(cb, childStepBoxes(section));
+    });
+  }
+
+  function persistAfterBulk(boxes){
+    if(!boxes.length) return;
+    // Existing guide listeners save ALL step states whenever one normal step checkbox changes.
+    boxes[0].dispatchEvent(new Event('change',{bubbles:true}));
+    setTimeout(syncBulkChecks,0);
+  }
+
+  function initBulkChecks(){
+    if(document.documentElement.dataset.bulkChecksV6==='1'){
+      syncBulkChecks();
+      return;
+    }
+    document.documentElement.dataset.bulkChecksV6='1';
+
+    /* Subsections / phases */
+    document.querySelectorAll('details.group').forEach(function(group){
+      const summary=group.querySelector(':scope > summary');
+      if(!summary || summary.querySelector('.bulk-check-wrap')) return;
+
+      const made=makeBulkControl('phase');
+      const chevron=summary.querySelector('.chev');
+
+      const right=document.createElement('div');
+      right.className='bulk-right';
+      right.appendChild(made.label);
+      if(chevron){
+        chevron.parentNode.removeChild(chevron);
+        right.appendChild(chevron);
+      }
+      summary.appendChild(right);
+
+      made.cb.addEventListener('change',function(e){
+        e.stopPropagation();
+        const boxes=childStepBoxes(group);
+        boxes.forEach(function(box){ box.checked=made.cb.checked; });
+        persistAfterBulk(boxes);
+      });
+    });
+
+    /* Top-level sections */
+    document.querySelectorAll('details.section, details.big-section').forEach(function(section){
+      const summary=section.querySelector(':scope > summary');
+      if(!summary || summary.querySelector('.bulk-check-wrap')) return;
+
+      const made=makeBulkControl('section');
+
+      // Der Eisendrache already has a right-side wrapper containing count + chevron.
+      let existingRight=null;
+      Array.from(summary.children).forEach(function(child){
+        if(child.querySelector && (child.querySelector('.section-count') || child.querySelector('.chev'))){
+          if(child !== summary.firstElementChild) existingRight=child;
+        }
+      });
+
+      if(existingRight){
+        existingRight.classList.add('bulk-right');
+        existingRight.insertBefore(made.label, existingRight.firstChild);
+      } else {
+        const chevron=summary.querySelector(':scope > .chev');
+        const right=document.createElement('div');
+        right.className='bulk-right';
+        right.appendChild(made.label);
+        if(chevron){
+          chevron.parentNode.removeChild(chevron);
+          right.appendChild(chevron);
+        }
+        summary.appendChild(right);
+      }
+
+      made.cb.addEventListener('change',function(e){
+        e.stopPropagation();
+        const boxes=childStepBoxes(section);
+        boxes.forEach(function(box){ box.checked=made.cb.checked; });
+        persistAfterBulk(boxes);
+      });
+    });
+
+    document.addEventListener('change',function(e){
+      if(e.target && e.target.classList && e.target.classList.contains('cb')){
+        setTimeout(syncBulkChecks,0);
+      }
+    });
+
+    syncBulkChecks();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initBulkChecks);
+  }else{
+    initBulkChecks();
+  }
+
+  // Existing guide render functions finish synchronously, but this second pass makes the
+  // enhancement resilient if a browser delays inline script execution.
+  setTimeout(initBulkChecks,50);
+})();
+</script>
+
+</body></html>
