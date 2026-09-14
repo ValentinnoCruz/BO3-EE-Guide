@@ -67,3 +67,6 @@ Map lineup reference: [Treyarch — Zombies Chronicles](https://www.treyarch.com
 
 
 Guide readability: original step codes and section numbers are visible again, with alternating card and subsection shading. Multi-action steps include labeled offline screenshot tabs for each target or location. The same conventions apply to future guides; see AGENTS.md. Screenshot credits remain separate from the Lofijedi guide attribution.
+
+
+Focused layouts: Wolf Bow paintings share an ordered panel; Void Bow references show comparisons; Revelations displays the grave interaction sequence. Selected multi-action steps pair their instructions with each image. Zetsubou plant care uses shared recipes with original round checkboxes, and Gorod keeps a complete recorded bomb order visible while bomb-location cards are on screen.

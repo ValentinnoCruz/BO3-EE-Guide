@@ -1,6 +1,27 @@
 /* Shared behavior for the image-first guides; no network dependencies. */
 (function(){
  function init(){
+  const sequenceCards=[...document.querySelectorAll('.card[data-sequence]')].filter(c=>c.dataset.sequence);
+  for(const key of new Set(sequenceCards.map(c=>c.dataset.sequence))){
+   const items=sequenceCards.filter(c=>c.dataset.sequence===key);const panel=document.createElement('section');panel.className='ordered-reference';panel.setAttribute('aria-label','Painting interaction order');
+   panel.innerHTML='<div class="ordered-reference-intro"><h3>🐺 Painting order</h3><p>Interact in this order: 1 → 2 → 3 → 4. The painting rooms change each game.</p></div><div class="ordered-reference-grid"></div><p class="ordered-reference-note">A wolf howl confirms the full sequence. If you select the wrong painting, restart from 1. Select an image to enlarge it.</p>';
+   items[0].before(panel);const grid=panel.querySelector('.ordered-reference-grid');items.forEach(c=>{grid.appendChild(c);c.querySelector('h3').textContent=c.dataset.sequenceLabel});
+  }
+  const careCards=[...document.querySelectorAll('.card[data-care-group]')].filter(c=>c.dataset.careGroup);
+  for(const key of new Set(careCards.map(c=>c.dataset.careGroup))){
+   const items=careCards.filter(c=>c.dataset.careGroup===key),rainbow=key==='rainbow-care';const panel=document.createElement('section');panel.className='care-reference';
+   panel.innerHTML='<h3>'+ (rainbow?'🌈 Rainbow plant — three rounds':'🌱 Shell plants — three rounds')+'</h3><p class="care-recipe">'+(rainbow?'Plant one seed in the hidden underwater planter. Water that same plant with RAINBOW water once per round for three consecutive rounds. Return to air after each visit.':'For each of three consecutive rounds: water every plant in your batch with BLUE water, then shoot each with the KT-4 or Masamune before ending the round. Keep using the same plants.')+'</p><div class="care-photo"></div><div class="care-rounds"></div><p class="care-warning"></p>';
+   items[0].before(panel);const photo=items[0].querySelector('.action-gallery,.imgwrap');if(photo)panel.querySelector('.care-photo').appendChild(photo);
+   const warnings=[...new Set(items.flatMap(c=>[...c.querySelectorAll('.warn')].map(w=>w.textContent.replace(/^Watch out:\s*/,''))))];panel.querySelector('.care-warning').textContent=warnings.length?'Watch out: '+warnings.join(' '):'';
+   items.forEach(c=>{panel.querySelector('.care-rounds').appendChild(c);c.querySelector('h3').textContent=c.dataset.careLabel;c.querySelectorAll('.action-gallery,.imgwrap').forEach(e=>e.remove())});
+  }
+  const bombResult=document.getElementById('bomb-result');
+  if(bombResult){
+   const bar=document.createElement('aside');bar.className='bomb-reference';bar.hidden=true;bar.setAttribute('aria-label','Recorded bomb defuse order');bar.innerHTML='<strong>💣 Defuse in this recorded order</strong><ol></ol>';document.body.appendChild(bar);
+   const visible=new Set();const sync=()=>{const list=[...bombResult.querySelectorAll('li')];bar.querySelector('ol').replaceChildren(...list.map(li=>{const item=document.createElement('li');item.textContent=li.textContent;return item}));bar.hidden=list.length!==6||!visible.size;document.body.classList.toggle('bomb-reference-active',!bar.hidden)};
+   new MutationObserver(sync).observe(bombResult,{subtree:true,childList:true,characterData:true});
+   const observer=new IntersectionObserver(entries=>{entries.forEach(e=>e.isIntersecting?visible.add(e.target):visible.delete(e.target));sync()});document.querySelectorAll('.card[data-id^="BOMB-"]').forEach(c=>observer.observe(c));sync();
+  }
   const brand='<span class="guide-brand">Guide by <strong>Lofijedi</strong></span>';
   const top=document.querySelector('header .top');top.insertAdjacentHTML('beforeend',brand);
   const lightbox=document.getElementById('imageLightbox');if(lightbox)lightbox.insertAdjacentHTML('beforeend',brand);
@@ -18,6 +39,7 @@
   try{hide=localStorage.getItem(SAVE_KEY+'_hide_done')==='1'}catch(e){}document.getElementById('hide-completed').checked=hide;
   function cards(){return [...document.querySelectorAll('.card')]}
   function refresh(){
+   document.querySelectorAll('.ordered-reference,.care-reference').forEach(g=>{g.hidden=![...g.querySelectorAll('.card')].some(c=>!c.classList.contains('hidden')&&!(hide&&c.classList.contains('done')))});
    const q=document.getElementById('search').value.trim().toLowerCase();
    cards().forEach(c=>{c.classList.toggle('completed-hidden',hide&&c.classList.contains('done'))});
    document.querySelectorAll('details.group,details.big-section').forEach(g=>{
