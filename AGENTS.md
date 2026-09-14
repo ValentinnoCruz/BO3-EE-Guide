@@ -10,3 +10,9 @@
 
 - Represent mutually exclusive spawn locations as image tabs under one objective, with one completion checkbox. Preserve legacy step IDs as progress aliases when consolidating them.
 - Maintain shared presentation in `ui/guide-ui.css` and `ui/guide-ui.js`; run `python ui/build.py` to embed them and rebuild every chooser template. Standalone guides must remain self-contained.
+
+- Keep the “Guide by Lofijedi” attribution on the chooser, guides, screenshot overlays, and enlarged-image views. Retain all original screenshot/source credits separately.
+
+- Display the original step/reference codes (for example SET-01 and SH-R1), including individual alternative-location codes, and visible main-section numbers. Never hide these during a redesign.
+- Preserve readable alternating backgrounds for step cards and subsection banners, including mobile layouts.
+- Every physical target mentioned by an instruction needs a matching, labeled location screenshot: switches/fuse boxes, marked doors/crates, grapple points, item spawns, crafting stations and aiming targets. Use action-image tabs for multiple actions; use alternative-location tabs with one checkbox for mutually exclusive spawns. Include a wider landmark view when a close-up alone does not establish where to stand. Do not use an unrelated or generic screenshot as a substitute. Keep all new images embedded offline and retain their source credits.
