@@ -2,6 +2,8 @@
 
 Interactive visual Easter Egg guides for **Call of Duty: Black Ops III Zombies**.
 
+Guide collection by **Lofijedi**. The chooser, map guides, screenshot overlays and enlarged-image views carry this attribution; original screenshot creators remain separately credited.
+
 ## Current maps
 - Shadows of Evil
 - The Giant
@@ -37,7 +39,7 @@ Interactive visual Easter Egg guides for **Call of Duty: Black Ops III Zombies**
 ## Offline use
 Open `index.html` in a browser to choose a map, or open any standalone guide directly. Screenshots are embedded in each HTML file, including the combined chooser; no assets folder, server, or internet connection is required. External source/reference links still require internet access.
 
-The original handoff contained broken screenshot URLs. Available replacements from the credited visual guides are included. Six screenshots without a matching source image are explicitly marked unavailable; their instructions remain intact.
+The original handoff contained broken screenshot URLs. Available replacements from the credited visual guides are included. Two original screenshot references remain unavailable; their instructions remain intact. Four previously broken music-location references now have replacement images.
 
 ## Zetsubou No Shima
 117 checklist steps cover setup, Pack-a-Punch, buildables, trials, the Skull, KT-4/Masamune, the three cogs, boss fight, plants, and optional rewards. Includes 101 embedded screenshot references and credited source links. Plant care and solo/co-op differences have separate instructions.
@@ -62,3 +64,6 @@ Current objective totals: Shadows of Evil 125, The Giant 39, Der Eisendrache 183
 The chooser has a separate, collapsible Zombies Chronicles section. Its eight maps are listed in their original release order: Nacht der Untoten, Verrückt, Shi No Numa, Kino der Toten, Ascension, Shangri-La, Moon, and Origins. Entries are marked **Guide coming soon** until a complete guide is added; the six original BO3 guides remain available in their own collection.
 
 Map lineup reference: [Treyarch — Zombies Chronicles](https://www.treyarch.com/studio-culture/2017/05/zombies-chronicles).
+
+
+Guide readability: original step codes and section numbers are visible again, with alternating card and subsection shading. Multi-action steps include labeled offline screenshot tabs for each target or location. The same conventions apply to future guides; see AGENTS.md. Screenshot credits remain separate from the Lofijedi guide attribution.

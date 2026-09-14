@@ -1,11 +1,16 @@
 /* Shared behavior for the image-first guides; no network dependencies. */
 (function(){
  function init(){
+  const brand='<span class="guide-brand">Guide by <strong>Lofijedi</strong></span>';
+  const top=document.querySelector('header .top');top.insertAdjacentHTML('beforeend',brand);
+  const lightbox=document.getElementById('imageLightbox');if(lightbox)lightbox.insertAdjacentHTML('beforeend',brand);
+
   const main=document.querySelector('main');
   const pane=document.createElement('div');pane.className='guide-pane';while(main.firstChild)pane.appendChild(main.firstChild);main.appendChild(pane);
   const sidebar=document.createElement('aside');sidebar.className='guide-sidebar';sidebar.setAttribute('aria-label','Guide sections');sidebar.innerHTML='<div class="route-label">Guide sections</div>';
   document.querySelectorAll('.navbtn').forEach((b,i)=>{sidebar.appendChild(b);const sec=document.getElementById(b.dataset.go);const icon=sec.querySelector('.heading-icon');b.textContent=(icon?icon.textContent:'')+' '+b.textContent.replace(/^\d+\s*/, '');b.appendChild(Object.assign(document.createElement('span'),{className:'nav-count'}))});
   sidebar.insertAdjacentHTML('beforeend','<div class="guide-options"><label><input type="checkbox" id="hide-completed"> Hide completed</label></div><div class="guide-totals" aria-live="polite"></div>');
+  sidebar.insertAdjacentHTML('beforeend',brand);
   main.append(sidebar,pane);
   const toolbar=document.createElement('div');toolbar.className='guide-toolbar';toolbar.innerHTML='<div><div class="guide-next-label">Up next</div><div class="guide-next-title" aria-live="polite"></div></div><button class="guide-next-button" type="button">Continue →</button>';pane.prepend(toolbar);
   const empty=document.createElement('div');empty.className='guide-empty';empty.hidden=true;empty.textContent='No matching unfinished steps. Clear search or show completed steps.';document.getElementById('content').after(empty);
@@ -33,6 +38,8 @@
   const oldUpdate=updateProgress;updateProgress=function(){oldUpdate();refresh()};
   const oldSearch=doSearch;doSearch=function(q){oldSearch(q);if(q.trim()){document.querySelectorAll('.card[data-alternatives]').forEach(c=>{const panels=[...c.querySelectorAll('.location-panel')];const index=panels.findIndex(p=>p.dataset.search.includes(q.trim().toLowerCase()));if(index>=0)c.querySelectorAll('.location-tab')[index].click()})}refresh()};
   document.querySelectorAll('.location-tab').forEach(b=>b.addEventListener('click',()=>{const c=b.closest('.card');c.querySelectorAll('.location-tab').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));c.querySelectorAll('.location-panel').forEach(p=>p.hidden=p.id!==b.getAttribute('aria-controls'))}));
+  document.querySelectorAll('.visual-tab').forEach(b=>b.addEventListener('click',()=>{const g=b.closest('.action-gallery');g.querySelectorAll('.visual-tab').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));g.querySelectorAll('.visual-panel').forEach(p=>p.hidden=p.id!==b.getAttribute('aria-controls'))}));
+  const actionSearch=doSearch;doSearch=function(q){actionSearch(q);if(q.trim())document.querySelectorAll('.action-gallery').forEach(g=>{const p=[...g.querySelectorAll('.visual-panel')].find(p=>p.dataset.search.includes(q.trim().toLowerCase()));if(p)g.querySelector('[aria-controls="'+p.id+'"]').click()})};
   sidebar.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>{focusSection=b.dataset.go;refresh()}));
   document.getElementById('hide-completed').addEventListener('change',e=>{hide=e.target.checked;try{localStorage.setItem(SAVE_KEY+'_hide_done',hide?'1':'0')}catch(e){}refresh()});
   toolbar.querySelector('button').addEventListener('click',()=>{const c=document.querySelector('.card.current-step');if(!c)return;for(let p=c.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;c.scrollIntoView({behavior:'smooth',block:'start'});c.querySelector('.cb').focus({preventScroll:true})});
