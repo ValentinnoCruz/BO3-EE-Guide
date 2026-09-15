@@ -30,7 +30,7 @@ Guide collection by **Lofijedi**. The chooser, map guides, screenshot overlays a
 - responsive layout
 
 ## Files
-- `index.html` — combined chooser
+- `index.html` — map chooser
 - `shadows-of-evil.html`
 - `the-giant.html`
 - `der-eisendrache.html`
@@ -41,7 +41,7 @@ Guide collection by **Lofijedi**. The chooser, map guides, screenshot overlays a
 - `origins.html`
 
 ## Offline use
-Open `index.html` in a browser to choose a map, or open any standalone guide directly. Screenshots are embedded in each HTML file, including the combined chooser; no assets folder, server, or internet connection is required. External source/reference links still require internet access.
+Open `index.html` in a browser to choose a map, or open any standalone guide directly. Each map guide embeds its own screenshots. Keep index.html and the eight map HTML files together in the extracted folder: the chooser loads the selected local file. No server or internet connection is required. Copying index.html alone does not include the map guides. External source/reference links still require internet access.
 
 The original handoff contained broken screenshot URLs. Available replacements from the credited visual guides are included. Two original screenshot references remain unavailable; their instructions remain intact. Four previously broken music-location references now have replacement images.
 
@@ -58,7 +58,7 @@ Dragon Network, Pack-a-Punch, shield and upgrades, Dragon Strike, Gauntlet egg t
 Complete solo/co-op main quest, shield and Keeper parts, Apothicon Servant upgrade, all three reels, egg and rune location references, seven relic targets, both arena visits, masks, free perk, music, chalk trading, time trials and the optional wisp. All related phases share a dropdown; screenshots are embedded for offline use.
 
 ## Shared guide UI
-All eight maps use the same image-first presentation. Edit `ui/guide-ui.css` or `ui/guide-ui.js`, then run `python ui/build.py` to embed the update into every standalone file and refresh the combined chooser. These source files are not required to view the guides offline.
+All eight maps use the same image-first presentation. Edit `ui/guide-ui.css` or `ui/guide-ui.js`, then run `python ui/build.py` to embed the update into every standalone file and verify the chooser routes. These source files are not required to view the guides offline.
 
 Consolidated location objectives retain the original progress keys as aliases. An existing check on any alternative marks its objective complete; later changes keep its legacy keys synchronized. Original location instructions and screenshots remain in their respective tabs.
 
@@ -80,3 +80,5 @@ BO3 solo/co-op setup, six Hacker spawn references, full Richtofen’s Grand Sche
 
 ## Origins
 Complete BO3 staff builds and upgrades with offline puzzle charts, shield and Maxis Drone parts, G-Strikes, One Inch Punch, all eight Little Lost Girl phases, free Zombie Blood and Archangel. Staff steps stay together under their elemental dropdowns. Solo Rain Fire and the final match-ending interaction are called out.
+
+The chooser loads one standalone map at a time instead of duplicating all maps. Guides ship with the current sidebar/pane structure already in their HTML; a brief loading message covers checklist initialization. Saved progress keys are preserved, and older chooser progress is imported once when a standalone guide has no saved value.

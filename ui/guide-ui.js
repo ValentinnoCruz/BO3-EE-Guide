@@ -26,13 +26,11 @@
   const top=document.querySelector('header .top');top.insertAdjacentHTML('beforeend',brand);
   const lightbox=document.getElementById('imageLightbox');if(lightbox)lightbox.insertAdjacentHTML('beforeend',brand);
 
-  const main=document.querySelector('main');
-  const pane=document.createElement('div');pane.className='guide-pane';while(main.firstChild)pane.appendChild(main.firstChild);main.appendChild(pane);
-  const sidebar=document.createElement('aside');sidebar.className='guide-sidebar';sidebar.setAttribute('aria-label','Guide sections');sidebar.innerHTML='<div class="route-label">Guide sections</div>';
-  document.querySelectorAll('.navbtn').forEach((b,i)=>{sidebar.appendChild(b);const sec=document.getElementById(b.dataset.go);const icon=sec.querySelector('.heading-icon');b.textContent=(icon?icon.textContent:'')+' '+b.textContent.replace(/^\d+\s*/, '');b.appendChild(Object.assign(document.createElement('span'),{className:'nav-count'}))});
+  const pane=document.querySelector('.guide-pane');
+  const sidebar=document.querySelector('.guide-sidebar');
+  document.querySelectorAll('.navbtn').forEach((b,i)=>{const sec=document.getElementById(b.dataset.go);const icon=sec.querySelector('.heading-icon');b.textContent=(icon?icon.textContent:'')+' '+b.textContent.replace(/^\d+\s*/, '');b.appendChild(Object.assign(document.createElement('span'),{className:'nav-count'}))});
   sidebar.insertAdjacentHTML('beforeend','<div class="guide-options"><label><input type="checkbox" id="hide-completed"> Hide completed</label></div><div class="guide-totals" aria-live="polite"></div>');
   sidebar.insertAdjacentHTML('beforeend',brand);
-  main.append(sidebar,pane);
   const toolbar=document.createElement('div');toolbar.className='guide-toolbar';toolbar.innerHTML='<div><div class="guide-next-label">Up next</div><div class="guide-next-title" aria-live="polite"></div></div><button class="guide-next-button" type="button">Continue →</button>';pane.prepend(toolbar);
   const empty=document.createElement('div');empty.className='guide-empty';empty.hidden=true;empty.textContent='No matching unfinished steps. Clear search or show completed steps.';document.getElementById('content').after(empty);
   let focusSection=null;let hide=false;
@@ -66,6 +64,30 @@
   document.getElementById('hide-completed').addEventListener('change',e=>{hide=e.target.checked;try{localStorage.setItem(SAVE_KEY+'_hide_done',hide?'1':'0')}catch(e){}refresh()});
   toolbar.querySelector('button').addEventListener('click',()=>{const c=document.querySelector('.card.current-step');if(!c)return;for(let p=c.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;c.scrollIntoView({behavior:'smooth',block:'start'});c.querySelector('.cb').focus({preventScroll:true})});
   refresh();
+  document.documentElement.classList.remove('guide-loading');
+  document.getElementById('guide-loading-message')?.remove();
+  // Import old chooser progress only once, and never replace existing standalone progress.
+  if(window.parent !== window){
+   const marker=SAVE_KEY+'_chooser_imported';
+   let imported=false;try{imported=localStorage.getItem(marker)==='1'}catch(error){}
+   if(!imported){
+    const receive=event=>{
+     const message=event.data;
+     if(event.source!==window.parent||!message||message.type!=='guide-progress-response'||message.key!==SAVE_KEY)return;
+     window.removeEventListener('message',receive);
+     const keys=[SAVE_KEY,SAVE_KEY+'_hide_done'];
+     if(document.getElementById('valve-start'))keys.push('gorod_krovi_run_notes_v1');
+     let changed=false;
+     try{
+      for(const key of keys){const value=message.values?.[key];if(localStorage.getItem(key)===null&&typeof value==='string'&&value.length<1000000){JSON.parse(value);localStorage.setItem(key,value);changed=true}}
+      localStorage.setItem(marker,'1');
+     }catch(error){}
+     if(changed)location.reload();
+    };
+    window.addEventListener('message',receive);
+    window.parent.postMessage({type:'guide-progress-request',key:SAVE_KEY},'*');
+   }
+  }
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
