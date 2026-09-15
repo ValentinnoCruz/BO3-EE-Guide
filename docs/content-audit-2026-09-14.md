@@ -1,5 +1,27 @@
 # Guide accuracy review — 14 September 2026
 
+## User-selected video follow-up — 15 September 2026
+
+Reviewed the relevant captions from the user's [Der Eisendrache video](https://www.youtube.com/watch?v=v3v_IKfgf4U). It instructs Protect for the safe code around 6:46, Destroy before Simon Says around 7:39, then the green button once both orbs glow around 9:21–9:46. It does not instruct another switch to Protect. `MQ-19` and the quick route now follow that sequence. This supersedes the earlier unresolved editorial wording below; it is caption-based confirmation of the selected walkthrough, not an independent gameplay test.
+
+The user's [Revelations video](https://www.youtube.com/watch?v=0YH6npBuHVg) was checked through its captions for the disputed mask requirements. It covers the main quest and does not list the Apothicon Mask kill counts. It has been added as a main-quest reference, but the spider/parasite count qualification remains. A mask-specific reference is still needed to resolve that question.
+
+## Implementation update
+
+The five supported corrections below have now been applied to the standalone guides and rebuilt chooser: Buzz Cut 22:00, Dragon Strike in the Wings checklist, two PaP interactions, five BRM tiles, and 12 shield strikes total. The original findings below remain as the audit record.
+
+The follow-up review also changed the Apothicon Mask Margwa instruction to three kills spanning at least two types, following the linked community testing report, and explains that Panzer objectives belong to the Helmet of the King. Spider and parasite cards now flag the conflicting 5/15 counts and direct players to the completion cue. DE `MQ-19` and the quick route no longer assert that the extra Protect switch is proven mandatory.
+
+**In-game verification remains pending.** No game session was run, and the linked gameplay videos were not independently watched end-to-end. The report author's findings were reviewed; that is not equivalent to reproducing them.
+
+### Targeted playtest record
+
+- Death Ray: record platform, game version and lobby mode. After both Simon Says terminals succeed in Destroy, record the selector position, green-button availability and whether pressing it brings down the rocket without switching. Repeat in another clean run. Do not confuse this with Protect for the earlier safe-code step.
+- Apothicon Mask counts: use a clean run and count qualifying spider and parasite kills separately, with player and targets in the acid during gas. Avoid incidental kills. Record each category cue, whether it occurs at 5 or 15, and final mannequin availability; repeat to distinguish missed qualifying kills from a threshold difference.
+- Margwa/Panzer: in a separate controlled run, complete other mask categories, kill three qualifying Margwas across two types, and avoid Panzer kills. Record the unlock. This checks the published report without mixing its conditions with the separate Margwa Mask or Helmet of the King.
+
+These checks require gameplay access or recorded runs; browser tests can verify the wording and navigation but cannot resolve the game mechanics.
+
 Reviewed the six current standalone guides, their quick routes and topic summaries, and the supplied `Revelations.txt`. This is a reference-based editorial review, not an in-game playtest or certification of every screenshot. The findings below distinguish supported corrections from conflicting claims. The guide pages and layout were not changed during this review.
 
 ## Findings to address first
