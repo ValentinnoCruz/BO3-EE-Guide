@@ -1,7 +1,7 @@
-"""Embed the shared offline UI and rebuild the six-map chooser."""
+"""Embed the shared offline UI and rebuild the map chooser."""
 import pathlib,re,html
 root=pathlib.Path(__file__).resolve().parent.parent
-maps={'soe':'shadows-of-evil','giant':'the-giant','de':'der-eisendrache','zns':'zetsubou-no-shima','gk':'gorod-krovi','rev':'revelations'}
+maps={'soe':'shadows-of-evil','giant':'the-giant','de':'der-eisendrache','zns':'zetsubou-no-shima','gk':'gorod-krovi','rev':'revelations','moon':'moon','origins':'origins'}
 for stem in maps.values():
  p=root/(stem+'.html');s=p.read_text(encoding='utf-8')
  for tag,suffix in [('style','css'),('script','js')]:
