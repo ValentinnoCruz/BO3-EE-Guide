@@ -6,10 +6,10 @@
 - Preserve step IDs and saved progress when reorganizing content. Topic checkboxes must include all descendant steps, show partial completion, and work with search and expand/collapse controls.
 - Use relevant emoji and readable accent colors for headings, with neutral instruction text.
 - Keep screenshots embedded and available offline.
-- Rebuild all corresponding templates in index.html whenever standalone guides change, and verify both standalone and chooser views.
+- Keep index.html lightweight: it loads standalone guide files through relative iframe URLs. Verify both standalone and chooser views; do not embed duplicate guide templates.
 
 - Represent mutually exclusive spawn locations as image tabs under one objective, with one completion checkbox. Preserve legacy step IDs as progress aliases when consolidating them.
-- Maintain shared presentation in `ui/guide-ui.css` and `ui/guide-ui.js`; run `python ui/build.py` to embed them and rebuild every chooser template. Standalone guides must remain self-contained.
+- Maintain shared presentation in `ui/guide-ui.css` and `ui/guide-ui.js`; run `python ui/build.py` to embed them and validate chooser routes. Standalone guides must remain self-contained.
 
 - Keep the “Guide by Lofijedi” attribution on the chooser, guides, screenshot overlays, and enlarged-image views. Retain all original screenshot/source credits separately.
 
@@ -18,3 +18,5 @@
 - Every physical target mentioned by an instruction needs a matching, labeled location screenshot: switches/fuse boxes, marked doors/crates, grapple points, item spawns, crafting stations and aiming targets. Use action-image tabs for multiple actions; use alternative-location tabs with one checkbox for mutually exclusive spawns. Include a wider landmark view when a close-up alone does not establish where to stand. Do not use an unrelated or generic screenshot as a substitute. Keep all new images embedded offline and retain their source credits.
 
 - Use side-by-side references for visual comparisons or fixed interaction orders. Keep alternative spawns in tabs. Put action-specific instructions with their matching screenshot, keep shared rules separate, and compact repeated care rounds into one recipe with original per-round checkboxes. Preserve original IDs and search behavior when grouping cards.
+
+- Keep the sidebar and guide pane in the initial HTML. Do not reconstruct the old layout before displaying the current UI. Preserve saved progress keys and the legacy chooser import when changing navigation.
